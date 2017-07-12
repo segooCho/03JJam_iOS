@@ -1,0 +1,444 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		7B41719AF68CE94460AE5123 /* Pods_JJam.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0642993740E03DA9687CA8CB /* Pods_JJam.framework */; };
+		8403927F1F160D410033BCBD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 840392751F160D410033BCBD /* Assets.xcassets */; };
+		840392801F160D410033BCBD /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 840392761F160D410033BCBD /* LaunchScreen.storyboard */; };
+		840392811F160D410033BCBD /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 840392781F160D410033BCBD /* Main.storyboard */; };
+		840392841F160D410033BCBD /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8403927E1F160D410033BCBD /* Info.plist */; };
+		8403929D1F1617850033BCBD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 840392991F1617850033BCBD /* AppDelegate.swift */; };
+		8403929F1F1617850033BCBD /* InterestRestaurantList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8403929C1F1617850033BCBD /* InterestRestaurantList.swift */; };
+		840392A41F1667730033BCBD /* InterestRestaurant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 840392A31F1667730033BCBD /* InterestRestaurant.swift */; };
+		840392A91F1669270033BCBD /* InterestRestaurantListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 840392A81F1669270033BCBD /* InterestRestaurantListCell.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		0642993740E03DA9687CA8CB /* Pods_JJam.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_JJam.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		2732E5029DA1A1A8D6613992 /* Pods-JJam.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-JJam.release.xcconfig"; path = "Pods/Target Support Files/Pods-JJam/Pods-JJam.release.xcconfig"; sourceTree = "<group>"; };
+		8403925E1F1601AB0033BCBD /* JJam.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = JJam.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		840392751F160D410033BCBD /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		840392771F160D410033BCBD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		840392791F160D410033BCBD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		8403927E1F160D410033BCBD /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		840392991F1617850033BCBD /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		8403929C1F1617850033BCBD /* InterestRestaurantList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InterestRestaurantList.swift; sourceTree = "<group>"; };
+		840392A31F1667730033BCBD /* InterestRestaurant.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InterestRestaurant.swift; sourceTree = "<group>"; };
+		840392A81F1669270033BCBD /* InterestRestaurantListCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InterestRestaurantListCell.swift; sourceTree = "<group>"; };
+		B99DEBAF54EB6F56B8590BB5 /* Pods-JJam.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-JJam.debug.xcconfig"; path = "Pods/Target Support Files/Pods-JJam/Pods-JJam.debug.xcconfig"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		8403925B1F1601AB0033BCBD /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7B41719AF68CE94460AE5123 /* Pods_JJam.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		70E180E9408F0CBAD5B5173F /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				0642993740E03DA9687CA8CB /* Pods_JJam.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		840392551F1601AB0033BCBD = {
+			isa = PBXGroup;
+			children = (
+				840392731F160D410033BCBD /* JJam */,
+				8403925F1F1601AB0033BCBD /* Products */,
+				F60EA2715578B1CF9EF39BFA /* Pods */,
+				70E180E9408F0CBAD5B5173F /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		8403925F1F1601AB0033BCBD /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				8403925E1F1601AB0033BCBD /* JJam.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		840392731F160D410033BCBD /* JJam */ = {
+			isa = PBXGroup;
+			children = (
+				840392981F1617850033BCBD /* Sources */,
+				840392741F160D410033BCBD /* Resources */,
+				8403927D1F160D410033BCBD /* Supporting Files */,
+			);
+			path = JJam;
+			sourceTree = "<group>";
+		};
+		840392741F160D410033BCBD /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				840392751F160D410033BCBD /* Assets.xcassets */,
+				840392761F160D410033BCBD /* LaunchScreen.storyboard */,
+				840392781F160D410033BCBD /* Main.storyboard */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		8403927D1F160D410033BCBD /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				8403927E1F160D410033BCBD /* Info.plist */,
+			);
+			path = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		840392981F1617850033BCBD /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+				840392991F1617850033BCBD /* AppDelegate.swift */,
+				840392A71F1669270033BCBD /* Views */,
+				840392A21F1667730033BCBD /* Models */,
+				8403929B1F1617850033BCBD /* ViewControllers */,
+			);
+			path = Sources;
+			sourceTree = "<group>";
+		};
+		8403929B1F1617850033BCBD /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				8403929C1F1617850033BCBD /* InterestRestaurantList.swift */,
+			);
+			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		840392A21F1667730033BCBD /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				840392A31F1667730033BCBD /* InterestRestaurant.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		840392A71F1669270033BCBD /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				840392A81F1669270033BCBD /* InterestRestaurantListCell.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		F60EA2715578B1CF9EF39BFA /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				B99DEBAF54EB6F56B8590BB5 /* Pods-JJam.debug.xcconfig */,
+				2732E5029DA1A1A8D6613992 /* Pods-JJam.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		8403925D1F1601AB0033BCBD /* JJam */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 840392701F1601AB0033BCBD /* Build configuration list for PBXNativeTarget "JJam" */;
+			buildPhases = (
+				9678C49F6C959101513EEA01 /* [CP] Check Pods Manifest.lock */,
+				8403925A1F1601AB0033BCBD /* Sources */,
+				8403925B1F1601AB0033BCBD /* Frameworks */,
+				8403925C1F1601AB0033BCBD /* Resources */,
+				77A23CA14E87CEBEBEFF90AF /* [CP] Embed Pods Frameworks */,
+				C36572918622E60629C2788D /* [CP] Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = JJam;
+			productName = JJam;
+			productReference = 8403925E1F1601AB0033BCBD /* JJam.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		840392561F1601AB0033BCBD /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0830;
+				LastUpgradeCheck = 0830;
+				ORGANIZATIONNAME = admin;
+				TargetAttributes = {
+					8403925D1F1601AB0033BCBD = {
+						CreatedOnToolsVersion = 8.3.3;
+						ProvisioningStyle = Automatic;
+					};
+				};
+			};
+			buildConfigurationList = 840392591F1601AB0033BCBD /* Build configuration list for PBXProject "JJam" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 840392551F1601AB0033BCBD;
+			productRefGroup = 8403925F1F1601AB0033BCBD /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				8403925D1F1601AB0033BCBD /* JJam */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		8403925C1F1601AB0033BCBD /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				840392841F160D410033BCBD /* Info.plist in Resources */,
+				840392811F160D410033BCBD /* Main.storyboard in Resources */,
+				8403927F1F160D410033BCBD /* Assets.xcassets in Resources */,
+				840392801F160D410033BCBD /* LaunchScreen.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		77A23CA14E87CEBEBEFF90AF /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-JJam/Pods-JJam-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		9678C49F6C959101513EEA01 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		C36572918622E60629C2788D /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-JJam/Pods-JJam-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		8403925A1F1601AB0033BCBD /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				840392A91F1669270033BCBD /* InterestRestaurantListCell.swift in Sources */,
+				840392A41F1667730033BCBD /* InterestRestaurant.swift in Sources */,
+				8403929D1F1617850033BCBD /* AppDelegate.swift in Sources */,
+				8403929F1F1617850033BCBD /* InterestRestaurantList.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		840392761F160D410033BCBD /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				840392771F160D410033BCBD /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+		840392781F160D410033BCBD /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				840392791F160D410033BCBD /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		8403926E1F1601AB0033BCBD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		8403926F1F1601AB0033BCBD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		840392711F1601AB0033BCBD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = B99DEBAF54EB6F56B8590BB5 /* Pods-JJam.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = "$(SRCROOT)/JJam/Supporting Files/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = admin.JJam;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+			};
+			name = Debug;
+		};
+		840392721F1601AB0033BCBD /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 2732E5029DA1A1A8D6613992 /* Pods-JJam.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = "$(SRCROOT)/JJam/Supporting Files/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = admin.JJam;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		840392591F1601AB0033BCBD /* Build configuration list for PBXProject "JJam" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				8403926E1F1601AB0033BCBD /* Debug */,
+				8403926F1F1601AB0033BCBD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		840392701F1601AB0033BCBD /* Build configuration list for PBXNativeTarget "JJam" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				840392711F1601AB0033BCBD /* Debug */,
+				840392721F1601AB0033BCBD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 840392561F1601AB0033BCBD /* Project object */;
+}

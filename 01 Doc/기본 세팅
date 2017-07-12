@@ -1,0 +1,27 @@
+기본 세팅
+
+
+* Pod 설정
+1. Xcode 닫기
+2. 경로 이동
+3. pod init => Podfile 생성 작업
+4. Podfile 수정
+
+Podfile
+======================
+platform :ios, '9.0'
+
+target 'Graygram' do
+  use_frameworks!
+  pod 'Alamofire', '~> 4.3'
+end
+======================
+
+5. pod install => 설치
+
+* 처음 설치 시 에러 발생하면 
+: pod repo update 
+
+
+6. XXX.xcworkspace 파일 실행
+
