@@ -62,30 +62,59 @@ final class InterestRestaurantList: UIViewController {
         }
     }
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "MealList" {
+            print("MealList")
+            /*
+            if let navigationController = segue.destination as? UINavigationController ,
+                let taskEditViewController = navigationController.topViewController as? TaskEditViewController {
+                let indexPath = tableView.indexPathForSelectedRow
+                if let index = indexPath {
+                    taskEditViewController.taskList = [self.taskList[index.row]]
+                }
+            }
+            */
+        } else {
+            print("addButton")
+        }
+
+    }
+    
     //MARK : ACTION
     func editButtonDidTap() {
+        guard !self.interestRestaurant.isEmpty else { return }
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(
+            barButtonSystemItem: .done,
+            target: self,
+            action: #selector(doneButtonDidTap)
+        )
+        self.tableView.setEditing(true, animated: true)
+    }
+    
+    func doneButtonDidTap() {
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(
+            barButtonSystemItem: .edit,
+            target: self,
+            action: #selector(editButtonDidTap)
+        )
+        self.tableView.setEditing(false, animated: true)
     }
     
     func addButtonDidTap() {
+        //TODO :: 관심 식당 추가
+        //AppDelegate.instance?.관심_식당_추가_ViewController()
+        let alertController = UIAlertController(
+            title: NSLocalizedString("Confirm", comment: "확인"),
+            message: "관심 식당 추가",
+            preferredStyle: .alert
+        )
+        let alertConfirm = UIAlertAction(
+            title: NSLocalizedString("Confirm", comment: "확인"),
+            style: .default) { _ in
+        }
+        alertController.addAction(alertConfirm)
+        self.present(alertController, animated: true, completion: nil)
     }
 }
 
-extension InterestRestaurantList: UITableViewDataSource {
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.interestRestaurant.count
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "interestRestaurantListCell", for: indexPath) as! InterestRestaurantListCell
-        cell.configure(interestRestaurant: self.interestRestaurant[indexPath.item])
-        return cell
-    }
-}
-
-extension InterestRestaurantList: UITableViewDelegate {
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 60 //cell height
-    }
-}
 

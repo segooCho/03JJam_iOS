@@ -13,7 +13,10 @@ import SnapKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-
+    
+    class var instance: AppDelegate? {
+        return UIApplication.shared.delegate as? AppDelegate
+    }
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         let window = UIWindow(frame: UIScreen.main.bounds)
@@ -24,19 +27,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         self.window = window
         return true
     }
-
     
+    //관심 식당
+    func InterestRestaurantListScreen() {
+        let interestRestaurantList = InterestRestaurantList()
+        let navigationController = UINavigationController(rootViewController: interestRestaurantList)
+        self.window?.rootViewController = navigationController
+    }
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+    //관심 식당-식단
+    func MealListScreen(id: String, name: String) {
+        let mealList = MealList()
+        mealList.InterestRestaurantId = id
+        mealList.InterestRestaurantName = name
+        let navigationController = UINavigationController(rootViewController: mealList)
+        self.window?.rootViewController = navigationController
+    }
     
     
     
