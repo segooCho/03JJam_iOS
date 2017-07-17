@@ -22,6 +22,14 @@ extension MealList: UITableViewDataSource {
 }
 
 extension MealList: UITableViewDelegate {
+    //선택
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        print("\(indexPath)가 선택!")
+        //NavigationController pushViewController
+        let mealDetail = MealDetail(mealDetailId: self.meal[indexPath.row].id)
+        self.navigationController?.pushViewController(mealDetail, animated: true)
+    }
+    
     //cell height
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 50

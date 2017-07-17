@@ -20,8 +20,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         let window = UIWindow(frame: UIScreen.main.bounds)
+        /*
+        //관심 식당
         let interestRestaurantList = InterestRestaurantList()
         let navigationController = UINavigationController(rootViewController: interestRestaurantList)
+        */
+        
+        //관심 식당-식당
+        let mealList = MealList(interestRestaurantId: "1", interestRestaurantName: "한라시스마 구내식당")
+        let navigationController = UINavigationController(rootViewController: mealList)
+        
         window.rootViewController = navigationController
         
         self.window = window
@@ -37,14 +45,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     //관심 식당-식단
     func MealListScreen(id: String, name: String) {
-        let mealList = MealList()
-        mealList.InterestRestaurantId = id
-        mealList.InterestRestaurantName = name
+        let mealList = MealList(interestRestaurantId: id, interestRestaurantName: name)
         let navigationController = UINavigationController(rootViewController: mealList)
         self.window?.rootViewController = navigationController
     }
     
-    
+    //관심 식당-식단 상세
+    //NavigationController pushViewController 으로 처리
     
     
     

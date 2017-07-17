@@ -62,24 +62,6 @@ final class InterestRestaurantList: UIViewController {
         }
     }
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "MealList" {
-            print("MealList")
-            /*
-            if let navigationController = segue.destination as? UINavigationController ,
-                let taskEditViewController = navigationController.topViewController as? TaskEditViewController {
-                let indexPath = tableView.indexPathForSelectedRow
-                if let index = indexPath {
-                    taskEditViewController.taskList = [self.taskList[index.row]]
-                }
-            }
-            */
-        } else {
-            print("addButton")
-        }
-
-    }
-    
     //MARK : ACTION
     func editButtonDidTap() {
         guard !self.interestRestaurant.isEmpty else { return }

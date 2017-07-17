@@ -23,6 +23,8 @@ final class MealListCell: UITableViewCell {
         self.backgroundColor = .white
         //image
         self.imageView?.image = UIImage(named: meal.imageString)
+        
+        //TODO :: image 사이즈 고정 && image 라운드 재정리 필요
         //image 사이즈 고정
         let itemSize = CGSize(width:42.0, height:42.0)
         UIGraphicsBeginImageContextWithOptions(itemSize, false, 0.0)
@@ -32,16 +34,17 @@ final class MealListCell: UITableViewCell {
         UIGraphicsEndImageContext()
         //image 라운드
         self.imageView?.layer.frame = (self.layer.frame).insetBy(dx: 0, dy: 0)
+        self.imageView?.layer.borderWidth = 0.5
         self.imageView?.layer.borderColor = UIColor.gray.cgColor
         self.imageView?.layer.cornerRadius = (self.frame.height)/5
         self.imageView?.layer.masksToBounds = false
         self.imageView?.clipsToBounds = true
-        self.imageView?.layer.borderWidth = 0.5
         self.imageView?.contentMode = UIViewContentMode.scaleAspectFill
+        
         //일자
         self.textLabel?.text = meal.dateString
-        //간략 내용
-        self.detailTextLabel?.text = meal.remarks
+        //요약 내용
+        self.detailTextLabel?.text = meal.summary
         self.accessoryType = .disclosureIndicator
     }
     
@@ -50,8 +53,10 @@ final class MealListCell: UITableViewCell {
         
     }
     
+    /*
     override func awakeFromNib() {
         super.awakeFromNib()
     }
+    */
 }
 

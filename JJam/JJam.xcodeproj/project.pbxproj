@@ -16,6 +16,11 @@
 		8403929F1F1617850033BCBD /* InterestRestaurantList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8403929C1F1617850033BCBD /* InterestRestaurantList.swift */; };
 		840392A41F1667730033BCBD /* InterestRestaurant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 840392A31F1667730033BCBD /* InterestRestaurant.swift */; };
 		840392A91F1669270033BCBD /* InterestRestaurantListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 840392A81F1669270033BCBD /* InterestRestaurantListCell.swift */; };
+		8442BCAF1F1C445E00F67730 /* MealDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8442BCAE1F1C445E00F67730 /* MealDetail.swift */; };
+		8442BCB31F1C7A7F00F67730 /* MealDetailExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8442BCB21F1C7A7F00F67730 /* MealDetailExtension.swift */; };
+		8442BCB51F1C7D1300F67730 /* MealDetailImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8442BCB41F1C7D1300F67730 /* MealDetailImageCell.swift */; };
+		8442BCB71F1C7DD800F67730 /* Detail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8442BCB61F1C7DD800F67730 /* Detail.swift */; };
+		8442BCB91F1C94E500F67730 /* MealDetailTextCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8442BCB81F1C94E500F67730 /* MealDetailTextCell.swift */; };
 		844C989D1F19F79400CBCCBF /* InterestRestaurantListExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844C989C1F19F79400CBCCBF /* InterestRestaurantListExtension.swift */; };
 		844C989F1F1A002000CBCCBF /* MealList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844C989E1F1A002000CBCCBF /* MealList.swift */; };
 		844C98A11F1A018D00CBCCBF /* MealListExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844C98A01F1A018D00CBCCBF /* MealListExtension.swift */; };
@@ -45,6 +50,11 @@
 		8403929C1F1617850033BCBD /* InterestRestaurantList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InterestRestaurantList.swift; sourceTree = "<group>"; };
 		840392A31F1667730033BCBD /* InterestRestaurant.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InterestRestaurant.swift; sourceTree = "<group>"; };
 		840392A81F1669270033BCBD /* InterestRestaurantListCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InterestRestaurantListCell.swift; sourceTree = "<group>"; };
+		8442BCAE1F1C445E00F67730 /* MealDetail.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MealDetail.swift; sourceTree = "<group>"; };
+		8442BCB21F1C7A7F00F67730 /* MealDetailExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MealDetailExtension.swift; sourceTree = "<group>"; };
+		8442BCB41F1C7D1300F67730 /* MealDetailImageCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MealDetailImageCell.swift; sourceTree = "<group>"; };
+		8442BCB61F1C7DD800F67730 /* Detail.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Detail.swift; sourceTree = "<group>"; };
+		8442BCB81F1C94E500F67730 /* MealDetailTextCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MealDetailTextCell.swift; sourceTree = "<group>"; };
 		844C989C1F19F79400CBCCBF /* InterestRestaurantListExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InterestRestaurantListExtension.swift; sourceTree = "<group>"; };
 		844C989E1F1A002000CBCCBF /* MealList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MealList.swift; sourceTree = "<group>"; };
 		844C98A01F1A018D00CBCCBF /* MealListExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MealListExtension.swift; sourceTree = "<group>"; };
@@ -148,6 +158,8 @@
 				844C989C1F19F79400CBCCBF /* InterestRestaurantListExtension.swift */,
 				844C989E1F1A002000CBCCBF /* MealList.swift */,
 				844C98A01F1A018D00CBCCBF /* MealListExtension.swift */,
+				8442BCAE1F1C445E00F67730 /* MealDetail.swift */,
+				8442BCB21F1C7A7F00F67730 /* MealDetailExtension.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -157,6 +169,7 @@
 			children = (
 				840392A31F1667730033BCBD /* InterestRestaurant.swift */,
 				844C98A21F1A031F00CBCCBF /* Meal.swift */,
+				8442BCB61F1C7DD800F67730 /* Detail.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -166,6 +179,8 @@
 			children = (
 				840392A81F1669270033BCBD /* InterestRestaurantListCell.swift */,
 				844C98A41F1A050500CBCCBF /* MealListCell.swift */,
+				8442BCB41F1C7D1300F67730 /* MealDetailImageCell.swift */,
+				8442BCB81F1C94E500F67730 /* MealDetailTextCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -331,13 +346,18 @@
 			buildActionMask = 2147483647;
 			files = (
 				840392A91F1669270033BCBD /* InterestRestaurantListCell.swift in Sources */,
+				8442BCB51F1C7D1300F67730 /* MealDetailImageCell.swift in Sources */,
 				840392A41F1667730033BCBD /* InterestRestaurant.swift in Sources */,
 				844C989F1F1A002000CBCCBF /* MealList.swift in Sources */,
 				8403929D1F1617850033BCBD /* AppDelegate.swift in Sources */,
 				844C98A31F1A031F00CBCCBF /* Meal.swift in Sources */,
 				844C989D1F19F79400CBCCBF /* InterestRestaurantListExtension.swift in Sources */,
 				844C98A11F1A018D00CBCCBF /* MealListExtension.swift in Sources */,
+				8442BCAF1F1C445E00F67730 /* MealDetail.swift in Sources */,
 				844C98A51F1A050500CBCCBF /* MealListCell.swift in Sources */,
+				8442BCB91F1C94E500F67730 /* MealDetailTextCell.swift in Sources */,
+				8442BCB31F1C7A7F00F67730 /* MealDetailExtension.swift in Sources */,
+				8442BCB71F1C7DD800F67730 /* Detail.swift in Sources */,
 				8403929F1F1617850033BCBD /* InterestRestaurantList.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

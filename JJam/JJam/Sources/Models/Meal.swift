@@ -10,12 +10,12 @@ struct Meal {
     var id: String
     var imageString: String
     var dateString: String
-    var remarks: String
+    var summary: String
     
-    init(id: String, imageString: String, dateString: String, remarks: String) {
+    init(id: String, imageString: String, dateString: String, summary: String) {
         self.id = id
         self.imageString = imageString
         self.dateString = dateString
-        self.remarks = remarks
+        self.summary = summary
     }
 }
