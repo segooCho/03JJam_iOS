@@ -13,6 +13,7 @@ import SnapKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
+    //var destination : URL?
     
     class var instance: AppDelegate? {
         return UIApplication.shared.delegate as? AppDelegate
@@ -20,29 +21,36 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         let window = UIWindow(frame: UIScreen.main.bounds)
+        window.backgroundColor = .white
+
+        /*
+        //GeneralUsersTabBar
+        let generalUsersTabBar = GeneralUsersTabBar(selectIndex : 0)
+        self.window?.rootViewController = generalUsersTabBar
+        */
+        
+        //BusinessUsersTabBar
+        let businessUsersTabBar = BusinessUsersTabBar(selectIndex: 0)
+        self.window?.rootViewController = businessUsersTabBar
+
         /*
         //관심 식당
         let interestRestaurantList = InterestRestaurantList()
         let navigationController = UINavigationController(rootViewController: interestRestaurantList)
-        */
-        
-        //관심 식당-식당
-        let mealList = MealList(interestRestaurantId: "1", interestRestaurantName: "한라시스마 구내식당")
-        let navigationController = UINavigationController(rootViewController: mealList)
-        
         window.rootViewController = navigationController
-        
         self.window = window
+        */
         return true
     }
     
-    //관심 식당
-    func InterestRestaurantListScreen() {
-        let interestRestaurantList = InterestRestaurantList()
-        let navigationController = UINavigationController(rootViewController: interestRestaurantList)
-        self.window?.rootViewController = navigationController
+    //GeneralUsersTabBar
+    func GeneralUsersTabBarScreen(selectIndex: Int) {
+        //InterestRestaurantList()              : 관심 식당
+        //GeneralUsersSettings()                : 설정
+        let generalUsersTabBar = GeneralUsersTabBar(selectIndex: selectIndex)
+        self.window?.rootViewController = generalUsersTabBar
     }
-    
+
     //관심 식당-식단
     func MealListScreen(id: String, name: String) {
         let mealList = MealList(interestRestaurantId: id, interestRestaurantName: name)
@@ -50,15 +58,80 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         self.window?.rootViewController = navigationController
     }
     
-    //관심 식당-식단 상세
-    //NavigationController pushViewController 으로 처리
+    //관심 식당 찾기
+    func RestaurantListSearchScreen() {
+        let restaurantListSearch = RestaurantListSearch()
+        let navigationController = UINavigationController(rootViewController: restaurantListSearch)
+        self.window?.rootViewController = navigationController
+    }
+
+    //Login
+    func LoginScreen() {
+        let login = Login()
+        let navigationController = UINavigationController(rootViewController: login)
+        self.window?.rootViewController = navigationController
+    }
     
+    //BusinessUsersTabBar(식단, 설정)
+    func BusinessUsersTabBarScreen(selectIndex: Int) {
+        //BusinessUsersMealList()                   : 식단
+        //BusinessUsersSettings()                   : 설정
+        let businessUsersTabBar = BusinessUsersTabBar(selectIndex: selectIndex)
+        self.window?.rootViewController = businessUsersTabBar
+    }
+
+    /*
+    //공지사항
+    func BusinessUsersStapleFoodScreen() {
+        let businessUsersStapleFood = BusinessUsersStapleFood()
+        let navigationController = UINavigationController(rootViewController: businessUsersStapleFood)
+        self.window?.rootViewController = navigationController
+    }
+    */
     
+    //주식(밥,면)
+    func BusinessUsersStapleFoodScreen() {
+        let businessUsersStapleFood = BusinessUsersStapleFood()
+        let navigationController = UINavigationController(rootViewController: businessUsersStapleFood)
+        self.window?.rootViewController = navigationController
+    }
     
+    //국
+    func BusinessUsersSoupScreen() {
+        let businessUsersSoup = BusinessUsersSoup()
+        let navigationController = UINavigationController(rootViewController: businessUsersSoup)
+        self.window?.rootViewController = navigationController
+    }
     
+    //반찬
+    func BusinessUsersSideDishScreen() {
+        let businessUsersSideDish = BusinessUsersSideDish()
+        let navigationController = UINavigationController(rootViewController: businessUsersSideDish)
+        self.window?.rootViewController = navigationController
+    }
     
+    //후식
+    func BusinessUsersDessertScreen() {
+        let businessUsersDessert = BusinessUsersDessert()
+        let navigationController = UINavigationController(rootViewController: businessUsersDessert)
+        self.window?.rootViewController = navigationController
+    }
     
-    
+    //메시지 처리 예시
+    /*
+     let alertController = UIAlertController(
+     title: NSLocalizedString("Confirm", comment: "확인"),
+     message: "관심 식당 추가",
+     preferredStyle: .alert
+     )
+     let alertConfirm = UIAlertAction(
+     title: NSLocalizedString("Confirm", comment: "확인"),
+     style: .default) { _ in
+     }
+     alertController.addAction(alertConfirm)
+     self.present(alertController, animated: true, completion: nil)
+     */
+
     
     
     

@@ -8,12 +8,12 @@
 
 struct InterestRestaurant {
     var id: String
-    var name: String
+    var companyName: String
     var address: String
     
-    init(id: String, name: String, address: String) {
+    init(id: String, companyName: String, address: String) {
         self.id = id
-        self.name = name
+        self.companyName = companyName
         self.address = address
     }
 }

@@ -18,7 +18,7 @@ final class MealListCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    //MARK : configure
+    //MARK: configure
     func configure(meal: Meal) {
         self.backgroundColor = .white
         //image

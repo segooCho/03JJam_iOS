@@ -18,17 +18,16 @@ final class InterestRestaurantListCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    //MARK : configure
+    //MARK: configure
     func configure(interestRestaurant: InterestRestaurant) {
         self.backgroundColor = .white
-        self.textLabel?.text = interestRestaurant.name
+        self.textLabel?.text = interestRestaurant.companyName
         self.detailTextLabel?.text = interestRestaurant.address
         self.accessoryType = .disclosureIndicator
     }
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        
     }
 
 }

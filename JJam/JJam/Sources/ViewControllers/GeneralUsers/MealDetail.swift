@@ -9,7 +9,8 @@
 import UIKit
 
 final class MealDetail: UIViewController {
-    //MARK : Properties
+    //MARK: Properties
+    var didSetupConstraints = false
     var detail: [Detail] = [] /*{
      didSet {
      self.saveAll()
@@ -19,7 +20,8 @@ final class MealDetail: UIViewController {
     fileprivate let mealDetailId:String!
     
     //MARK: UI
-    fileprivate let detailTableView = UITableView(frame: .zero, style: .grouped)
+    //fileprivate let detailTableView = UITableView(frame: .zero, style: .grouped)
+    fileprivate let detailTableView = UITableView(frame: .zero, style: .plain)
     //fileprivate let progressView = UIProgressView()
 
     //MARK: init
@@ -29,7 +31,7 @@ final class MealDetail: UIViewController {
         //데이터 임시 처리
         self.detail.append(Detail(id: "1", imageString: "01.jpg", dateString: "2017-07-11일 (화)", division: "아침",
                                   stapleFood: "현미밥", soup: "된장국", sideDish1: "김치", sideDish2: "돈까스", sideDish3: "햄",
-                                  sideDish4: "김", dessert: "국수, 김치볶음밥", remarks: "공지사항\n안녕하세요. 한라시그마 구내식당 입니다.\n*월요일 ~ 금요일 까지 영업합니다.\n*토요일, 일요일, 공휴일은 휴무입니다.\n\n\n\n\n감사합니다."))
+                                  sideDish4: "김", dessert: "국수, 김치볶음밥", remarks: "오늘도 정성을 다해 준비하였습니다.\n한라시그마 구내식당\n\n\n\n\n감사합니다."))
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -37,7 +39,7 @@ final class MealDetail: UIViewController {
     }
     
     
-    //MARK : View Life Cycle
+    //MARK: View Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         //print("mealId : \(mealId)")
@@ -57,16 +59,23 @@ final class MealDetail: UIViewController {
         self.detailTableView.dataSource = self
         self.detailTableView.delegate = self
         self.view.addSubview(self.detailTableView)
-        
-        self.detailTableView.snp.makeConstraints { make in
-            //make.top.equalTo(self.topLayoutGuide.snp.bottom).offset(-50)
-            //make.left.right.height.equalToSuperview()
-            make.edges.equalToSuperview()
-        }
-        
+        //updateViewConstraints 자동 호출
+        self.view.setNeedsUpdateConstraints()
     }
     
-    //MARK : ACTION
+    //MARK: 애플 추천 방식으로 한번만 화면을 그리도록 한다.
+    //setNeedsUpdateConstraints() 필요
+    override func updateViewConstraints() {
+        if !self.didSetupConstraints {
+            self.didSetupConstraints = true
+            self.detailTableView.snp.makeConstraints { make in
+                make.edges.equalToSuperview()
+            }
+        }
+        super.updateViewConstraints()
+    }
+    
+    //MARK: ACTION
     func cancelButtonDidTap() {
         //NavigationController popViewController
         //self.navigationController?.popViewController(animated: true)

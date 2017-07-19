@@ -1,30 +1,26 @@
 //
-//  MealDetailTextCell.swift
+//  BusinessUsersMealDetailTextCell.swift
 //  JJam
 //
-//  Created by admin on 2017. 7. 17..
+//  Created by admin on 2017. 7. 19..
 //  Copyright © 2017년 admin. All rights reserved.
 //
 
+
 import UIKit
 
-final class MealDetailTextCell: UITableViewCell {
+final class BusinessUsersMealDetailTextCell: UITableViewCell {
     //MARK: Constants
     fileprivate struct Metric {
         static let labelLeft = CGFloat(10)
         static let labelRight = CGFloat(-300)
-
+        
         static let textFieldLeft = CGFloat(80)
         static let textFieldRight = CGFloat(-10)
         
         static let commonOffset = CGFloat(5)
         static let commonHeight = CGFloat(30)
         static let commonHeightTextView = CGFloat(100)
-    }
-    
-    fileprivate struct Font {
-        static let label = UIFont.systemFont(ofSize: 14)
-        static let TextField = UIFont.systemFont(ofSize: 14)
     }
     
     //MARK: UI
@@ -59,94 +55,42 @@ final class MealDetailTextCell: UITableViewCell {
     fileprivate let remarksLabel = UILabel()
     fileprivate let remarksTextView = UITextView()
     
-
+    
     //MARK: init
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: .subtitle, reuseIdentifier: reuseIdentifier)
         self.selectionStyle = .none
         
-        let color = UIColor(red: 186/255, green: 186/255, blue: 186/255, alpha: 1.0).cgColor
-        //self.dateLabel.backgroundColor = .red
-        self.dateLabel.font = Font.label
-        self.dateLabel.text = "일자"
-        self.dateTextField.layer.borderColor = color
-        self.dateTextField.layer.borderWidth = 0.5
-        self.dateTextField.layer.cornerRadius = 5
-        self.dateTextField.font = Font.TextField
-        self.dateTextField.isEnabled = false
+        //TODO :: SelectBox 처리
+        UICommonSetLabel(self.dateLabel, text: "일자")
+        UICommonSetTextFieldDisable(self.dateTextField)
         
-        self.divisionLabel.font = Font.label
-        self.divisionLabel.text = "구분"
-        self.divisionTextField.layer.borderColor = color
-        self.divisionTextField.layer.borderWidth = 0.5
-        self.divisionTextField.layer.cornerRadius = 5
-        self.divisionTextField.font = Font.TextField
-        self.divisionTextField.isEnabled = false
+        UICommonSetLabel(self.divisionLabel, text: "구분")
+        UICommonSetTextFieldDisable(self.divisionTextField)
         
-        self.stapleFoodLabel.font = Font.label
-        self.stapleFoodLabel.text = "주식"
-        self.stapleFoodTextField.layer.borderColor = color
-        self.stapleFoodTextField.layer.borderWidth = 0.5
-        self.stapleFoodTextField.layer.cornerRadius = 5
-        self.stapleFoodTextField.font = Font.TextField
-        self.stapleFoodTextField.isEnabled = false
+        UICommonSetLabel(self.stapleFoodLabel, text: "주식(밥,면)")
+        UICommonSetTextFieldDisable(self.stapleFoodTextField)
         
-        self.soupLabel.font = Font.label
-        self.soupLabel.text = "국"
-        self.soupTextField.layer.borderColor = color
-        self.soupTextField.layer.borderWidth = 0.5
-        self.soupTextField.layer.cornerRadius = 5
-        self.soupTextField.font = Font.TextField
-        self.soupTextField.isEnabled = false
-
-        self.sideDish1Label.font = Font.label
-        self.sideDish1Label.text = "반찬1"
-        self.sideDish1TextField.layer.borderColor = color
-        self.sideDish1TextField.layer.borderWidth = 0.5
-        self.sideDish1TextField.layer.cornerRadius = 5
-        self.sideDish1TextField.font = Font.TextField
-        self.sideDish1TextField.isEnabled = false
-
-        self.sideDish2Label.font = Font.label
-        self.sideDish2Label.text = "반찬2"
-        self.sideDish2TextField.layer.borderColor = color
-        self.sideDish2TextField.layer.borderWidth = 0.5
-        self.sideDish2TextField.layer.cornerRadius = 5
-        self.sideDish2TextField.font = Font.TextField
-        self.sideDish2TextField.isEnabled = false
-
-        self.sideDish3Label.font = Font.label
-        self.sideDish3Label.text = "반찬3"
-        self.sideDish3TextField.layer.borderColor = color
-        self.sideDish3TextField.layer.borderWidth = 0.5
-        self.sideDish3TextField.layer.cornerRadius = 5
-        self.sideDish3TextField.font = Font.TextField
-        self.sideDish3TextField.isEnabled = false
+        UICommonSetLabel(self.soupLabel, text: "국")
+        UICommonSetTextFieldDisable(self.soupTextField)
         
-        self.sideDish4Label.font = Font.label
-        self.sideDish4Label.text = "반찬4"
-        self.sideDish4TextField.layer.borderColor = color
-        self.sideDish4TextField.layer.borderWidth = 0.5
-        self.sideDish4TextField.layer.cornerRadius = 5
-        self.sideDish4TextField.font = Font.TextField
-        self.sideDish4TextField.isEnabled = false
+        UICommonSetLabel(self.sideDish1Label, text: "반찬1")
+        UICommonSetTextFieldDisable(self.sideDish1TextField)
         
-        self.dessertLabel.font = Font.label
-        self.dessertLabel.text = "후식"
-        self.dessertTextField.layer.borderColor = color
-        self.dessertTextField.layer.borderWidth = 0.5
-        self.dessertTextField.layer.cornerRadius = 5
-        self.dessertTextField.font = Font.TextField
-        self.dessertTextField.isEnabled = false
-
-        self.remarksLabel.font = Font.label
-        self.remarksLabel.text = "비고"
-        self.remarksTextView.layer.borderColor = color
-        self.remarksTextView.layer.borderWidth = 0.5
-        self.remarksTextView.layer.cornerRadius = 5
-        self.remarksTextView.font = Font.TextField
-        self.remarksTextView.isEditable = false
-
+        UICommonSetLabel(self.sideDish2Label, text: "반찬2")
+        UICommonSetTextFieldDisable(self.sideDish2TextField)
+        
+        UICommonSetLabel(self.sideDish3Label, text: "반찬3")
+        UICommonSetTextFieldDisable(self.sideDish3TextField)
+        
+        UICommonSetLabel(self.sideDish4Label, text: "반찬4")
+        UICommonSetTextFieldDisable(self.sideDish4TextField)
+        
+        UICommonSetLabel(self.dessertLabel, text: "후식")
+        UICommonSetTextFieldDisable(self.dessertTextField)
+        
+        UICommonSetLabel(self.remarksLabel, text: "비고")
+        UICommonSetTextViewDisable(self.remarksTextView)
         
         self.contentView.addSubview(self.dateLabel)
         self.contentView.addSubview(self.dateTextField)
@@ -174,25 +118,25 @@ final class MealDetailTextCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    //MARK : configure
-    func configure(detail: Detail) {
-        self.dateTextField.text = detail.dateString
-        self.divisionTextField.text = detail.division
-        self.stapleFoodTextField.text = detail.stapleFood
-        self.soupTextField.text = detail.soup
-        self.sideDish1TextField.text = detail.sideDish1
-        self.sideDish2TextField.text = detail.sideDish2
-        self.sideDish3TextField.text = detail.sideDish3
-        self.sideDish4TextField.text = detail.sideDish4
-        self.dessertTextField.text = detail.dessert
-        self.remarksTextView.text = detail.remarks
+    //MARK: configure
+    func configure(businessUsersDetail: BusinessUsersDetail) {
+        self.dateTextField.text = businessUsersDetail.dateString
+        self.divisionTextField.text = businessUsersDetail.division
+        self.stapleFoodTextField.text = businessUsersDetail.stapleFood
+        self.soupTextField.text = businessUsersDetail.soup
+        self.sideDish1TextField.text = businessUsersDetail.sideDish1
+        self.sideDish2TextField.text = businessUsersDetail.sideDish2
+        self.sideDish3TextField.text = businessUsersDetail.sideDish3
+        self.sideDish4TextField.text = businessUsersDetail.sideDish4
+        self.dessertTextField.text = businessUsersDetail.dessert
+        self.remarksTextView.text = businessUsersDetail.remarks
         self.setNeedsLayout()
     }
     
     //MARK: Size
     class func height() -> CGFloat {
         var height: CGFloat = 0
-
+        
         //TextField 9개
         //TextView  1개
         height += Metric.commonOffset * 10
@@ -235,7 +179,7 @@ final class MealDetailTextCell: UITableViewCell {
             make.height.equalTo(Metric.commonHeight)
         }
         
-        //주식
+        //주식(밥,면)
         self.stapleFoodLabel.snp.makeConstraints { make in
             make.left.equalTo(Metric.labelLeft)
             make.right.equalTo(Metric.labelRight)
@@ -262,7 +206,7 @@ final class MealDetailTextCell: UITableViewCell {
             make.top.equalTo(self.stapleFoodLabel.snp.bottom).offset(Metric.commonOffset)
             make.height.equalTo(Metric.commonHeight)
         }
-
+        
         //반찬1
         self.sideDish1Label.snp.makeConstraints { make in
             make.left.equalTo(Metric.labelLeft)
@@ -304,7 +248,7 @@ final class MealDetailTextCell: UITableViewCell {
             make.top.equalTo(self.sideDish2Label.snp.bottom).offset(Metric.commonOffset)
             make.height.equalTo(Metric.commonHeight)
         }
-
+        
         //반찬4
         self.sideDish4Label.snp.makeConstraints { make in
             make.left.equalTo(Metric.labelLeft)
@@ -318,7 +262,7 @@ final class MealDetailTextCell: UITableViewCell {
             make.top.equalTo(self.sideDish3Label.snp.bottom).offset(Metric.commonOffset)
             make.height.equalTo(Metric.commonHeight)
         }
-
+        
         //후식
         self.dessertLabel.snp.makeConstraints { make in
             make.left.equalTo(Metric.labelLeft)
@@ -348,3 +292,4 @@ final class MealDetailTextCell: UITableViewCell {
         }
     }
 }
+
