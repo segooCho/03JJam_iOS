@@ -13,6 +13,14 @@ fileprivate struct Font {
     static let font14 = UIFont.systemFont(ofSize: 14)
 }
 
+//MARK: UISegmentedControl Common Set
+func UICommonSetSegmentedControl(_ uIKit: UISegmentedControl, titles: Array<String>) {
+    for (index, title) in titles.enumerated() {
+        uIKit.insertSegment(withTitle: title, at: index, animated: false)
+    }
+}
+
+
 //MARK: UILabel Common Set
 func UICommonSetLabel(_ uIKit: UILabel, text: String) {
     uIKit.font = Font.font14
@@ -62,17 +70,31 @@ func UICommonSetTextViewDisable(_ uIKit: UITextView) {
 }
 
 //MARK: Common Set UITextView isEnabled = true
-func UICommonSetTextViewEnable(_ uIKit: UITextView) {
+func UICommonSetTextViewEnable(_ uIKit: UITextView, placeholderText: String) {
     let color = UIColor(red: 186/255, green: 186/255, blue: 186/255, alpha: 1.0).cgColor
     uIKit.layer.borderColor = color
     uIKit.layer.borderWidth = 0.5
     uIKit.layer.cornerRadius = 5
     uIKit.font = Font.font14
+    uIKit.placeholder = placeholderText
     uIKit.isEditable = true
 }
 
 //MARK: Common Set Shake UITextField
 func UICommonSetShakeTextField(_ uIKit: UITextField) {
+    UIView.animate(withDuration: 0.05, animations: { uIKit.frame.origin.x -= 5 }, completion: { _ in
+        UIView.animate(withDuration: 0.05, animations: { uIKit.frame.origin.x += 10 }, completion: { _ in
+            UIView.animate(withDuration: 0.05, animations: { uIKit.frame.origin.x -= 10 }, completion: { _ in
+                UIView.animate(withDuration: 0.05, animations: { uIKit.frame.origin.x += 10 }, completion: { _ in
+                    UIView.animate(withDuration: 0.05, animations: { uIKit.frame.origin.x -= 5 })
+                })
+            })
+        })
+    })
+}
+
+//MARK: Common Set Shake UITextView
+func UICommonSetShakeTextView(_ uIKit: UITextView) {
     UIView.animate(withDuration: 0.05, animations: { uIKit.frame.origin.x -= 5 }, completion: { _ in
         UIView.animate(withDuration: 0.05, animations: { uIKit.frame.origin.x += 10 }, completion: { _ in
             UIView.animate(withDuration: 0.05, animations: { uIKit.frame.origin.x -= 10 }, completion: { _ in

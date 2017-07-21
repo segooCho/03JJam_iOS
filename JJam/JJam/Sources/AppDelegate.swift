@@ -23,16 +23,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let window = UIWindow(frame: UIScreen.main.bounds)
         window.backgroundColor = .white
 
-        /*
         //GeneralUsersTabBar
         let generalUsersTabBar = GeneralUsersTabBar(selectIndex : 0)
         self.window?.rootViewController = generalUsersTabBar
-        */
         
+        /*
         //BusinessUsersTabBar
         let businessUsersTabBar = BusinessUsersTabBar(selectIndex: 0)
         self.window?.rootViewController = businessUsersTabBar
-
+        */
+        
         /*
         //관심 식당
         let interestRestaurantList = InterestRestaurantList()
@@ -65,10 +65,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         self.window?.rootViewController = navigationController
     }
 
-    //Login
+    //로그인
     func LoginScreen() {
         let login = Login()
         let navigationController = UINavigationController(rootViewController: login)
+        self.window?.rootViewController = navigationController
+    }
+    
+    //회원가입
+    func BusinessUsersSignUpScreen() {
+        let bsusinessUsersSignUp = BusinessUsersSignUp()
+        let navigationController = UINavigationController(rootViewController: bsusinessUsersSignUp)
         self.window?.rootViewController = navigationController
     }
     
@@ -80,42 +87,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         self.window?.rootViewController = businessUsersTabBar
     }
 
-    /*
     //공지사항
-    func BusinessUsersStapleFoodScreen() {
-        let businessUsersStapleFood = BusinessUsersStapleFood()
-        let navigationController = UINavigationController(rootViewController: businessUsersStapleFood)
-        self.window?.rootViewController = navigationController
-    }
-    */
-    
-    //주식(밥,면)
-    func BusinessUsersStapleFoodScreen() {
-        let businessUsersStapleFood = BusinessUsersStapleFood()
-        let navigationController = UINavigationController(rootViewController: businessUsersStapleFood)
+    func BusinessUsersNoticeScreen() {
+        let businessUsersNotice = BusinessUsersNotice(businessUsersRestaurantId: "1" )
+        let navigationController = UINavigationController(rootViewController: businessUsersNotice)
         self.window?.rootViewController = navigationController
     }
     
-    //국
-    func BusinessUsersSoupScreen() {
-        let businessUsersSoup = BusinessUsersSoup()
-        let navigationController = UINavigationController(rootViewController: businessUsersSoup)
-        self.window?.rootViewController = navigationController
-    }
-    
-    //반찬
-    func BusinessUsersSideDishScreen() {
-        let businessUsersSideDish = BusinessUsersSideDish()
-        let navigationController = UINavigationController(rootViewController: businessUsersSideDish)
-        self.window?.rootViewController = navigationController
-    }
-    
-    //후식
-    func BusinessUsersDessertScreen() {
-        let businessUsersDessert = BusinessUsersDessert()
-        let navigationController = UINavigationController(rootViewController: businessUsersDessert)
-        self.window?.rootViewController = navigationController
-    }
     
     //메시지 처리 예시
     /*

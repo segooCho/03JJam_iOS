@@ -11,6 +11,7 @@ import UIKit
 final class MealList: UIViewController {
     //MARK: Properties
     var didSetupConstraints = false
+    var segmentedIndexAndCode = 0
     var meal: [Meal] = [] /*{
      didSet {
      self.saveAll()
@@ -25,6 +26,8 @@ final class MealList: UIViewController {
 
     //MARK: UI
     //fileprivate let activityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: .gray)
+    fileprivate let segmentedControl = UISegmentedControl()
+    fileprivate let segmentedTitles: Array<String> = ["오늘 식단","계획 식단","과거 식단"]
     fileprivate let label = UILabel()
     fileprivate let textView = UITextView()
     fileprivate let tableView = UITableView(frame: .zero, style: .plain)
@@ -71,6 +74,11 @@ final class MealList: UIViewController {
             action: #selector(cancelButtonDidTap)
         )
         
+        //segmentedControl
+        UICommonSetSegmentedControl(self.segmentedControl, titles: segmentedTitles)
+        self.segmentedControl.addTarget(self, action: #selector(changeSegmentedControl), for: .valueChanged)
+        self.segmentedControl.selectedSegmentIndex = self.segmentedIndexAndCode
+        
         //인증
         if (self.interestRestaurantCertification == "Y") {
             UICommonSetLabel(self.label, text: "사업자 등록증 인증 업체입니다.")
@@ -82,17 +90,18 @@ final class MealList: UIViewController {
             self.label.textAlignment = .center
         }
 
-        self.view.addSubview(self.label)
-
         //공지사항
         self.textView.text = self.interestRestaurantNotice
         UICommonSetTextViewDisable(self.textView)
-        self.view.addSubview(self.textView)
         
         //식단
         self.tableView.register(MealListCell.self, forCellReuseIdentifier: "mealListCell")
         self.tableView.dataSource = self
         self.tableView.delegate = self
+
+        self.view.addSubview(self.segmentedControl)
+        self.view.addSubview(self.label)
+        self.view.addSubview(self.textView)
         self.view.addSubview(self.tableView)
         //updateViewConstraints 자동 호출
         self.view.setNeedsUpdateConstraints()
@@ -103,10 +112,16 @@ final class MealList: UIViewController {
     override func updateViewConstraints() {
         if !self.didSetupConstraints {
             self.didSetupConstraints = true
+            self.segmentedControl.snp.makeConstraints { make in
+                make.left.equalTo(40)
+                make.right.equalTo(-40)
+                make.top.equalTo(self.topLayoutGuide.snp.bottom).offset(5)
+                make.height.equalTo(30)
+            }
             self.label.snp.makeConstraints { make in
                 make.left.equalTo(10)
                 make.right.equalTo(-10)
-                make.top.equalTo(self.topLayoutGuide.snp.bottom).offset(8)
+                make.top.equalTo(self.segmentedControl.snp.bottom).offset(8)
                 make.height.equalTo(10)
             }
             self.textView.snp.makeConstraints { make in
@@ -123,7 +138,27 @@ final class MealList: UIViewController {
         super.updateViewConstraints()
     }
     
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
+    }
+    
     //MARK: ACTION
+    func changeSegmentedControl() {
+        self.segmentedIndexAndCode = segmentedControl.selectedSegmentIndex
+        
+        switch self.segmentedControl.selectedSegmentIndex {
+        case 0:
+            break
+        case 1:
+            break
+        case 2:
+            break
+        default:
+            break
+        }
+    }
+    
     func cancelButtonDidTap() {
         AppDelegate.instance?.GeneralUsersTabBarScreen(selectIndex: 0)
     }

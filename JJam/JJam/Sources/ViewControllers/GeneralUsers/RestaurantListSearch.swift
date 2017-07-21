@@ -94,12 +94,18 @@ final class RestaurantListSearch: UIViewController {
         super.updateViewConstraints()
     }
     
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
+    }
+    
     //MARK: ACTION
     func cancelButtonDidTap() {
         AppDelegate.instance?.GeneralUsersTabBarScreen(selectIndex: 0)
     }
     
     func addButtonDidTap() {
+        AppDelegate.instance?.GeneralUsersTabBarScreen(selectIndex: 0)
     }
     
     func textFieldDidChangeText(_ textField: UITextField) {

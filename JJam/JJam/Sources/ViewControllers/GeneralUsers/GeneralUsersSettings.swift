@@ -78,6 +78,11 @@ final class GeneralUsersSettings: UIViewController {
         super.updateViewConstraints()
     }
     
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
+    }
+    
     fileprivate func cellData(for sectionItem: SectionItem) -> CellData {
         switch sectionItem {
         case .about:

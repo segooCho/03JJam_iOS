@@ -49,7 +49,7 @@ final class BusinessUsersMealDetail: UIViewController {
     //MARK: View Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        //print("mealId : \(mealId)")
+
         self.view.backgroundColor = .white
         self.title = "상세 식단"
         
@@ -82,10 +82,24 @@ final class BusinessUsersMealDetail: UIViewController {
         super.updateViewConstraints()
     }
     
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
+    }
+
+    //view가 안보이다가 다시 보이게 되었을때 발생하는 이벤트
+    //TabBar 이동 후 재 선택 시
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true) // No need for semicolon
+        if self.didSetupConstraints {
+            //NavigationController popViewController
+            _ = self.navigationController?.popViewController(animated: true)
+        }
+    }
+    
     //MARK: ACTION
     func cancelButtonDidTap() {
         //NavigationController popViewController
-        //self.navigationController?.popViewController(animated: true)
         _ = self.navigationController?.popViewController(animated: true)
     }
 }

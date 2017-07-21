@@ -1,37 +1,34 @@
 //
-//  MealDetail.swift
+//  BusinessUsersSignUp.swift
 //  JJam
 //
-//  Created by admin on 2017. 7. 17..
+//  Created by admin on 2017. 7. 20..
 //  Copyright © 2017년 admin. All rights reserved.
 //
 
+
 import UIKit
 
-final class MealDetail: UIViewController {
+final class BusinessUsersSignUp: UIViewController {
     //MARK: Properties
     var didSetupConstraints = false
-    var detail: [Detail] = [] /*{
+    var signUp: [SignUp] = [] /*{
      didSet {
      self.saveAll()
      }
      }
      */
-    fileprivate let mealDetailId:String!
     
     //MARK: UI
-    //fileprivate let detailTableView = UITableView(frame: .zero, style: .grouped)
     fileprivate let detailTableView = UITableView(frame: .zero, style: .plain)
     //fileprivate let progressView = UIProgressView()
-
+    
     //MARK: init
-    init(mealDetailId: String) {
-        self.mealDetailId = mealDetailId
+    init() {
         super.init(nibName: nil, bundle: nil)
         //데이터 임시 처리
-        self.detail.append(Detail(id: "1", imageString: "01.jpg", dateString: "2017-07-11일 (화)", division: "아침",
-                                  stapleFood: "현미밥", soup: "된장국", sideDish1: "김치", sideDish2: "돈까스", sideDish3: "햄",
-                                  sideDish4: "김", dessert: "국수, 김치볶음밥", remarks: "오늘도 정성을 다해 준비하였습니다.\n한라시그마 구내식당\n\n\n\n\n감사합니다."))
+        self.signUp.append(SignUp(id: "", password: "", password2: "", businessNumber: "",
+                                  companyName: "", address: "", contactNumber: "", imageString: ""))
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -42,20 +39,24 @@ final class MealDetail: UIViewController {
     //MARK: View Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        //print("mealId : \(mealId)")
-        self.view.backgroundColor = .white
-        self.title = "상세 식단"
         
-        //cancelButton
+        self.view.backgroundColor = .white
+        self.title = "회원 가입"
+        
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(
             barButtonSystemItem: .cancel,
             target: self,
             action: #selector(cancelButtonDidTap)
         )
-        
-        //상세식단
-        self.detailTableView.register(MealDetailImageCell.self, forCellReuseIdentifier: "mealDetailImageCell")
-        self.detailTableView.register(MealDetailTextCell.self, forCellReuseIdentifier: "mealDetailTextCell")
+
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(
+            barButtonSystemItem: .add,
+            target: self,
+            action: #selector(addButtonDidTap)
+        )
+
+        self.detailTableView.register(BusinessUsersSignUpTextCell.self, forCellReuseIdentifier: "businessUsersSignUpTextCell")
+        self.detailTableView.register(BusinessUsersSignUpImageCell.self, forCellReuseIdentifier: "businessUsersSignUpImageCell")
         self.detailTableView.dataSource = self
         self.detailTableView.delegate = self
         self.view.addSubview(self.detailTableView)
@@ -82,7 +83,14 @@ final class MealDetail: UIViewController {
     
     //MARK: ACTION
     func cancelButtonDidTap() {
-        //NavigationController popViewController
-        _ = self.navigationController?.popViewController(animated: true)
+        AppDelegate.instance?.LoginScreen()
     }
+    
+    func addButtonDidTap() {
+        AppDelegate.instance?.LoginScreen()
+    }
+    
+    
+    
 }
+

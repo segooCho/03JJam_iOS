@@ -18,10 +18,6 @@ final class BusinessUsersSettings: UIViewController {
     
     fileprivate enum SectionItem {
         case notice
-        case stapleFood
-        case soup
-        case sideDish
-        case dessert
         case profile
         case logout
     }
@@ -34,10 +30,6 @@ final class BusinessUsersSettings: UIViewController {
     fileprivate var sections: [Section] = [
         Section(items: [
             .notice,
-            .stapleFood,
-            .soup,
-            .sideDish,
-            .dessert,
             ]),
         Section(items: [
             .profile,
@@ -83,18 +75,15 @@ final class BusinessUsersSettings: UIViewController {
         super.updateViewConstraints()
     }
     
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
+    }
+    
     fileprivate func cellData(for sectionItem: SectionItem) -> CellData {
         switch sectionItem {
         case .notice:
             return CellData(text: "공지사항", detailText: nil)
-        case .stapleFood:
-            return CellData(text: "주식(밥,면)", detailText: nil)
-        case .soup:
-            return CellData(text: "국", detailText: nil)
-        case .sideDish:
-            return CellData(text: "반찬", detailText: nil)
-        case .dessert:
-            return CellData(text: "후식", detailText: nil)
         case .profile:
             return CellData(text: "회원정보", detailText: nil)
         case .logout:
@@ -131,15 +120,7 @@ extension BusinessUsersSettings: UITableViewDelegate {
         let sectionItem = self.sections[indexPath.section].items[indexPath.row]
         switch sectionItem {
         case .notice:
-            break
-        case .stapleFood:
-            AppDelegate.instance?.BusinessUsersStapleFoodScreen()
-        case .soup:
-            AppDelegate.instance?.BusinessUsersSoupScreen()
-        case .sideDish:
-            AppDelegate.instance?.BusinessUsersSideDishScreen()
-        case .dessert:
-            AppDelegate.instance?.BusinessUsersDessertScreen()
+            AppDelegate.instance?.BusinessUsersNoticeScreen()
         case .profile:
             break
         case .logout:

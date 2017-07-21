@@ -83,6 +83,11 @@ final class Login: UIViewController {
         super.updateViewConstraints()
     }
     
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
+    }
+    
     // MARK: Actions
     func cancelButtonDidTap() {
         AppDelegate.instance?.GeneralUsersTabBarScreen(selectIndex: 1)
@@ -116,11 +121,7 @@ final class Login: UIViewController {
     }
     
     func signUpButtonDidTap() {
-        
-        self.usernameTextField.isEnabled = false
-        self.passwordTextField.isEnabled = false
-        self.loginButton.isEnabled = false
-        self.loginButton.alpha = 0.4
+        AppDelegate.instance?.BusinessUsersSignUpScreen()
     }
     
 }
