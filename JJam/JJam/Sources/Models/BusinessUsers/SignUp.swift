@@ -15,10 +15,11 @@ struct SignUp {
     var companyName: String
     var address: String
     var contactNumber : String
+    var representative : String
     var imageString : String
     
     init(id: String, password: String, password2: String, businessNumber: String,
-         companyName: String, address: String, contactNumber: String, imageString: String) {
+         companyName: String, address: String, contactNumber: String, representative: String, imageString: String) {
         self.id = id
         self.password = password
         self.password2 = password2
@@ -26,6 +27,7 @@ struct SignUp {
         self.companyName = companyName
         self.address = address
         self.contactNumber = contactNumber
+        self.representative = representative
         self.imageString = imageString
     }
 }

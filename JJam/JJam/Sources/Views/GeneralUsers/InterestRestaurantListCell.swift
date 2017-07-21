@@ -22,7 +22,6 @@ final class InterestRestaurantListCell: UITableViewCell {
     func configure(interestRestaurant: InterestRestaurant) {
         self.backgroundColor = .white
         self.textLabel?.text = interestRestaurant.companyName
-        self.detailTextLabel?.text = interestRestaurant.address
         self.accessoryType = .disclosureIndicator
     }
     

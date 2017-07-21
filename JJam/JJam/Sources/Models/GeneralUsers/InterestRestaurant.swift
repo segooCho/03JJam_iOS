@@ -9,11 +9,9 @@
 struct InterestRestaurant {
     var id: String
     var companyName: String
-    var address: String
     
-    init(id: String, companyName: String, address: String) {
+    init(id: String, companyName: String) {
         self.id = id
         self.companyName = companyName
-        self.address = address
     }
 }

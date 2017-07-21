@@ -45,6 +45,11 @@ final class BusinessUsersSignUpTextCell: UITableViewCell {
     //연락처
     fileprivate let contactNumberLabel = UILabel()
     fileprivate let contactNumberTextField = UITextField()
+    //대표자
+    fileprivate let representativeLabel = UILabel()
+    fileprivate let representativeTextField = UITextField()
+    
+    
     
     
     //MARK: init
@@ -76,6 +81,9 @@ final class BusinessUsersSignUpTextCell: UITableViewCell {
         UICommonSetLabel(self.contactNumberLabel, text: "연락처")
         UICommonSetTextFieldEnable(self.contactNumberTextField, placeholderText: self.contactNumberLabel.text!)
         
+        UICommonSetLabel(self.representativeLabel, text: "대표자")
+        UICommonSetTextFieldEnable(self.representativeTextField, placeholderText: self.representativeLabel.text!)
+        
         self.contentView.addSubview(self.idLabel)
         self.contentView.addSubview(self.idTextField)
         self.contentView.addSubview(self.passwordLabel)
@@ -90,6 +98,8 @@ final class BusinessUsersSignUpTextCell: UITableViewCell {
         self.contentView.addSubview(self.addressTextView)
         self.contentView.addSubview(self.contactNumberLabel)
         self.contentView.addSubview(self.contactNumberTextField)
+        self.contentView.addSubview(self.representativeLabel)
+        self.contentView.addSubview(self.representativeTextField)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -105,6 +115,7 @@ final class BusinessUsersSignUpTextCell: UITableViewCell {
         self.companyNameTextField.text = signUp.companyName
         self.addressTextView.text = signUp.address
         self.contactNumberTextField.text = signUp.contactNumber
+        self.representativeTextField.text = signUp.representative
         self.setNeedsLayout()
     }
     
@@ -112,10 +123,10 @@ final class BusinessUsersSignUpTextCell: UITableViewCell {
     class func height() -> CGFloat {
         var height: CGFloat = 0
         
-        //TextField 6개
+        //TextField 7개
         //TextView  1개
-        height += Metric.commonOffset * 7
-        height += Metric.commonHeight * 6
+        height += Metric.commonOffset * 8
+        height += Metric.commonHeight * 7
         height += Metric.commonHeightTextView
         height += Metric.commonOffset   //하단 여백 처리
         return height
@@ -219,6 +230,20 @@ final class BusinessUsersSignUpTextCell: UITableViewCell {
             make.left.equalTo(Metric.textFieldLeft)
             make.right.equalTo(Metric.textFieldRight)
             make.top.equalTo(self.addressTextView.snp.bottom).offset(Metric.commonOffset)
+            make.height.equalTo(Metric.commonHeight)
+        }
+        
+        //대표자
+        self.representativeLabel.snp.makeConstraints { make in
+            make.left.equalTo(Metric.labelLeft)
+            make.right.equalTo(Metric.labelRight)
+            make.top.equalTo(self.contactNumberLabel.snp.bottom).offset(Metric.commonOffset)
+            make.height.equalTo(Metric.commonHeight)
+        }
+        self.representativeTextField.snp.makeConstraints { make in
+            make.left.equalTo(Metric.textFieldLeft)
+            make.right.equalTo(Metric.textFieldRight)
+            make.top.equalTo(self.contactNumberLabel.snp.bottom).offset(Metric.commonOffset)
             make.height.equalTo(Metric.commonHeight)
         }
     }

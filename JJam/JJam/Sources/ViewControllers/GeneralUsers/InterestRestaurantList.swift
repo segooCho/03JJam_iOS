@@ -32,9 +32,9 @@ final class InterestRestaurantList: UIViewController {
         self.tabBarItem.selectedImage = UIImage(named: "tab-restaurant-selected")
         
         //데이터 임시 처리
-        self.interestRestaurant.append(InterestRestaurant(id: "1", companyName: "한라시그마 구내식당", address: "경기도 성남시 중원구 둔춘대로 545"))
-        self.interestRestaurant.append(InterestRestaurant(id: "2", companyName: "벽산 구내식당", address: "경기도 성남시 중원구 둔춘대로 경기도 성남시 중원구 둔춘대로 경기도 성남시 중원구 둔춘대로 경기도 성남시 545"))
-        self.interestRestaurant.append(InterestRestaurant(id: "3", companyName: "조은 함바", address: "서울시 서초구 서초동 545"))
+        self.interestRestaurant.append(InterestRestaurant(id: "1", companyName: "한라시그마 구내식당"))
+        self.interestRestaurant.append(InterestRestaurant(id: "2", companyName: "벽산 구내식당"))
+        self.interestRestaurant.append(InterestRestaurant(id: "3", companyName: "조은 함바"))
     }
     
     required init?(coder aDecoder: NSCoder) {

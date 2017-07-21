@@ -28,7 +28,7 @@ final class BusinessUsersSignUp: UIViewController {
         super.init(nibName: nil, bundle: nil)
         //데이터 임시 처리
         self.signUp.append(SignUp(id: "", password: "", password2: "", businessNumber: "",
-                                  companyName: "", address: "", contactNumber: "", imageString: ""))
+                                  companyName: "", address: "", contactNumber: "", representative: "", imageString: ""))
     }
     
     required init?(coder aDecoder: NSCoder) {
