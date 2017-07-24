@@ -58,9 +58,6 @@
 		845C07D91F20B4B0008A6F9F /* SignUp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 845C07D81F20B4B0008A6F9F /* SignUp.swift */; };
 		846417321F2199BF0029BC78 /* UITextViewPlaceholder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 846417311F2199BF0029BC78 /* UITextViewPlaceholder.swift */; };
 		846417351F2243270029BC78 /* GeneralUsersNetWorking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 846417341F2243270029BC78 /* GeneralUsersNetWorking.swift */; };
-		846417371F2249B00029BC78 /* MappingError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 846417361F2249B00029BC78 /* MappingError.swift */; };
-		846417391F2249E60029BC78 /* DataResponseMapResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 846417381F2249E60029BC78 /* DataResponseMapResult.swift */; };
-		8464173B1F224A080029BC78 /* ResponseErrorInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8464173A1F224A080029BC78 /* ResponseErrorInfo.swift */; };
 		84AB5D351F26336000EC5099 /* NotificationCommonSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84AB5D341F26336000EC5099 /* NotificationCommonSet.swift */; };
 		84FC03461F1A2D3A00FC96BB /* 01.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 84FC033C1F1A2D3A00FC96BB /* 01.jpg */; };
 		84FC03471F1A2D3A00FC96BB /* 02.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 84FC033D1F1A2D3A00FC96BB /* 02.jpg */; };
@@ -128,9 +125,6 @@
 		845C07D81F20B4B0008A6F9F /* SignUp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUp.swift; sourceTree = "<group>"; };
 		846417311F2199BF0029BC78 /* UITextViewPlaceholder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UITextViewPlaceholder.swift; sourceTree = "<group>"; };
 		846417341F2243270029BC78 /* GeneralUsersNetWorking.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GeneralUsersNetWorking.swift; sourceTree = "<group>"; };
-		846417361F2249B00029BC78 /* MappingError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MappingError.swift; sourceTree = "<group>"; };
-		846417381F2249E60029BC78 /* DataResponseMapResult.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataResponseMapResult.swift; sourceTree = "<group>"; };
-		8464173A1F224A080029BC78 /* ResponseErrorInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResponseErrorInfo.swift; sourceTree = "<group>"; };
 		84AB5D341F26336000EC5099 /* NotificationCommonSet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationCommonSet.swift; sourceTree = "<group>"; };
 		84FC033C1F1A2D3A00FC96BB /* 01.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 01.jpg; sourceTree = "<group>"; };
 		84FC033D1F1A2D3A00FC96BB /* 02.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 02.jpg; sourceTree = "<group>"; };
@@ -350,9 +344,6 @@
 			isa = PBXGroup;
 			children = (
 				846417341F2243270029BC78 /* GeneralUsersNetWorking.swift */,
-				846417361F2249B00029BC78 /* MappingError.swift */,
-				846417381F2249E60029BC78 /* DataResponseMapResult.swift */,
-				8464173A1F224A080029BC78 /* ResponseErrorInfo.swift */,
 			);
 			path = Networking;
 			sourceTree = "<group>";
@@ -530,7 +521,6 @@
 				843069651F1E594C008B7DEF /* BusinessUsersMealListExtension.swift in Sources */,
 				8430696B1F1E5DCC008B7DEF /* BusinessUsersMealDetail.swift in Sources */,
 				845C07CF1F20B01F008A6F9F /* BusinessUsersSignUp.swift in Sources */,
-				846417391F2249E60029BC78 /* DataResponseMapResult.swift in Sources */,
 				843069671F1E598E008B7DEF /* BusinessUsersMeal.swift in Sources */,
 				846417321F2199BF0029BC78 /* UITextViewPlaceholder.swift in Sources */,
 				84AB5D351F26336000EC5099 /* NotificationCommonSet.swift in Sources */,
@@ -538,12 +528,10 @@
 				8430694C1F1E51AA008B7DEF /* RestaurantSearch.swift in Sources */,
 				845C07D31F20B39D008A6F9F /* BusinessUsersSignUpTextCell.swift in Sources */,
 				843069591F1E51AA008B7DEF /* MealDetailImageCell.swift in Sources */,
-				846417371F2249B00029BC78 /* MappingError.swift in Sources */,
 				845C07D91F20B4B0008A6F9F /* SignUp.swift in Sources */,
 				843069581F1E51AA008B7DEF /* InterestRestaurantListCell.swift in Sources */,
 				843069541F1E51AA008B7DEF /* MealListExtension.swift in Sources */,
 				84183C1A1F1F142A00EECDD0 /* SettingsCell.swift in Sources */,
-				8464173B1F224A080029BC78 /* ResponseErrorInfo.swift in Sources */,
 				8430696D1F1E5DFA008B7DEF /* BusinessUsersMealDetailExtension.swift in Sources */,
 				843069711F1E5E79008B7DEF /* BusinessUsersMealDetailImageCell.swift in Sources */,
 				843069571F1E51AA008B7DEF /* GeneralUsersSettings.swift in Sources */,
