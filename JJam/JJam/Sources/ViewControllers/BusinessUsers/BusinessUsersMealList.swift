@@ -109,7 +109,8 @@ final class BusinessUsersMealList: UIViewController {
             }
             self.tableView.snp.makeConstraints { make in
                 make.top.equalTo(self.label.snp.bottom).offset(3)
-                make.left.right.height.equalToSuperview()
+                make.left.right.equalToSuperview()
+                make.bottom.equalTo(self.view.snp.bottom)
             }
         }
         super.updateViewConstraints()

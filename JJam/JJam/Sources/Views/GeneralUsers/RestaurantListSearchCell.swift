@@ -27,14 +27,15 @@ final class RestaurantListSearchCell: UITableViewCell {
         self.textLabel?.text = restaurantSearch.companyName
 
         var certification: String!
-        if (restaurantSearch.certification == "Y") {
+        //certification = "(사업자 등록증 인증 업체)"
+        
+        if (restaurantSearch.certification == "Y" || restaurantSearch.certification == "y") {
             certification = "(사업자 등록증 인증 업체)"
             self.textLabel?.textColor = .red
         } else {
             certification = "(사업자 등록증 미인증 업체)"
             self.textLabel?.textColor = .blue
         }
-        
         self.detailTextLabel?.text = certification + "\n"
                                     + "주소 : " + restaurantSearch.address + "\n"
                                     + "연락처 : " + restaurantSearch.contactNumber + "\n"
@@ -45,6 +46,7 @@ final class RestaurantListSearchCell: UITableViewCell {
         } else {
             self.accessoryType = .none
         }
+        
     }
     
     override func layoutSubviews() {

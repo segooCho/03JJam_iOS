@@ -101,6 +101,12 @@ final class BusinessUsersMenuManagement: UIViewController {
         self.view.setNeedsUpdateConstraints()
     }
     
+    //키보드 처리
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.textField.becomeFirstResponder()
+    }
+    
     //MARK: 애플 추천 방식으로 한번만 화면을 그리도록 한다.
     //setNeedsUpdateConstraints() 필요
     override func updateViewConstraints() {
@@ -120,7 +126,8 @@ final class BusinessUsersMenuManagement: UIViewController {
             }
             self.tableView.snp.makeConstraints { make in
                 make.top.equalTo(self.textField.snp.bottom).offset(3)
-                make.left.right.height.equalToSuperview()
+                make.left.right.equalToSuperview()
+                make.bottom.equalTo(self.view.snp.bottom)
             }
         }
         super.updateViewConstraints()

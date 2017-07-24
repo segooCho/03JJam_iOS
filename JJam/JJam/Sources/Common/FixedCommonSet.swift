@@ -12,4 +12,5 @@ import UIKit
 struct FixedCommonSet {
     static let tableViewCellHeight = CGFloat(50)
     static let tableViewCellHeight100 = CGFloat(100)
+    static let networkinkBaseUrl = "http://127.0.0.1:3000/"
 }

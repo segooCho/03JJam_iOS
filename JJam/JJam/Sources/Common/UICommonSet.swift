@@ -56,6 +56,7 @@ func UICommonSetTextFieldEnable(_ uIKit: UITextField, placeholderText: String) {
     uIKit.isEnabled = true
     uIKit.autocorrectionType = .no          //첫글자 소문자
     uIKit.autocapitalizationType = .none    //오타 교정
+    uIKit.returnKeyType = .done             //리턴키 done
 }
 
 //MARK: Common Set UITextView isEnabled = false

@@ -24,6 +24,12 @@ final class InterestRestaurantList: UIViewController {
     fileprivate let textView = UITextView()
     fileprivate let tableView = UITableView(frame: .zero, style: .plain)
     
+    
+    //NotificationCenter에 등록된 옵저버의 타겟 객체가 소멸
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
+    
     //MARK: init
     init() {
         super.init(nibName: nil, bundle: nil)
@@ -32,9 +38,9 @@ final class InterestRestaurantList: UIViewController {
         self.tabBarItem.selectedImage = UIImage(named: "tab-restaurant-selected")
         
         //데이터 임시 처리
-        self.interestRestaurant.append(InterestRestaurant(id: "1", companyName: "한라시그마 구내식당"))
-        self.interestRestaurant.append(InterestRestaurant(id: "2", companyName: "벽산 구내식당"))
-        self.interestRestaurant.append(InterestRestaurant(id: "3", companyName: "조은 함바"))
+        self.interestRestaurant.append(InterestRestaurant(_id: "1", companyName: "한라시그마 구내식당"))
+        self.interestRestaurant.append(InterestRestaurant(_id: "2", companyName: "벽산 구내식당"))
+        self.interestRestaurant.append(InterestRestaurant(_id: "3", companyName: "조은 함바"))
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -77,7 +83,15 @@ final class InterestRestaurantList: UIViewController {
         self.view.setNeedsUpdateConstraints()
     }
     
-    //MARK: 애플 추천 방식으로 한번만 화면을 그리도록 한다. 
+    //XIB로 view 를 생성하지 않고 view을 로드할때 사용된다
+    override func loadView() {
+        super.loadView()
+        //NotificationCenter에 등록
+        NotificationCenter.default.addObserver(self, selector: #selector(interestRestaurantDidAdd), name: .interestRestaurantDidAdd, object: nil)
+    }
+
+    
+    //MARK: 애플 추천 방식으로 한번만 화면을 그리도록 한다.
     //setNeedsUpdateConstraints() 필요
     override func updateViewConstraints() {
         if !self.didSetupConstraints {
@@ -90,7 +104,8 @@ final class InterestRestaurantList: UIViewController {
             }
             self.tableView.snp.makeConstraints { make in
                 make.top.equalTo(self.textView.snp.bottom).offset(3)
-                make.left.right.height.equalToSuperview()
+                make.left.right.equalToSuperview()
+                make.bottom.equalTo(self.view.snp.bottom)
             }
         }
         super.updateViewConstraints()
@@ -122,8 +137,25 @@ final class InterestRestaurantList: UIViewController {
     }
     
     func addButtonDidTap() {
-        AppDelegate.instance?.RestaurantListSearchScreen()
+        //AppDelegate.instance?.RestaurantListSearchScreen()
+        let restaurantListSearch = RestaurantListSearch()
+        self.navigationController?.pushViewController(restaurantListSearch, animated: true)
     }
+    
+    //관심 목록 저장
+    func interestRestaurantDidAdd(_ notification: Notification ) {
+        
+        guard let interestRestaurant = notification.userInfo?["interestRestaurant"] as? [InterestRestaurant] else { return }
+        
+        var count = 0
+        while(count < interestRestaurant.count) {
+            self.interestRestaurant.append(interestRestaurant[count])
+            count = count + 1
+        }
+        self.tableView.reloadData()
+    }
+
+    
 }
 
 

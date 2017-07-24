@@ -7,18 +7,29 @@
 //
 
 import UIKit
+import Alamofire
+//import ObjectMapper
 
 final class RestaurantListSearch: UIViewController {
     //MARK: Properties
     var didSetupConstraints = false
-    var restaurantSearch: [RestaurantSearch] = [] /*{
+    var restaurantSearch: [RestaurantSearch] = []
+    var interestRestaurant: [InterestRestaurant] = []
+    fileprivate var didAddInterestRestaurant: ((InterestRestaurant) -> Void)?
+
+    //var restaurantSearch: RestaurantSearch?
+
+    /*
+    var restaurantSearch: [RestaurantSearch2] = [] /*{
      didSet {
      self.saveAll()
      }
      }
      */
+    */
     
     //MARK: UI
+    fileprivate let activityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: .gray)
     fileprivate let textField = UITextField()
     fileprivate let button = UIButton()
     fileprivate let tableView = UITableView(frame: .zero, style: .plain)
@@ -54,6 +65,7 @@ final class RestaurantListSearch: UIViewController {
         
         UICommonSetTextFieldEnable(self.textField, placeholderText:"상호 or 주소(읍,면,동)")
         self.textField.addTarget(self, action: #selector(textFieldDidChangeText), for: .editingChanged)
+        self.textField.delegate = self
         
         UICommonSetButton(self.button, setTitleText: "찾기", colorInt: 0)
         self.button.addTarget(self, action: #selector(searchButtonDidTap), for: .touchUpInside)
@@ -65,9 +77,18 @@ final class RestaurantListSearch: UIViewController {
         self.view.addSubview(self.textField)
         self.view.addSubview(self.button)
         self.view.addSubview(self.tableView)
+        self.view.addSubview(self.activityIndicatorView)
+
         //updateViewConstraints 자동 호출
         self.view.setNeedsUpdateConstraints()
     }
+    
+    //키보드 처리
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.textField.becomeFirstResponder()
+    }
+    
     
     //MARK: 애플 추천 방식으로 한번만 화면을 그리도록 한다.
     //setNeedsUpdateConstraints() 필요
@@ -86,9 +107,15 @@ final class RestaurantListSearch: UIViewController {
                 make.top.equalTo(self.topLayoutGuide.snp.bottom).offset(5)
                 make.height.equalTo(30)
             }
+            
             self.tableView.snp.makeConstraints { make in
                 make.top.equalTo(self.textField.snp.bottom).offset(3)
-                make.left.right.height.equalToSuperview()
+                make.left.right.equalToSuperview()
+                make.bottom.equalTo(self.view.snp.bottom)
+            }
+            
+            self.activityIndicatorView.snp.makeConstraints { make in
+                make.center.equalToSuperview()
             }
         }
         super.updateViewConstraints()
@@ -101,11 +128,23 @@ final class RestaurantListSearch: UIViewController {
     
     //MARK: ACTION
     func cancelButtonDidTap() {
-        AppDelegate.instance?.GeneralUsersTabBarScreen(selectIndex: 0)
+        _ = self.navigationController?.popViewController(animated: true)
     }
     
     func addButtonDidTap() {
-        AppDelegate.instance?.GeneralUsersTabBarScreen(selectIndex: 0)
+        //TODO : 관심 식당 처리
+
+        var count = 0
+        while(count < self.restaurantSearch.count) {
+            let restaurantSearch = self.restaurantSearch[count]
+            if (restaurantSearch.isDone){
+                self.interestRestaurant.append(InterestRestaurant(_id: restaurantSearch._id, companyName: restaurantSearch.companyName))
+            }
+            count = count + 1
+        }
+        
+        NotificationCenter.default.post(name: .interestRestaurantDidAdd, object: self, userInfo: ["interestRestaurant": self.interestRestaurant])
+        _ = self.navigationController?.popViewController(animated: true)
     }
     
     func textFieldDidChangeText(_ textField: UITextField) {
@@ -113,18 +152,96 @@ final class RestaurantListSearch: UIViewController {
     }
     
     func searchButtonDidTap() {
-        /*
         guard let name = self.textField.text, !name.isEmpty else {
             UICommonSetShakeTextField(self.textField)
             self.textField.becomeFirstResponder()
             return
         }
-        */
+        self.textField.resignFirstResponder() //키보드 숨기기
+        
+        self.activityIndicatorView.startAnimating()
+        //self.restaurantSearch.removeAll()
+        GeneralUsersNetWorking.restaurantSearch(searchText: self.textField.text!) { [weak self] response in
+            guard let `self` = self else { return }
+            self.restaurantSearch = response
+            self.activityIndicatorView.stopAnimating()
+            self.tableView.reloadData()
+        }
+        
+        
+        /*
+         let urlString = FixedCommonSet.networkinkBaseUrl + "restaurantSearch"
+         let parameters: [String: Any] = [
+         "searchText": name,
+         ]
+         let headers: HTTPHeaders = [
+         "Accept": "application/json",
+         ]
+         
+         self.restaurantSearch.removeAll()
+         Alamofire.request(urlString, method: .get, parameters: parameters, headers: headers)
+         .validate(statusCode: 200..<400)
+         .responseJSON {
+         response in
+         switch response.result {
+         case .success(let value) :
+         guard let json = value as? [[String: Any]] else {break}
+         let data = [RestaurantSearch](JSONArray: json) ?? [] //?? : 앞에 있는 연산자가 오류이면 []를 실행하라
+         self.restaurantSearch.append(contentsOf: data)
+         self.tableView.reloadData()
+         case .failure(let error) :
+         print("요청 실패 \(error)")
+         self.tableView.reloadData()
+         
+         }
+         }
+         */
+        
         
         //데이터 임시 처리
-        self.restaurantSearch.append(RestaurantSearch(id: "1", companyName: "한라시그마 구내식당", certification: "Y", address: "경기도 성남시 중원구 둔춘대로 545", contactNumber: "031-111-3344", representative: "홍길동"))
-        self.restaurantSearch.append(RestaurantSearch(id: "2", companyName: "벽산 구내식당", certification: "N", address: "경기도 성남시 중원구 둔춘대로 5666", contactNumber: "010-8888-9999", representative: "김갑"))
+        /*
+        self.restaurantSearch.append(RestaurantSearch(_id: "1", companyName: "한라시그마 구내식당", certification: "Y", address: "경기도 성남시 중원구 둔춘대로 545", contactNumber: "031-111-3344", representative: "홍길동"))
+        self.restaurantSearch.append(RestaurantSearch(_id: "2", companyName: "벽산 구내식당", certification: "N", address: "경기도 성남시 중원구 둔춘대로 5666", contactNumber: "010-8888-9999", representative: "김갑"))
+        */
         
-        self.tableView.reloadData()
+        //self.tableView.reloadData()
+    }
+}
+
+
+extension RestaurantListSearch: UITableViewDataSource {
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return self.restaurantSearch.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "restaurantListSearchCell", for: indexPath) as! RestaurantListSearchCell
+        cell.configure(restaurantSearch: self.restaurantSearch[indexPath.item])
+        return cell
+    }
+}
+
+extension RestaurantListSearch: UITableViewDelegate {
+    //cell height
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return FixedCommonSet.tableViewCellHeight100
+    }
+    
+    //cell 선택
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        print("\(indexPath)가 선택!")
+        var restaurantSearch = self.restaurantSearch[indexPath.row]
+        restaurantSearch.isDone = !restaurantSearch.isDone
+        self.restaurantSearch[indexPath.row] = restaurantSearch
+        tableView.reloadRows(at: [indexPath], with: .automatic)
+    }
+}
+
+extension RestaurantListSearch: UITextFieldDelegate {
+    //TextField 리턴키 처리
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        searchButtonDidTap()
+        return true
     }
 }
