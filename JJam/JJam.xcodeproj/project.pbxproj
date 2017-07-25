@@ -46,7 +46,6 @@
 		845C07C91F206CE3008A6F9F /* BusinessUsersMenuManagement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 845C07C81F206CE3008A6F9F /* BusinessUsersMenuManagement.swift */; };
 		845C07CD1F2081DA008A6F9F /* BusinessUsersNotice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 845C07CC1F2081DA008A6F9F /* BusinessUsersNotice.swift */; };
 		845C07CF1F20B01F008A6F9F /* BusinessUsersSignUp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 845C07CE1F20B01F008A6F9F /* BusinessUsersSignUp.swift */; };
-		845C07D11F20B042008A6F9F /* BusinessUsersSignUpExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 845C07D01F20B042008A6F9F /* BusinessUsersSignUpExtension.swift */; };
 		845C07D31F20B39D008A6F9F /* BusinessUsersSignUpTextCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 845C07D21F20B39D008A6F9F /* BusinessUsersSignUpTextCell.swift */; };
 		845C07D51F20B3BB008A6F9F /* BusinessUsersSignUpImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 845C07D41F20B3BB008A6F9F /* BusinessUsersSignUpImageCell.swift */; };
 		845C07D91F20B4B0008A6F9F /* SignUp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 845C07D81F20B4B0008A6F9F /* SignUp.swift */; };
@@ -107,7 +106,6 @@
 		845C07C81F206CE3008A6F9F /* BusinessUsersMenuManagement.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BusinessUsersMenuManagement.swift; sourceTree = "<group>"; };
 		845C07CC1F2081DA008A6F9F /* BusinessUsersNotice.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BusinessUsersNotice.swift; sourceTree = "<group>"; };
 		845C07CE1F20B01F008A6F9F /* BusinessUsersSignUp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BusinessUsersSignUp.swift; sourceTree = "<group>"; };
-		845C07D01F20B042008A6F9F /* BusinessUsersSignUpExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BusinessUsersSignUpExtension.swift; sourceTree = "<group>"; };
 		845C07D21F20B39D008A6F9F /* BusinessUsersSignUpTextCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BusinessUsersSignUpTextCell.swift; sourceTree = "<group>"; };
 		845C07D41F20B3BB008A6F9F /* BusinessUsersSignUpImageCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BusinessUsersSignUpImageCell.swift; sourceTree = "<group>"; };
 		845C07D81F20B4B0008A6F9F /* SignUp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUp.swift; sourceTree = "<group>"; };
@@ -263,7 +261,6 @@
 			children = (
 				843069311F1E51AA008B7DEF /* Login.swift */,
 				845C07CE1F20B01F008A6F9F /* BusinessUsersSignUp.swift */,
-				845C07D01F20B042008A6F9F /* BusinessUsersSignUpExtension.swift */,
 				8430695E1F1E55FA008B7DEF /* BusinessUsersTabBar.swift */,
 				843069601F1E57A4008B7DEF /* BusinessUsersSettings.swift */,
 				843069621F1E593A008B7DEF /* BusinessUsersMealList.swift */,
@@ -524,7 +521,6 @@
 				8430694B1F1E51AA008B7DEF /* Meal.swift in Sources */,
 				843069731F1E5E86008B7DEF /* BusinessUsersMealDetailTextCell.swift in Sources */,
 				8430694A1F1E51AA008B7DEF /* InterestRestaurant.swift in Sources */,
-				845C07D11F20B042008A6F9F /* BusinessUsersSignUpExtension.swift in Sources */,
 				8430694F1F1E51AA008B7DEF /* InterestRestaurantList.swift in Sources */,
 				845C07C91F206CE3008A6F9F /* BusinessUsersMenuManagement.swift in Sources */,
 				843069611F1E57A4008B7DEF /* BusinessUsersSettings.swift in Sources */,
