@@ -11,14 +11,9 @@ import UIKit
 final class InterestRestaurantList: UIViewController {
     
     //MARK: Properties
-    let JJamUserDefaultsKey = "JJamUserDefaultsKey"
-    var didSetupConstraints = false
-    var interestRestaurant: [InterestRestaurant] = [] /*{
-        didSet {
-            self.saveAll()
-        }
-    }
-    */
+    fileprivate let JJamUserDefaultsKey = "JJamUserDefaultsKey"
+    fileprivate var didSetupConstraints = false
+    fileprivate var interestRestaurant: [InterestRestaurant] = []
     fileprivate let fixedNotice = "www.JJam.com 에서 가맹점 검색 및 가맹점 요청이 가능합니다."
 
     //MARK: UI
