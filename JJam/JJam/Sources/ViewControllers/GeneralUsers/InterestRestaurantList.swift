@@ -11,6 +11,7 @@ import UIKit
 final class InterestRestaurantList: UIViewController {
     
     //MARK: Properties
+    let JJamUserDefaultsKey = "JJamUserDefaultsKey"
     var didSetupConstraints = false
     var interestRestaurant: [InterestRestaurant] = [] /*{
         didSet {
@@ -37,10 +38,20 @@ final class InterestRestaurantList: UIViewController {
         self.tabBarItem.image = UIImage(named: "tab-restaurant")
         self.tabBarItem.selectedImage = UIImage(named: "tab-restaurant-selected")
         
+        //로컬 저장 정보 불러오기
+        if let dicts = UserDefaults.standard.array(forKey: JJamUserDefaultsKey) as? [[String: Any]] {
+            self.interestRestaurant = dicts.flatMap { (disc: [String: Any]) -> InterestRestaurant? in
+                if let _id = disc["_id"] as? String, let companyName = disc["companyName"] as? String {
+                    return InterestRestaurant(_id: _id, companyName: companyName)
+                } else {
+                    return nil
+                }
+            }
+        }
         //데이터 임시 처리
-        self.interestRestaurant.append(InterestRestaurant(_id: "1", companyName: "한라시그마 구내식당"))
-        self.interestRestaurant.append(InterestRestaurant(_id: "2", companyName: "벽산 구내식당"))
-        self.interestRestaurant.append(InterestRestaurant(_id: "3", companyName: "조은 함바"))
+        //self.interestRestaurant.append(InterestRestaurant(_id: "1", companyName: "한라시그마 구내식당"))
+        //self.interestRestaurant.append(InterestRestaurant(_id: "2", companyName: "벽산 구내식당"))
+        //self.interestRestaurant.append(InterestRestaurant(_id: "3", companyName: "조은 함바"))
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -142,20 +153,58 @@ final class InterestRestaurantList: UIViewController {
         self.navigationController?.pushViewController(restaurantListSearch, animated: true)
     }
     
-    //관심 목록 저장
+    //Notification 관심 목록 저장
     func interestRestaurantDidAdd(_ notification: Notification ) {
-        
         guard let interestRestaurant = notification.userInfo?["interestRestaurant"] as? [InterestRestaurant] else { return }
         
-        var count = 0
-        while(count < interestRestaurant.count) {
-            self.interestRestaurant.append(interestRestaurant[count])
+        //중복 제거 처리 및 등록
+        for notificationData in interestRestaurant {
+            if self.interestRestaurant.count == 0 {
+                self.interestRestaurant.append(notificationData)
+            } else {
+                var checkDeduplication = true
+                for data in self.interestRestaurant {
+                    if (data._id == notificationData._id) {
+                        checkDeduplication = false
+                    }
+                }
+                if checkDeduplication == true {
+                    self.interestRestaurant.append(notificationData)
+                }
+            }
+        }
+        
+        /*
+        //중복 제거 : NSOrderedSet 안됨
+        let interestRestaurantDeduplication = NSOrderedSet(array: self.interestRestaurant)
+        print("interestRestaurantDeduplication: \(interestRestaurantDeduplication)")
+        
+        self.interestRestaurant.removeAll()
+        count = 0
+        while(count < interestRestaurantDeduplication.count) {
+            let data = interestRestaurantDeduplication[count] as! InterestRestaurant
+            //print("restaurantSearch: \(data?.companyName)")
+            self.interestRestaurant.append(InterestRestaurant(_id: data._id, companyName: data.companyName))
             count = count + 1
         }
+        */
         self.tableView.reloadData()
+        UserDefaultsSet()
     }
-
     
+    //로컬 파일로 저장
+    func UserDefaultsSet() {
+        let dicts:[[String: Any]] = self.interestRestaurant.map {
+            (interestRestaurant: InterestRestaurant) -> [String: Any] in
+            return [
+                "_id": interestRestaurant._id,
+                "companyName": interestRestaurant.companyName,
+                ]
+        }
+        UserDefaults.standard.set(dicts, forKey: JJamUserDefaultsKey)
+        //로컬 파일로 저장
+        UserDefaults.standard.synchronize()
+    }
 }
 
 
@@ -183,19 +232,17 @@ extension InterestRestaurantList: UITableViewDelegate {
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         self.interestRestaurant.remove(at: indexPath.row)
         tableView.deleteRows(at: [indexPath], with: .automatic)
-        //TODO :: 저장 필요
+        UserDefaultsSet()
     }
     
     //위치 이동
     func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
         var interestRestaurant = self.interestRestaurant
-        let removeTaks = interestRestaurant.remove(at: sourceIndexPath.row)
-        interestRestaurant.insert(removeTaks, at: destinationIndexPath.row)
+        let removeInterestRestaurant = interestRestaurant.remove(at: sourceIndexPath.row)
+        interestRestaurant.insert(removeInterestRestaurant, at: destinationIndexPath.row)
         self.interestRestaurant = interestRestaurant
-        //TODO :: 저장 필요 한가??
+        UserDefaultsSet()
     }
-    
-    
     //cell height
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return FixedCommonSet.tableViewCellHeight

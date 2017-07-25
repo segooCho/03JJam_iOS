@@ -132,17 +132,11 @@ final class RestaurantListSearch: UIViewController {
     }
     
     func addButtonDidTap() {
-        //TODO : 관심 식당 처리
-
-        var count = 0
-        while(count < self.restaurantSearch.count) {
-            let restaurantSearch = self.restaurantSearch[count]
-            if (restaurantSearch.isDone){
-                self.interestRestaurant.append(InterestRestaurant(_id: restaurantSearch._id, companyName: restaurantSearch.companyName))
+        for data in self.restaurantSearch {
+            if (data.isDone){
+                self.interestRestaurant.append(InterestRestaurant(_id: data._id, companyName: data.companyName))
             }
-            count = count + 1
         }
-        
         NotificationCenter.default.post(name: .interestRestaurantDidAdd, object: self, userInfo: ["interestRestaurant": self.interestRestaurant])
         _ = self.navigationController?.popViewController(animated: true)
     }

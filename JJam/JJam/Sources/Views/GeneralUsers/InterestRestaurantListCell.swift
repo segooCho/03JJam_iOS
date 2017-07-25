@@ -22,6 +22,8 @@ final class InterestRestaurantListCell: UITableViewCell {
     func configure(interestRestaurant: InterestRestaurant) {
         self.backgroundColor = .white
         self.textLabel?.text = interestRestaurant.companyName
+        //TODO: 개발용 임시로 표시
+        self.detailTextLabel?.text = "Oid:" + interestRestaurant._id
         self.accessoryType = .disclosureIndicator
     }
     
