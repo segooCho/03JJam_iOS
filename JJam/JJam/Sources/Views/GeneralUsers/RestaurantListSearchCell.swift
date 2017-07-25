@@ -29,7 +29,7 @@ final class RestaurantListSearchCell: UITableViewCell {
         var certification: String!
         //certification = "(사업자 등록증 인증 업체)"
         
-        if (restaurantSearch.certification == "Y" || restaurantSearch.certification == "y") {
+        if restaurantSearch.certification == "y" {
             certification = "(사업자 등록증 인증 업체)"
             self.textLabel?.textColor = .red
         } else {

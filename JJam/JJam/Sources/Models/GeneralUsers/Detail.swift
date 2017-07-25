@@ -6,6 +6,7 @@
 //  Copyright © 2017년 admin. All rights reserved.
 //
 
+/*
 struct Detail {
     var id: String
     var imageString: String
@@ -40,3 +41,4 @@ struct Detail {
         self.remarks = remarks
     }
 }
+*/

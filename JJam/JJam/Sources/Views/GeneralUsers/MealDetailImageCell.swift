@@ -23,8 +23,8 @@ final class MealDetailImageCell: UITableViewCell {
     }
     
     //MARK: configure
-    func configure(mealDetailImageString: String) {
-        self.photoView.image = UIImage(named: mealDetailImageString)
+    func configure(foodImage: String) {
+        self.photoView.image = UIImage(named: foodImage)
     }
     
     //MARK: Size

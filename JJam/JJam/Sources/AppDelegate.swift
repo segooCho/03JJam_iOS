@@ -51,20 +51,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         self.window?.rootViewController = generalUsersTabBar
     }
 
-    //관심 식당-식단
-    func MealListScreen(id: String, name: String) {
-        let mealList = MealList(interestRestaurantId: id, interestRestaurantName: name)
-        let navigationController = UINavigationController(rootViewController: mealList)
-        self.window?.rootViewController = navigationController
-    }
-    
-    //관심 식당 찾기
-    func RestaurantListSearchScreen() {
-        let restaurantListSearch = RestaurantListSearch()
-        let navigationController = UINavigationController(rootViewController: restaurantListSearch)
-        self.window?.rootViewController = navigationController
-    }
-
     //로그인
     func LoginScreen() {
         let login = Login()

@@ -10,28 +10,25 @@ import UIKit
 
 final class MealDetail: UIViewController {
     //MARK: Properties
-    var didSetupConstraints = false
-    var detail: [Detail] = [] /*{
-     didSet {
-     self.saveAll()
-     }
-     }
-     */
-    fileprivate let mealDetailId:String!
+    fileprivate var didSetupConstraints = false
+    //fileprivate var detail: [Detail] = []
+    fileprivate var meal: [Meal] = []
+    //fileprivate let mealDetailId:String!
     
     //MARK: UI
-    //fileprivate let detailTableView = UITableView(frame: .zero, style: .grouped)
     fileprivate let detailTableView = UITableView(frame: .zero, style: .plain)
-    //fileprivate let progressView = UIProgressView()
 
     //MARK: init
-    init(mealDetailId: String) {
-        self.mealDetailId = mealDetailId
+    init(meal: [Meal]) {
+        self.meal = meal
         super.init(nibName: nil, bundle: nil)
+        
         //데이터 임시 처리
+        /*
         self.detail.append(Detail(id: "1", imageString: "01.jpg", dateString: "2017-07-11일 (화)", division: "아침",
                                   stapleFood: "현미밥", soup: "된장국", sideDish1: "김치", sideDish2: "돈까스", sideDish3: "햄",
                                   sideDish4: "김", dessert: "국수, 김치볶음밥", remarks: "오늘도 정성을 다해 준비하였습니다.\n한라시그마 구내식당\n\n\n\n\n감사합니다."))
+        */
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -97,11 +94,11 @@ extension MealDetail: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.row == 0 {
             let cell = tableView.dequeueReusableCell(withIdentifier: "mealDetailImageCell", for: indexPath) as! MealDetailImageCell
-            cell.configure(mealDetailImageString: self.detail[0].imageString)
+            cell.configure(foodImage: self.meal[0].foodImage)
             return cell
         } else {
             let cell = tableView.dequeueReusableCell(withIdentifier: "mealDetailTextCell", for: indexPath) as! MealDetailTextCell
-            cell.configure(detail: self.detail[0])
+            cell.configure(meal: self.meal[0])
             return cell
         }
     }

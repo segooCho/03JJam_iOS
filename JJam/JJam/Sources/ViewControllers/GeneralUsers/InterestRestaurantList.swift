@@ -143,7 +143,6 @@ final class InterestRestaurantList: UIViewController {
     }
     
     func addButtonDidTap() {
-        //AppDelegate.instance?.RestaurantListSearchScreen()
         let restaurantListSearch = RestaurantListSearch()
         self.navigationController?.pushViewController(restaurantListSearch, animated: true)
     }
@@ -220,7 +219,8 @@ extension InterestRestaurantList: UITableViewDelegate {
     //선택
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         //print("\(indexPath)가 선택!")
-        AppDelegate.instance?.MealListScreen(id : self.interestRestaurant[indexPath.row]._id, name: self.interestRestaurant[indexPath.row].companyName)
+        let mealList = MealList(interestRestaurantId : self.interestRestaurant[indexPath.row]._id, interestRestaurantName: self.interestRestaurant[indexPath.row].companyName)
+        self.navigationController?.pushViewController(mealList, animated: true)
     }
     
     //삭제

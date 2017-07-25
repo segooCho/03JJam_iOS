@@ -31,8 +31,7 @@ struct GeneralUsersNetWorking {
                     case .success(let value) :
                         guard let json = value as? [[String: Any]] else {break}
                         //TODO : 오류 처리 필요
-                        let data = [RestaurantSearch](JSONArray: json) ?? [
-                        ] //?? : 앞에 있는 연산자가 오류이면 []를 실행하라
+                        let data = [RestaurantSearch](JSONArray: json)
                         restaurantSearch.append(contentsOf: data)
                         completion(restaurantSearch)
                     case .failure(let error) :
@@ -42,6 +41,105 @@ struct GeneralUsersNetWorking {
         }
         completion(restaurantSearch)
     }   //restaurantSearch
+    
+    
+    //식당 인증
+    static func restaurantCertification(restaurant_Id: String, completion: @escaping (_ restaurantCertification: [RestaurantCertification]) -> Void) {
+        let urlString = FixedCommonSet.networkinkBaseUrl + "restaurantCertification"
+        let parameters: [String: Any] = [
+            "restaurant_Id": restaurant_Id,
+            ]
+        let headers: HTTPHeaders = [
+            "Accept": "application/json",
+            ]
+        
+        var restaurantCertification: [RestaurantCertification] = []
+        
+        Alamofire.request(urlString, method: .get, parameters: parameters, headers: headers)
+            .validate(statusCode: 200..<400)
+            .responseJSON {
+                response in
+                switch response.result {
+                case .success(let value) :
+                    guard let json = value as? [[String: Any]] else {break}
+                    //TODO : 오류 처리 필요
+                    let data = [RestaurantCertification](JSONArray: json)
+                    restaurantCertification.append(contentsOf: data)
+                    completion(restaurantCertification)
+                case .failure(let error) :
+                    print("요청 실패 \(error)")
+                    completion(restaurantCertification)
+                }
+        }
+        completion(restaurantCertification)
+    }   //restaurantCertification
+
+    //식당 공지 사항
+    static func restaurantNotice(restaurant_Id: String, completion: @escaping (_ restaurantNotice: [RestaurantNotice]) -> Void) {
+        let urlString = FixedCommonSet.networkinkBaseUrl + "restaurantNotice"
+        let parameters: [String: Any] = [
+            "restaurant_Id": restaurant_Id,
+            ]
+        let headers: HTTPHeaders = [
+            "Accept": "application/json",
+            ]
+        
+        var restaurantNotice: [RestaurantNotice] = []
+        
+        Alamofire.request(urlString, method: .get, parameters: parameters, headers: headers)
+            .validate(statusCode: 200..<400)
+            .responseJSON {
+                response in
+                switch response.result {
+                case .success(let value) :
+                    guard let json = value as? [[String: Any]] else {break}
+                    //TODO : 오류 처리 필요
+                    let data = [RestaurantNotice](JSONArray: json)
+                    restaurantNotice.append(contentsOf: data)
+                    completion(restaurantNotice)
+                case .failure(let error) :
+                    print("요청 실패 \(error)")
+                    completion(restaurantNotice)
+                }
+        }
+        completion(restaurantNotice)
+    }   //restaurantNotice
+
+    
+    //식단 조회
+    static func mealSearch(restaurant_Id: String, segmentedIndexAndCode: Int, completion: @escaping (_ meal: [Meal]) -> Void) {
+        let urlString = FixedCommonSet.networkinkBaseUrl + "mealSearch"
+        let parameters: [String: Any] = [
+            "restaurant_Id": restaurant_Id,
+            "segmentedId": segmentedIndexAndCode,
+            ]
+        let headers: HTTPHeaders = [
+            "Accept": "application/json",
+            ]
+        
+        var meal: [Meal] = []
+        Alamofire.request(urlString, method: .get, parameters: parameters, headers: headers)
+            .validate(statusCode: 200..<400)
+            .responseJSON {
+                response in
+                switch response.result {
+                case .success(let value) :
+                    guard let json = value as? [[String: Any]] else {break}
+                    //TODO : 오류 처리 필요
+                    let data = [Meal](JSONArray: json)
+                    meal.append(contentsOf: data)
+                    completion(meal)
+                case .failure(let error) :
+                    print("요청 실패 \(error)")
+                    completion(meal)
+                }
+        }
+        completion(meal)
+    }   //mealSearch
+
+    
+    
+    
     
     
     

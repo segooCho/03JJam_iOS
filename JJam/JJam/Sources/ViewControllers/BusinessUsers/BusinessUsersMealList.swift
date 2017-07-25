@@ -36,7 +36,7 @@ final class BusinessUsersMealList: UIViewController {
         self.tabBarItem.selectedImage = UIImage(named: "tab-restaurant-selected")
         
         //데이터 임시 처리
-        self.businessUsersRestaurantCertification = "N"
+        self.businessUsersRestaurantCertification = "n"
         self.businessUsersMeal.append(BusinessUsersMeal(id: "1", imageString: "01.jpg", dateString: "2017-07-11일(화) 아침", summary: "등록 내용 없음"))
         self.businessUsersMeal.append(BusinessUsersMeal(id: "2", imageString: "02.jpg", dateString: "2017-07-11일(화) 점심", summary: "현미밥, 된장국, 김치, 돈까스, 김, 불고기"))
         self.businessUsersMeal.append(BusinessUsersMeal(id: "3", imageString: "03.jpg", dateString: "2017-07-11일(화) 저녁", summary: "등록 내용 없음"))

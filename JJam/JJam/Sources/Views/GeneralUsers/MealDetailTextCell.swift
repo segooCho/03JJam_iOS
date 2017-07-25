@@ -26,6 +26,9 @@ final class MealDetailTextCell: UITableViewCell {
     //일자
     fileprivate let dateLabel = UILabel()
     fileprivate let dateTextField = UITextField()
+    //위치
+    fileprivate let locationLabel = UILabel()
+    fileprivate let locationTextField = UITextField()
     //구분
     fileprivate let divisionLabel = UILabel()
     fileprivate let divisionTextField = UITextField()
@@ -63,6 +66,9 @@ final class MealDetailTextCell: UITableViewCell {
         UICommonSetLabel(self.dateLabel, text: "일자")
         UICommonSetTextFieldDisable(self.dateTextField)
         
+        UICommonSetLabel(self.locationLabel, text: "위치")
+        UICommonSetTextFieldDisable(self.locationTextField)
+        
         UICommonSetLabel(self.divisionLabel, text: "구분")
         UICommonSetTextFieldDisable(self.divisionTextField)
         
@@ -92,6 +98,8 @@ final class MealDetailTextCell: UITableViewCell {
         
         self.contentView.addSubview(self.dateLabel)
         self.contentView.addSubview(self.dateTextField)
+        self.contentView.addSubview(self.locationLabel)
+        self.contentView.addSubview(self.locationTextField)
         self.contentView.addSubview(self.divisionLabel)
         self.contentView.addSubview(self.divisionTextField)
         self.contentView.addSubview(self.stapleFoodLabel)
@@ -117,17 +125,18 @@ final class MealDetailTextCell: UITableViewCell {
     }
     
     //MARK: configure
-    func configure(detail: Detail) {
-        self.dateTextField.text = detail.dateString
-        self.divisionTextField.text = detail.division
-        self.stapleFoodTextField.text = detail.stapleFood
-        self.soupTextField.text = detail.soup
-        self.sideDish1TextField.text = detail.sideDish1
-        self.sideDish2TextField.text = detail.sideDish2
-        self.sideDish3TextField.text = detail.sideDish3
-        self.sideDish4TextField.text = detail.sideDish4
-        self.dessertTextField.text = detail.dessert
-        self.remarksTextView.text = detail.remarks
+    func configure(meal: Meal) {
+        self.dateTextField.text = meal.mealDate + " (" + meal.mealDateLabel + ")"
+        self.locationTextField.text = meal.location
+        self.divisionTextField.text = meal.division
+        self.stapleFoodTextField.text = meal.stapleFood
+        self.soupTextField.text = meal.soup
+        self.sideDish1TextField.text = meal.sideDish1
+        self.sideDish2TextField.text = meal.sideDish2
+        self.sideDish3TextField.text = meal.sideDish3
+        self.sideDish4TextField.text = meal.sideDish4
+        self.dessertTextField.text = meal.dessert
+        self.remarksTextView.text = meal.remarks.replacingOccurrences(of: "\\n", with: "\n")
         self.setNeedsLayout()
     }
     
@@ -135,10 +144,10 @@ final class MealDetailTextCell: UITableViewCell {
     class func height() -> CGFloat {
         var height: CGFloat = 0
 
-        //TextField 9개
+        //TextField 10개
         //TextView  1개
-        height += Metric.commonOffset * 10
-        height += Metric.commonHeight * 9
+        height += Metric.commonOffset * 11
+        height += Metric.commonHeight * 10
         height += Metric.commonHeightTextView
         height += Metric.commonOffset   //하단 여백 처리
         return height
@@ -163,17 +172,31 @@ final class MealDetailTextCell: UITableViewCell {
             make.height.equalTo(Metric.commonHeight)
         }
         
-        //구분
-        self.divisionLabel.snp.makeConstraints { make in
+        //위치
+        self.locationLabel.snp.makeConstraints { make in
             make.left.equalTo(Metric.labelLeft)
             make.right.equalTo(Metric.labelRight)
             make.top.equalTo(self.dateLabel.snp.bottom).offset(Metric.commonOffset)
             make.height.equalTo(Metric.commonHeight)
         }
-        self.divisionTextField.snp.makeConstraints { make in
+        self.locationTextField.snp.makeConstraints { make in
             make.left.equalTo(Metric.textFieldLeft)
             make.right.equalTo(Metric.textFieldRight)
             make.top.equalTo(self.dateLabel.snp.bottom).offset(Metric.commonOffset)
+            make.height.equalTo(Metric.commonHeight)
+        }
+
+        //구분
+        self.divisionLabel.snp.makeConstraints { make in
+            make.left.equalTo(Metric.labelLeft)
+            make.right.equalTo(Metric.labelRight)
+            make.top.equalTo(self.locationLabel.snp.bottom).offset(Metric.commonOffset)
+            make.height.equalTo(Metric.commonHeight)
+        }
+        self.divisionTextField.snp.makeConstraints { make in
+            make.left.equalTo(Metric.textFieldLeft)
+            make.right.equalTo(Metric.textFieldRight)
+            make.top.equalTo(self.locationLabel.snp.bottom).offset(Metric.commonOffset)
             make.height.equalTo(Metric.commonHeight)
         }
         

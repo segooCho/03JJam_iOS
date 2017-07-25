@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		7B41719AF68CE94460AE5123 /* Pods_JJam.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0642993740E03DA9687CA8CB /* Pods_JJam.framework */; };
+		840007F11F274D54009702CB /* RestaurantCertification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 840007F01F274D54009702CB /* RestaurantCertification.swift */; };
+		840007F31F275085009702CB /* RestaurantNotice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 840007F21F275085009702CB /* RestaurantNotice.swift */; };
 		8403927F1F160D410033BCBD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 840392751F160D410033BCBD /* Assets.xcassets */; };
 		840392801F160D410033BCBD /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 840392761F160D410033BCBD /* LaunchScreen.storyboard */; };
 		840392811F160D410033BCBD /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 840392781F160D410033BCBD /* Main.storyboard */; };
@@ -67,6 +69,8 @@
 /* Begin PBXFileReference section */
 		0642993740E03DA9687CA8CB /* Pods_JJam.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_JJam.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2732E5029DA1A1A8D6613992 /* Pods-JJam.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-JJam.release.xcconfig"; path = "Pods/Target Support Files/Pods-JJam/Pods-JJam.release.xcconfig"; sourceTree = "<group>"; };
+		840007F01F274D54009702CB /* RestaurantCertification.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RestaurantCertification.swift; sourceTree = "<group>"; };
+		840007F21F275085009702CB /* RestaurantNotice.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RestaurantNotice.swift; sourceTree = "<group>"; };
 		8403925E1F1601AB0033BCBD /* JJam.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = JJam.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		840392751F160D410033BCBD /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		840392771F160D410033BCBD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -219,6 +223,8 @@
 		843069281F1E51AA008B7DEF /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				840007F01F274D54009702CB /* RestaurantCertification.swift */,
+				840007F21F275085009702CB /* RestaurantNotice.swift */,
 				843069291F1E51AA008B7DEF /* BusinessUsers */,
 				8430692A1F1E51AA008B7DEF /* GeneralUsers */,
 			);
@@ -512,10 +518,12 @@
 				843069711F1E5E79008B7DEF /* BusinessUsersMealDetailImageCell.swift in Sources */,
 				843069571F1E51AA008B7DEF /* GeneralUsersSettings.swift in Sources */,
 				84183C1C1F1F236B00EECDD0 /* Menu.swift in Sources */,
+				840007F11F274D54009702CB /* RestaurantCertification.swift in Sources */,
 				843069491F1E51AA008B7DEF /* Detail.swift in Sources */,
 				8430694E1F1E51AA008B7DEF /* GeneralUsersTabBar.swift in Sources */,
 				8430695C1F1E51AA008B7DEF /* RestaurantListSearchCell.swift in Sources */,
 				843069631F1E593A008B7DEF /* BusinessUsersMealList.swift in Sources */,
+				840007F31F275085009702CB /* RestaurantNotice.swift in Sources */,
 				843069481F1E51AA008B7DEF /* UICommonSet.swift in Sources */,
 				845C07CD1F2081DA008A6F9F /* BusinessUsersNotice.swift in Sources */,
 				8430694B1F1E51AA008B7DEF /* Meal.swift in Sources */,

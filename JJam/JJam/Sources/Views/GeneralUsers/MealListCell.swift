@@ -22,7 +22,7 @@ final class MealListCell: UITableViewCell {
     func configure(meal: Meal) {
         self.backgroundColor = .white
         //image
-        self.imageView?.image = UIImage(named: meal.imageString)
+        self.imageView?.image = UIImage(named: meal.foodImage)
         
         //TODO :: image 사이즈 고정 && image 라운드 재정리 필요
         //image 사이즈 고정
@@ -42,9 +42,11 @@ final class MealListCell: UITableViewCell {
         self.imageView?.contentMode = UIViewContentMode.scaleAspectFill
         
         //일자
-        self.textLabel?.text = meal.dateString
+        self.textLabel?.text = meal.mealDate + " (" + meal.mealDateLabel + ") " + meal.division
+        
         //요약 내용
-        self.detailTextLabel?.text = meal.summary
+        self.detailTextLabel?.text = meal.stapleFood + "," + meal.soup + "," + meal.sideDish1 + "," + meal.sideDish2 + ","
+                                    + meal.sideDish3 + "," + meal.sideDish4 + "," + meal.dessert
         self.accessoryType = .disclosureIndicator
     }
     

@@ -10,14 +10,9 @@ import UIKit
 
 final class MealList: UIViewController {
     //MARK: Properties
-    var didSetupConstraints = false
-    var segmentedIndexAndCode = 0
-    var meal: [Meal] = [] /*{
-     didSet {
-     self.saveAll()
-     }
-     }
-     */
+    fileprivate var didSetupConstraints = false
+    fileprivate var segmentedIndexAndCode = 0
+    fileprivate var meal: [Meal] = []
     
     fileprivate let interestRestaurantId:String!
     fileprivate let interestRestaurantName:String!
@@ -25,9 +20,9 @@ final class MealList: UIViewController {
     var interestRestaurantNotice:String!
 
     //MARK: UI
-    //fileprivate let activityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: .gray)
+    fileprivate let activityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: .gray)
     fileprivate let segmentedControl = UISegmentedControl()
-    fileprivate let segmentedTitles: Array<String> = ["오늘 식단","계획 식단","과거 식단"]
+    fileprivate let segmentedTitles: Array<String> = ["오늘 식단","계획 식단","지난 식단"]
     fileprivate let label = UILabel()
     fileprivate let textView = UITextView()
     fileprivate let tableView = UITableView(frame: .zero, style: .plain)
@@ -38,9 +33,19 @@ final class MealList: UIViewController {
         self.interestRestaurantName = interestRestaurantName
         super.init(nibName: nil, bundle: nil)
         
+        self.interestRestaurantCertification = "n"
+        self.interestRestaurantNotice = ""
+        
+        //식당 인증
+        restaurantCertification()
+        //식당 공지 사항
+        restaurantNotice()
+        //식단 조회
+        mealSearch()
         //데이터 임시 처리
-        self.interestRestaurantCertification = "N"
-        self.interestRestaurantNotice = "공지사항\n안녕하세요. 한라시그마 구내식당 입니다.\n*월요일 ~ 금요일 까지 영업합니다.\n*토요일, 일요일, 공휴일은 휴무입니다.\n\n\n\n감사합니다."
+        //self.interestRestaurantCertification = "n"
+        //self.interestRestaurantNotice = "공지사항\n안녕하세요. 한라시그마 구내식당 입니다.\n*월요일 ~ 금요일 까지 영업합니다.\n*토요일, 일요일, 공휴일은 휴무입니다.\n\n\n\n감사합니다."
+        /*
         self.meal.append(Meal(id: "1", imageString: "01.jpg", dateString: "2017-07-11일(화) 아침", summary: "등록 내용 없음"))
         self.meal.append(Meal(id: "2", imageString: "02.jpg", dateString: "2017-07-11일(화) 점심", summary: "현미밥, 된장국, 김치, 돈까스, 김, 불고기"))
         self.meal.append(Meal(id: "3", imageString: "03.jpg", dateString: "2017-07-11일(화) 저녁", summary: "등록 내용 없음"))
@@ -50,6 +55,7 @@ final class MealList: UIViewController {
         self.meal.append(Meal(id: "7", imageString: "07.jpg", dateString: "2017-07-07일(금) 아침", summary: "등록 내용 없음"))
         self.meal.append(Meal(id: "8", imageString: "08.jpg", dateString: "2017-07-07일(금) 점심", summary: "현미밥, 된장국, 김치, 돈까스, 김, 불고기"))
         self.meal.append(Meal(id: "9", imageString: "09.jpg", dateString: "2017-07-07일(금) 저녁", summary: "등록 내용 없음"))
+        */
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -79,8 +85,8 @@ final class MealList: UIViewController {
         self.segmentedControl.addTarget(self, action: #selector(changeSegmentedControl), for: .valueChanged)
         self.segmentedControl.selectedSegmentIndex = self.segmentedIndexAndCode
         
-        //인증
-        if (self.interestRestaurantCertification == "Y") {
+        //인증 : viewDidLoad 시점에 값을 받지 못함
+        if (self.interestRestaurantCertification == "y") {
             UICommonSetLabel(self.label, text: "사업자 등록증 인증 업체입니다.")
             self.label.textColor = .red
             self.label.textAlignment = .center
@@ -90,7 +96,7 @@ final class MealList: UIViewController {
             self.label.textAlignment = .center
         }
 
-        //공지사항
+        //공지사항 : viewDidLoad 시점에 값을 받지 못함
         self.textView.text = self.interestRestaurantNotice
         UICommonSetTextViewDisable(self.textView)
         
@@ -145,23 +151,61 @@ final class MealList: UIViewController {
     }
     
     //MARK: ACTION
-    func changeSegmentedControl() {
-        self.segmentedIndexAndCode = segmentedControl.selectedSegmentIndex
-        
-        switch self.segmentedControl.selectedSegmentIndex {
-        case 0:
-            break
-        case 1:
-            break
-        case 2:
-            break
-        default:
-            break
+    //식당 인증
+    func restaurantCertification() {
+        self.activityIndicatorView.startAnimating()
+        GeneralUsersNetWorking.restaurantCertification(restaurant_Id: self.interestRestaurantId) { [weak self] response in
+            guard let `self` = self else { return }
+            if response.count > 0 {
+                self.interestRestaurantCertification = response[0].certification
+                //인증
+                if (self.interestRestaurantCertification == "y") {
+                    self.label.text = "사업자 등록증 인증 업체입니다."
+                    self.label.textColor = .red
+                } else {
+                    self.label.text = "사업자 등록증 미인증 업체입니다."
+                    self.label.textColor = .blue
+                }
+            }
+            self.activityIndicatorView.stopAnimating()
         }
     }
     
+    //식당 공지사항
+    func restaurantNotice() {
+        self.activityIndicatorView.startAnimating()
+        GeneralUsersNetWorking.restaurantNotice(restaurant_Id: self.interestRestaurantId) { [weak self] response in
+            guard let `self` = self else { return }
+            if response.count > 0 {
+                self.interestRestaurantNotice = response[0].notice
+                //공지사항 : \\n 처리
+                let data = self.interestRestaurantNotice.replacingOccurrences(of: "\\n", with: "\n")
+                self.textView.text = data
+            }
+            self.activityIndicatorView.stopAnimating()
+        }
+    }
+
+    //식단 조회
+    func mealSearch() {
+        self.activityIndicatorView.startAnimating()
+        GeneralUsersNetWorking.mealSearch(restaurant_Id: self.interestRestaurantId, segmentedIndexAndCode: self.segmentedIndexAndCode) { [weak self] response in
+            guard let `self` = self else { return }
+            self.meal = response
+            self.activityIndicatorView.stopAnimating()
+            self.tableView.reloadData()
+        }
+    }
+    
+    //세그먼트 메뉴 클릭
+    func changeSegmentedControl() {
+        self.segmentedIndexAndCode = segmentedControl.selectedSegmentIndex
+        mealSearch()
+    }
+    
     func cancelButtonDidTap() {
-        AppDelegate.instance?.GeneralUsersTabBarScreen(selectIndex: 0)
+        //AppDelegate.instance?.GeneralUsersTabBarScreen(selectIndex: 0)
+        _ = self.navigationController?.popViewController(animated: true)
     }
  
     /*
@@ -191,8 +235,8 @@ extension MealList: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         print("\(indexPath)가 선택!")
         //NavigationController pushViewController
-        let mealDetail = MealDetail(mealDetailId: self.meal[indexPath.row].id)
-        self.navigationController?.pushViewController(mealDetail, animated: true)
+        let meal = MealDetail(meal: [self.meal[indexPath.row]])
+        self.navigationController?.pushViewController(meal, animated: true)
     }
     
     //cell height
