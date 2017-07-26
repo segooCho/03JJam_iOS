@@ -36,10 +36,8 @@ final class MealList: UIViewController {
         self.interestRestaurantCertification = "n"
         self.interestRestaurantNotice = ""
         
-        //식당 인증
-        restaurantCertification()
-        //식당 공지 사항
-        restaurantNotice()
+        //식당 인증 & 공지 사항
+        restaurantInfo()
         //식단 조회
         mealSearch()
         //데이터 임시 처리
@@ -151,11 +149,12 @@ final class MealList: UIViewController {
     }
     
     //MARK: ACTION
-    //식당 인증
-    func restaurantCertification() {
+    //식당 인증 & 공지사항
+    func restaurantInfo() {
         self.activityIndicatorView.startAnimating()
-        GeneralUsersNetWorking.restaurantCertification(restaurant_Id: self.interestRestaurantId) { [weak self] response in
+        GeneralUsersNetWorking.restaurantInfo(restaurant_Id: self.interestRestaurantId) { [weak self] response in
             guard let `self` = self else { return }
+            self.activityIndicatorView.stopAnimating()
             if response.count > 0 {
                 //인증
                 let message = response[0].message
@@ -169,7 +168,7 @@ final class MealList: UIViewController {
                         preferredStyle: .alert
                     )
                     let alertConfirm = UIAlertAction(
-                        title: "돌아가기",
+                        title: "이전 화면 돌아가기",
                         style: .default) { _ in
                             //이전 화면
                             _ = self.navigationController?.popViewController(animated: true)
@@ -177,6 +176,7 @@ final class MealList: UIViewController {
                     alertController.addAction(alertConfirm)
                     self.present(alertController, animated: true, completion: nil)
                 } else {
+                    //인증
                     self.interestRestaurantCertification = response[0].certification
                     if (self.interestRestaurantCertification == "y") {
                         self.label.text = "사업자 등록증 인증 업체입니다."
@@ -185,50 +185,18 @@ final class MealList: UIViewController {
                         self.label.text = "사업자 등록증 미인증 업체입니다."
                         self.label.textColor = .red
                     }
+                    //인증
+                    self.interestRestaurantNotice = response[0].notice
+                    //공지사항 : \\n 처리
+                    let data = self.interestRestaurantNotice.replacingOccurrences(of: "\\n", with: "\n")
+                    self.textView.text = data
                 }
 
             }
-            // TODO : 탈퇴 식당 처리 필요
-            /*else {
-                self.label.text = "선택된 식당은 탈퇴한 상태입니다."
-                self.label.textColor = .red
-
-                /*
-                //인증 값이 없다면 탈퇴 식당임
-                let alertController = UIAlertController(
-                    title: NSLocalizedString("Confirm", comment: "확인"),
-                    message: "선택된 식당은 탈퇴한 상태입니다.",
-                    preferredStyle: .alert
-                )
-                let alertConfirm = UIAlertAction(
-                    title: NSLocalizedString("Confirm", comment: "확인"),
-                    style: .default) { _ in
-                }
-                alertController.addAction(alertConfirm)
-                self.present(alertController, animated: true, completion: nil)
-                //이전 화면
-                //_ = self.navigationController?.popViewController(animated: true)
-                */
-            }*/
             self.activityIndicatorView.stopAnimating()
         }
     }
     
-    //식당 공지사항
-    func restaurantNotice() {
-        self.activityIndicatorView.startAnimating()
-        GeneralUsersNetWorking.restaurantNotice(restaurant_Id: self.interestRestaurantId) { [weak self] response in
-            guard let `self` = self else { return }
-            if response.count > 0 {
-                self.interestRestaurantNotice = response[0].notice
-                //공지사항 : \\n 처리
-                let data = self.interestRestaurantNotice.replacingOccurrences(of: "\\n", with: "\n")
-                self.textView.text = data
-            }
-            self.activityIndicatorView.stopAnimating()
-        }
-    }
-
     //식단 조회
     func mealSearch() {
         self.activityIndicatorView.startAnimating()

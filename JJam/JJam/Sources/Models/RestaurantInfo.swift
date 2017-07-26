@@ -1,5 +1,5 @@
 //
-//  RestaurantCertification.swift
+//  RestaurantInfo.swift
 //  JJam
 //
 //  Created by admin on 2017. 7. 25..
@@ -8,8 +8,9 @@
 
 import ObjectMapper
 
-struct RestaurantCertification: Mappable {
+struct RestaurantInfo: Mappable {
     var certification: String?
+    var notice: String?
     var message: String?
     
     init?(map: Map) {
@@ -17,6 +18,7 @@ struct RestaurantCertification: Mappable {
     
     mutating func mapping(map: Map) {
         self.certification <- map["certification"]
+        self.notice <- map["notice"]
         self.message <- map["message"]
     }
 }

@@ -43,9 +43,9 @@ struct GeneralUsersNetWorking {
     }   //restaurantSearch
     
     
-    //식당 인증
-    static func restaurantCertification(restaurant_Id: String, completion: @escaping (_ restaurantCertification: [RestaurantCertification]) -> Void) {
-        let urlString = FixedCommonSet.networkinkBaseUrl + "restaurantCertification"
+    //식당 인증 & 공지사항
+    static func restaurantInfo(restaurant_Id: String, completion: @escaping (_ restaurantInfo: [RestaurantInfo]) -> Void) {
+        let urlString = FixedCommonSet.networkinkBaseUrl + "restaurantInfo"
         let parameters: [String: Any] = [
             "restaurant_Id": restaurant_Id,
             ]
@@ -53,7 +53,7 @@ struct GeneralUsersNetWorking {
             "Accept": "application/json",
             ]
         
-        var restaurantCertification: [RestaurantCertification] = []
+        var restaurantInfo: [RestaurantInfo] = []
         
         Alamofire.request(urlString, method: .get, parameters: parameters, headers: headers)
             .validate(statusCode: 200..<400)
@@ -63,48 +63,16 @@ struct GeneralUsersNetWorking {
                 case .success(let value) :
                     guard let json = value as? [[String: Any]] else {break}
                     //TODO : 오류 처리 필요
-                    let data = [RestaurantCertification](JSONArray: json)
-                    restaurantCertification.append(contentsOf: data)
-                    completion(restaurantCertification)
+                    let data = [RestaurantInfo](JSONArray: json)
+                    restaurantInfo.append(contentsOf: data)
+                    completion(restaurantInfo)
                 case .failure(let error) :
                     print("요청 실패 \(error)")
-                    completion(restaurantCertification)
+                    completion(restaurantInfo)
                 }
         }
-        completion(restaurantCertification)
-    }   //restaurantCertification
-
-    //식당 공지 사항
-    static func restaurantNotice(restaurant_Id: String, completion: @escaping (_ restaurantNotice: [RestaurantNotice]) -> Void) {
-        let urlString = FixedCommonSet.networkinkBaseUrl + "restaurantNotice"
-        let parameters: [String: Any] = [
-            "restaurant_Id": restaurant_Id,
-            ]
-        let headers: HTTPHeaders = [
-            "Accept": "application/json",
-            ]
-        
-        var restaurantNotice: [RestaurantNotice] = []
-        
-        Alamofire.request(urlString, method: .get, parameters: parameters, headers: headers)
-            .validate(statusCode: 200..<400)
-            .responseJSON {
-                response in
-                switch response.result {
-                case .success(let value) :
-                    guard let json = value as? [[String: Any]] else {break}
-                    //TODO : 오류 처리 필요
-                    let data = [RestaurantNotice](JSONArray: json)
-                    restaurantNotice.append(contentsOf: data)
-                    completion(restaurantNotice)
-                case .failure(let error) :
-                    print("요청 실패 \(error)")
-                    completion(restaurantNotice)
-                }
-        }
-        completion(restaurantNotice)
-    }   //restaurantNotice
-
+        completion(restaurantInfo)
+    }   //restaurantInfo
     
     //식단 조회
     static func mealSearch(restaurant_Id: String, segmentedIndexAndCode: Int, completion: @escaping (_ meal: [Meal]) -> Void) {
