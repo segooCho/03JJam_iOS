@@ -23,8 +23,6 @@ final class MealDetailImageCell: UITableViewCell {
         self.scrollView.maximumZoomScale = 3
         self.scrollView.addSubview(self.photoView)
         self.contentView.addSubview(self.scrollView)
-        
-        //self.contentView.addSubview(self.photoView)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -34,7 +32,6 @@ final class MealDetailImageCell: UITableViewCell {
     //MARK: configure
     func configure(foodImage: String) {
         self.photoView.setImage(with: foodImage)
-        //self.photoView.image = UIImage(named: foodImage)
     }
     
     //MARK: Size
@@ -47,15 +44,6 @@ final class MealDetailImageCell: UITableViewCell {
         super.layoutSubviews()
         self.scrollView.frame = self.contentView.bounds
         self.photoView.frame = self.scrollView.bounds
-        
-        /*
-        self.scrollView.contentInset.top = self.scrollView.snp_height / 2 - self.cropAreaView.height / 2
-        self.scrollView.contentInset.bottom = self.scrollView.contentInset.top
-        self.scrollView.contentSize = self.photoView.size
-        self.scrollView.contentOffset.x = self.scrollView.contentSize.width / 2 - self.scrollView.width / 2
-        self.scrollView.contentOffset.y = self.scrollView.contentSize.height / 2 - self.scrollView.height / 2
-        */
-
     }
 }
 

@@ -157,16 +157,59 @@ final class MealList: UIViewController {
         GeneralUsersNetWorking.restaurantCertification(restaurant_Id: self.interestRestaurantId) { [weak self] response in
             guard let `self` = self else { return }
             if response.count > 0 {
-                self.interestRestaurantCertification = response[0].certification
                 //인증
-                if (self.interestRestaurantCertification == "y") {
-                    self.label.text = "사업자 등록증 인증 업체입니다."
-                    self.label.textColor = .blue
-                } else {
-                    self.label.text = "사업자 등록증 미인증 업체입니다."
+                let message = response[0].message
+                if message != nil {
+                    self.label.text = message
                     self.label.textColor = .red
+
+                    let alertController = UIAlertController(
+                        title: "확인",
+                        message: message,
+                        preferredStyle: .alert
+                    )
+                    let alertConfirm = UIAlertAction(
+                        title: "돌아가기",
+                        style: .default) { _ in
+                            //이전 화면
+                            _ = self.navigationController?.popViewController(animated: true)
+                    }
+                    alertController.addAction(alertConfirm)
+                    self.present(alertController, animated: true, completion: nil)
+                } else {
+                    self.interestRestaurantCertification = response[0].certification
+                    if (self.interestRestaurantCertification == "y") {
+                        self.label.text = "사업자 등록증 인증 업체입니다."
+                        self.label.textColor = .blue
+                    } else {
+                        self.label.text = "사업자 등록증 미인증 업체입니다."
+                        self.label.textColor = .red
+                    }
                 }
+
             }
+            // TODO : 탈퇴 식당 처리 필요
+            /*else {
+                self.label.text = "선택된 식당은 탈퇴한 상태입니다."
+                self.label.textColor = .red
+
+                /*
+                //인증 값이 없다면 탈퇴 식당임
+                let alertController = UIAlertController(
+                    title: NSLocalizedString("Confirm", comment: "확인"),
+                    message: "선택된 식당은 탈퇴한 상태입니다.",
+                    preferredStyle: .alert
+                )
+                let alertConfirm = UIAlertAction(
+                    title: NSLocalizedString("Confirm", comment: "확인"),
+                    style: .default) { _ in
+                }
+                alertController.addAction(alertConfirm)
+                self.present(alertController, animated: true, completion: nil)
+                //이전 화면
+                //_ = self.navigationController?.popViewController(animated: true)
+                */
+            }*/
             self.activityIndicatorView.stopAnimating()
         }
     }

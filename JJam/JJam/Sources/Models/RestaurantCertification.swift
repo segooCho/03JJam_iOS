@@ -9,13 +9,15 @@
 import ObjectMapper
 
 struct RestaurantCertification: Mappable {
-    var certification: String!
+    var certification: String?
+    var message: String?
     
     init?(map: Map) {
     }
     
     mutating func mapping(map: Map) {
         self.certification <- map["certification"]
+        self.message <- map["message"]
     }
 }
 

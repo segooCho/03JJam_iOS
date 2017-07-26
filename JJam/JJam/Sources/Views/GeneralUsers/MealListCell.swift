@@ -43,11 +43,11 @@ final class MealListCell: UITableViewCell {
         self.imageView!.clipsToBounds = true
         self.imageView!.contentMode = UIViewContentMode.scaleAspectFill
  
-        //일자
+        //일자 (요일) 아침,점심,저녁
         self.textLabel!.text = meal.mealDate + " (" + meal.mealDateLabel + ") " + meal.division
         
         //요약 내용
-        self.detailTextLabel!.text = meal.stapleFood + "," + meal.soup + "," + meal.sideDish1 + "," + meal.sideDish2 + ","
+        self.detailTextLabel!.text = "오늘의 메뉴 : " + meal.stapleFood + "," + meal.soup + "," + meal.sideDish1 + "," + meal.sideDish2 + ","
                                     + meal.sideDish3 + "," + meal.sideDish4 + "," + meal.dessert
         self.accessoryType = .disclosureIndicator
     }
