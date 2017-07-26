@@ -193,7 +193,6 @@ final class MealList: UIViewController {
                 }
 
             }
-            self.activityIndicatorView.stopAnimating()
         }
     }
     

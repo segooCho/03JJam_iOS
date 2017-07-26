@@ -9,6 +9,7 @@
 import UIKit
 import SnapKit
 import Kingfisher
+import SwiftyHash
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -23,10 +24,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         let window = UIWindow(frame: UIScreen.main.bounds)
         window.backgroundColor = .white
-
+        
+        //로그인
+        LoginScreen()
+        
+        /*
         //GeneralUsersTabBar
         let generalUsersTabBar = GeneralUsersTabBar(selectIndex : 0)
         self.window?.rootViewController = generalUsersTabBar
+        */
         
         /*
         //BusinessUsersTabBar
@@ -34,13 +40,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         self.window?.rootViewController = businessUsersTabBar
         */
         
-        /*
-        //관심 식당
-        let interestRestaurantList = InterestRestaurantList()
-        let navigationController = UINavigationController(rootViewController: interestRestaurantList)
-        window.rootViewController = navigationController
-        self.window = window
-        */
+        
         return true
     }
     

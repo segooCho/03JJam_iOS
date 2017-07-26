@@ -90,7 +90,6 @@ final class BusinessUsersNotice: UIViewController {
     
     func addButtonDidTap() {
         guard let notice = self.textView.text, !notice.isEmpty else {
-            self.textView.becomeFirstResponder()
             UICommonSetShakeTextView(self.textView)
             return
         }

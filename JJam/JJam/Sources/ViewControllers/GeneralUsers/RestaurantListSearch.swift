@@ -7,26 +7,12 @@
 //
 
 import UIKit
-import Alamofire
-//import ObjectMapper
 
 final class RestaurantListSearch: UIViewController {
     //MARK: Properties
-    var didSetupConstraints = false
-    var restaurantSearch: [RestaurantSearch] = []
-    var interestRestaurant: [InterestRestaurant] = []
-    fileprivate var didAddInterestRestaurant: ((InterestRestaurant) -> Void)?
-
-    //var restaurantSearch: RestaurantSearch?
-
-    /*
-    var restaurantSearch: [RestaurantSearch2] = [] /*{
-     didSet {
-     self.saveAll()
-     }
-     }
-     */
-    */
+    fileprivate var didSetupConstraints = false
+    fileprivate var restaurantSearch: [RestaurantSearch] = []
+    fileprivate var interestRestaurant: [InterestRestaurant] = []
     
     //MARK: UI
     fileprivate let activityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: .gray)
@@ -147,58 +133,17 @@ final class RestaurantListSearch: UIViewController {
     
     func searchButtonDidTap() {
         guard let name = self.textField.text, !name.isEmpty else {
-            UICommonSetShakeTextField(self.textField)
             self.textField.becomeFirstResponder()
             return
         }
         self.textField.resignFirstResponder() //키보드 숨기기
-        
         self.activityIndicatorView.startAnimating()
-        //self.restaurantSearch.removeAll()
         GeneralUsersNetWorking.restaurantSearch(searchText: self.textField.text!) { [weak self] response in
             guard let `self` = self else { return }
             self.restaurantSearch = response
             self.activityIndicatorView.stopAnimating()
             self.tableView.reloadData()
         }
-        
-        
-        /*
-         let urlString = FixedCommonSet.networkinkBaseUrl + "restaurantSearch"
-         let parameters: [String: Any] = [
-         "searchText": name,
-         ]
-         let headers: HTTPHeaders = [
-         "Accept": "application/json",
-         ]
-         
-         self.restaurantSearch.removeAll()
-         Alamofire.request(urlString, method: .get, parameters: parameters, headers: headers)
-         .validate(statusCode: 200..<400)
-         .responseJSON {
-         response in
-         switch response.result {
-         case .success(let value) :
-         guard let json = value as? [[String: Any]] else {break}
-         let data = [RestaurantSearch](JSONArray: json) ?? [] //?? : 앞에 있는 연산자가 오류이면 []를 실행하라
-         self.restaurantSearch.append(contentsOf: data)
-         self.tableView.reloadData()
-         case .failure(let error) :
-         print("요청 실패 \(error)")
-         self.tableView.reloadData()
-         
-         }
-         }
-         */
-        
-        
-        //데이터 임시 처리
-        /*
-        self.restaurantSearch.append(RestaurantSearch(_id: "1", companyName: "한라시그마 구내식당", certification: "Y", address: "경기도 성남시 중원구 둔춘대로 545", contactNumber: "031-111-3344", representative: "홍길동"))
-        self.restaurantSearch.append(RestaurantSearch(_id: "2", companyName: "벽산 구내식당", certification: "N", address: "경기도 성남시 중원구 둔춘대로 5666", contactNumber: "010-8888-9999", representative: "김갑"))
-        */
-        
-        //self.tableView.reloadData()
     }
 }
 

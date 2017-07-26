@@ -83,6 +83,7 @@ func UICommonSetTextViewEnable(_ uIKit: UITextView, placeholderText: String) {
 
 //MARK: Common Set Shake UITextField
 func UICommonSetShakeTextField(_ uIKit: UITextField) {
+    uIKit.becomeFirstResponder()
     UIView.animate(withDuration: 0.05, animations: { uIKit.frame.origin.x -= 5 }, completion: { _ in
         UIView.animate(withDuration: 0.05, animations: { uIKit.frame.origin.x += 10 }, completion: { _ in
             UIView.animate(withDuration: 0.05, animations: { uIKit.frame.origin.x -= 10 }, completion: { _ in
@@ -96,6 +97,7 @@ func UICommonSetShakeTextField(_ uIKit: UITextField) {
 
 //MARK: Common Set Shake UITextView
 func UICommonSetShakeTextView(_ uIKit: UITextView) {
+    uIKit.becomeFirstResponder()
     UIView.animate(withDuration: 0.05, animations: { uIKit.frame.origin.x -= 5 }, completion: { _ in
         UIView.animate(withDuration: 0.05, animations: { uIKit.frame.origin.x += 10 }, completion: { _ in
             UIView.animate(withDuration: 0.05, animations: { uIKit.frame.origin.x -= 10 }, completion: { _ in

@@ -189,7 +189,6 @@ final class BusinessUsersMenuManagement: UIViewController {
     func addButtonDidTap() {
         guard let name = self.textField.text, !name.isEmpty else {
             UICommonSetShakeTextField(self.textField)
-            self.textField.becomeFirstResponder()
             return
         }
         
@@ -206,7 +205,6 @@ final class BusinessUsersMenuManagement: UIViewController {
     func savaButtonDidTap() {
         guard let name = self.textField.text, !name.isEmpty else {
             UICommonSetShakeTextField(self.textField)
-            self.textField.becomeFirstResponder()
             return
         }
         

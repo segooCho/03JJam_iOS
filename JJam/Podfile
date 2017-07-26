@@ -3,6 +3,7 @@ target 'JJam' do
   pod 'Alamofire', '~> 4.3'
   pod ‘ObjectMapper’, '~> 2.2’ 
   pod ‘SnapKit’, '~> 3.2’ 
-  pod ‘Kingfisher’, '~> 3.5’ 
+  pod ‘Kingfisher’, '~> 3.5’
+  pod 'SwiftyHash', '~> 0.7'
 end
 use_frameworks!
