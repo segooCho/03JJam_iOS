@@ -78,11 +78,11 @@ final class BusinessUsersMealList: UIViewController {
         //인증
         if (self.businessUsersRestaurantCertification == "Y") {
             UICommonSetLabel(self.label, text: "사업자 등록증 인증 상태입니다.")
-            self.label.textColor = .red
+            self.label.textColor = .blue
             self.label.textAlignment = .center
         } else {
             UICommonSetLabel(self.label, text: "사업자 등록증 미인증 상태입니다.")
-            self.label.textColor = .blue
+            self.label.textColor = .red
             self.label.textAlignment = .center
         }
         self.view.addSubview(self.label)
@@ -172,7 +172,7 @@ extension BusinessUsersMealList: UITableViewDataSource {
 extension BusinessUsersMealList: UITableViewDelegate {
     //선택
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print("\(indexPath)가 선택!")
+        //print("\(indexPath)가 선택!")
         //NavigationController pushViewController
         let businessUsersMealDetail = BusinessUsersMealDetail(businessUsersMealDetailId: self.businessUsersMeal[indexPath.row].id)
         self.navigationController?.pushViewController(businessUsersMealDetail, animated: true)

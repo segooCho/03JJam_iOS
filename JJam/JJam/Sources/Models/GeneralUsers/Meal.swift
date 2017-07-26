@@ -44,8 +44,7 @@ struct Meal: Mappable {
         self.sideDish4 <- map["sideDish4"]
         self.dessert <- map["dessert"]
         self.remarks <- map["remarks"]
-        //self.foodImage <- map["foodImage"]
-        self.foodImage = "01.jpg"
+        self.foodImage <- map["foodImage"]
     }
 }
 

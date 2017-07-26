@@ -88,11 +88,11 @@ final class MealList: UIViewController {
         //인증 : viewDidLoad 시점에 값을 받지 못함
         if (self.interestRestaurantCertification == "y") {
             UICommonSetLabel(self.label, text: "사업자 등록증 인증 업체입니다.")
-            self.label.textColor = .red
+            self.label.textColor = .blue
             self.label.textAlignment = .center
         } else {
             UICommonSetLabel(self.label, text: "사업자 등록증 미인증 업체입니다.")
-            self.label.textColor = .blue
+            self.label.textColor = .red
             self.label.textAlignment = .center
         }
 
@@ -161,10 +161,10 @@ final class MealList: UIViewController {
                 //인증
                 if (self.interestRestaurantCertification == "y") {
                     self.label.text = "사업자 등록증 인증 업체입니다."
-                    self.label.textColor = .red
+                    self.label.textColor = .blue
                 } else {
                     self.label.text = "사업자 등록증 미인증 업체입니다."
-                    self.label.textColor = .blue
+                    self.label.textColor = .red
                 }
             }
             self.activityIndicatorView.stopAnimating()
@@ -233,7 +233,7 @@ extension MealList: UITableViewDataSource {
 extension MealList: UITableViewDelegate {
     //선택
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print("\(indexPath)가 선택!")
+        //print("\(indexPath)가 선택!")
         //NavigationController pushViewController
         let meal = MealDetail(meal: [self.meal[indexPath.row]])
         self.navigationController?.pushViewController(meal, animated: true)
@@ -242,5 +242,13 @@ extension MealList: UITableViewDelegate {
     //cell height
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return FixedCommonSet.tableViewCellHeight
+    }
+    
+    func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "mealListCell", for: indexPath) as! MealListCell
+        cell.imageView?.kf.cancelDownloadTask()
+        
+        //self.imageView?.setImage(with: meal.foodImage)
+        
     }
 }

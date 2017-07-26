@@ -30,11 +30,11 @@ final class RestaurantListSearchCell: UITableViewCell {
         //certification = "(사업자 등록증 인증 업체)"
         
         if restaurantSearch.certification == "y" {
+            self.textLabel?.textColor = .blue
             certification = "(사업자 등록증 인증 업체)"
-            self.textLabel?.textColor = .red
         } else {
             certification = "(사업자 등록증 미인증 업체)"
-            self.textLabel?.textColor = .blue
+            self.textLabel?.textColor = .red
         }
         self.detailTextLabel?.text = certification + "\n"
                                     + "주소 : " + restaurantSearch.address + "\n"

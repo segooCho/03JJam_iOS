@@ -224,7 +224,7 @@ extension RestaurantListSearch: UITableViewDelegate {
     
     //cell 선택
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print("\(indexPath)가 선택!")
+        //print("\(indexPath)가 선택!")
         var restaurantSearch = self.restaurantSearch[indexPath.row]
         restaurantSearch.isDone = !restaurantSearch.isDone
         self.restaurantSearch[indexPath.row] = restaurantSearch

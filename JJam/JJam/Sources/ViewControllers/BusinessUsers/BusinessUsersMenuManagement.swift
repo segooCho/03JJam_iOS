@@ -239,7 +239,7 @@ extension BusinessUsersMenuManagement: UITableViewDelegate {
     
     //cell 선택
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print("\(indexPath)가 선택!")
+        //print("\(indexPath)가 선택!")
         var menu = self.menu[indexPath.row]
         menu.isDone = !menu.isDone
         self.menu[indexPath.row] = menu

@@ -20,7 +20,6 @@
 		843069461F1E51AA008B7DEF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843069241F1E51AA008B7DEF /* AppDelegate.swift */; };
 		843069471F1E51AA008B7DEF /* FixedCommonSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843069261F1E51AA008B7DEF /* FixedCommonSet.swift */; };
 		843069481F1E51AA008B7DEF /* UICommonSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843069271F1E51AA008B7DEF /* UICommonSet.swift */; };
-		843069491F1E51AA008B7DEF /* Detail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8430692B1F1E51AA008B7DEF /* Detail.swift */; };
 		8430694A1F1E51AA008B7DEF /* InterestRestaurant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8430692C1F1E51AA008B7DEF /* InterestRestaurant.swift */; };
 		8430694B1F1E51AA008B7DEF /* Meal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8430692D1F1E51AA008B7DEF /* Meal.swift */; };
 		8430694C1F1E51AA008B7DEF /* RestaurantSearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8430692E1F1E51AA008B7DEF /* RestaurantSearch.swift */; };
@@ -53,6 +52,8 @@
 		845C07D91F20B4B0008A6F9F /* SignUp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 845C07D81F20B4B0008A6F9F /* SignUp.swift */; };
 		846417321F2199BF0029BC78 /* UITextViewPlaceholder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 846417311F2199BF0029BC78 /* UITextViewPlaceholder.swift */; };
 		846417351F2243270029BC78 /* GeneralUsersNetWorking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 846417341F2243270029BC78 /* GeneralUsersNetWorking.swift */; };
+		849D93851F283682004776E7 /* UIImageViewSetImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849D93841F283682004776E7 /* UIImageViewSetImage.swift */; };
+		849D93A21F28624B004776E7 /* NoImageFound.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 849D93A11F28624B004776E7 /* NoImageFound.jpg */; };
 		84AB5D351F26336000EC5099 /* NotificationCommonSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84AB5D341F26336000EC5099 /* NotificationCommonSet.swift */; };
 		84FC03461F1A2D3A00FC96BB /* 01.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 84FC033C1F1A2D3A00FC96BB /* 01.jpg */; };
 		84FC03471F1A2D3A00FC96BB /* 02.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 84FC033D1F1A2D3A00FC96BB /* 02.jpg */; };
@@ -82,7 +83,6 @@
 		843069241F1E51AA008B7DEF /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		843069261F1E51AA008B7DEF /* FixedCommonSet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FixedCommonSet.swift; sourceTree = "<group>"; };
 		843069271F1E51AA008B7DEF /* UICommonSet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UICommonSet.swift; sourceTree = "<group>"; };
-		8430692B1F1E51AA008B7DEF /* Detail.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Detail.swift; sourceTree = "<group>"; };
 		8430692C1F1E51AA008B7DEF /* InterestRestaurant.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InterestRestaurant.swift; sourceTree = "<group>"; };
 		8430692D1F1E51AA008B7DEF /* Meal.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Meal.swift; sourceTree = "<group>"; };
 		8430692E1F1E51AA008B7DEF /* RestaurantSearch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RestaurantSearch.swift; sourceTree = "<group>"; };
@@ -115,6 +115,8 @@
 		845C07D81F20B4B0008A6F9F /* SignUp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUp.swift; sourceTree = "<group>"; };
 		846417311F2199BF0029BC78 /* UITextViewPlaceholder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UITextViewPlaceholder.swift; sourceTree = "<group>"; };
 		846417341F2243270029BC78 /* GeneralUsersNetWorking.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GeneralUsersNetWorking.swift; sourceTree = "<group>"; };
+		849D93841F283682004776E7 /* UIImageViewSetImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIImageViewSetImage.swift; sourceTree = "<group>"; };
+		849D93A11F28624B004776E7 /* NoImageFound.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = NoImageFound.jpg; sourceTree = "<group>"; };
 		84AB5D341F26336000EC5099 /* NotificationCommonSet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationCommonSet.swift; sourceTree = "<group>"; };
 		84FC033C1F1A2D3A00FC96BB /* 01.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 01.jpg; sourceTree = "<group>"; };
 		84FC033D1F1A2D3A00FC96BB /* 02.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 02.jpg; sourceTree = "<group>"; };
@@ -216,6 +218,7 @@
 				843069261F1E51AA008B7DEF /* FixedCommonSet.swift */,
 				843069271F1E51AA008B7DEF /* UICommonSet.swift */,
 				846417311F2199BF0029BC78 /* UITextViewPlaceholder.swift */,
+				849D93841F283682004776E7 /* UIImageViewSetImage.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -245,7 +248,6 @@
 		8430692A1F1E51AA008B7DEF /* GeneralUsers */ = {
 			isa = PBXGroup;
 			children = (
-				8430692B1F1E51AA008B7DEF /* Detail.swift */,
 				8430692C1F1E51AA008B7DEF /* InterestRestaurant.swift */,
 				8430692D1F1E51AA008B7DEF /* Meal.swift */,
 				8430692E1F1E51AA008B7DEF /* RestaurantSearch.swift */,
@@ -336,6 +338,7 @@
 		84FC033B1F1A2D3A00FC96BB /* image */ = {
 			isa = PBXGroup;
 			children = (
+				849D93A11F28624B004776E7 /* NoImageFound.jpg */,
 				84FC033C1F1A2D3A00FC96BB /* 01.jpg */,
 				84FC033D1F1A2D3A00FC96BB /* 02.jpg */,
 				84FC033E1F1A2D3A00FC96BB /* 03.jpg */,
@@ -431,6 +434,7 @@
 				84FC034C1F1A2D3A00FC96BB /* 07.jpg in Resources */,
 				84FC034F1F1A2D3A00FC96BB /* 10.jpg in Resources */,
 				84FC034B1F1A2D3A00FC96BB /* 06.jpg in Resources */,
+				849D93A21F28624B004776E7 /* NoImageFound.jpg in Resources */,
 				840392841F160D410033BCBD /* Info.plist in Resources */,
 				840392811F160D410033BCBD /* Main.storyboard in Resources */,
 				8403927F1F160D410033BCBD /* Assets.xcassets in Resources */,
@@ -516,10 +520,10 @@
 				843069581F1E51AA008B7DEF /* InterestRestaurantListCell.swift in Sources */,
 				84183C1A1F1F142A00EECDD0 /* SettingsCell.swift in Sources */,
 				843069711F1E5E79008B7DEF /* BusinessUsersMealDetailImageCell.swift in Sources */,
+				849D93851F283682004776E7 /* UIImageViewSetImage.swift in Sources */,
 				843069571F1E51AA008B7DEF /* GeneralUsersSettings.swift in Sources */,
 				84183C1C1F1F236B00EECDD0 /* Menu.swift in Sources */,
 				840007F11F274D54009702CB /* RestaurantCertification.swift in Sources */,
-				843069491F1E51AA008B7DEF /* Detail.swift in Sources */,
 				8430694E1F1E51AA008B7DEF /* GeneralUsersTabBar.swift in Sources */,
 				8430695C1F1E51AA008B7DEF /* RestaurantListSearchCell.swift in Sources */,
 				843069631F1E593A008B7DEF /* BusinessUsersMealList.swift in Sources */,
