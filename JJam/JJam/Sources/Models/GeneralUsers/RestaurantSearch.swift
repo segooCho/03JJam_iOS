@@ -16,6 +16,8 @@ struct RestaurantSearch: Mappable {
     var contactNumber: String!
     var representative: String!
     var isDone: Bool!
+    var message: String?                //리턴 메시지
+
     
     init?(map: Map) {
     }
@@ -28,6 +30,7 @@ struct RestaurantSearch: Mappable {
         self.contactNumber <- map["contactNumber"]
         self.representative <- map["representative"]
         self.isDone = false
+        self.message <- map["message"]
     }
 }
 

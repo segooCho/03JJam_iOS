@@ -9,6 +9,8 @@
 import UIKit
 
 final class MealListCell: UITableViewCell {
+    fileprivate var segmentedIndexAndCode = 0
+    
     //MARK: init
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: .subtitle, reuseIdentifier: reuseIdentifier)
@@ -19,7 +21,8 @@ final class MealListCell: UITableViewCell {
     }
     
     //MARK: configure
-    func configure(meal: Meal) {
+    func configure(meal: Meal, segmentedIndexAndCode: Int) {
+        self.segmentedIndexAndCode = segmentedIndexAndCode
         self.backgroundColor = .white
        
         //image
@@ -28,7 +31,7 @@ final class MealListCell: UITableViewCell {
         
         //TODO :: image 사이즈 고정 && image 라운드 재정리 필요
         //image 사이즈 고정
-        let itemSize = CGSize(width:42.0, height:42.0)
+        let itemSize = CGSize(width:57.0, height:57.0)
         UIGraphicsBeginImageContextWithOptions(itemSize, false, 0.0)
         let imageRect = CGRect(x:0.0, y:0.0, width:itemSize.width, height:itemSize.height)
         self.imageView!.image?.draw(in:imageRect)
@@ -43,12 +46,27 @@ final class MealListCell: UITableViewCell {
         self.imageView!.clipsToBounds = true
         self.imageView!.contentMode = UIViewContentMode.scaleAspectFill
  
-        //일자 (요일) 아침,점심,저녁
-        self.textLabel!.text = meal.mealDate + " (" + meal.mealDateLabel + ") " + meal.division
         
-        //요약 내용
-        self.detailTextLabel!.text = "오늘의 메뉴 : " + meal.stapleFood + "," + meal.soup + "," + meal.sideDish1 + "," + meal.sideDish2 + ","
-                                    + meal.sideDish3 + "," + meal.sideDish4 + "," + meal.dessert
+        self.detailTextLabel!.numberOfLines = 3
+        //오늘 식단, 계획 식단, 과거 식단 & Image 식단
+        switch segmentedIndexAndCode {
+        case 3 :
+            //Image 식단
+            self.textLabel!.text = meal.mealDate + " (" + meal.mealDateLabel + ")"
+            //요약 내용
+            self.detailTextLabel!.text = ""
+
+        default :
+            //오늘 식단, 계획 식단, 과거 식단
+            //일자 (요일) 아침,점심,저녁
+            self.textLabel!.text = meal.mealDate + " (" + meal.mealDateLabel + ") " + meal.division
+            //요약 내용
+            self.detailTextLabel!.numberOfLines = 3
+            self.detailTextLabel!.text = "위치 : " + meal.location + "\n"
+                                       + "메뉴 : " + meal.stapleFood + "," + meal.soup + "," + meal.sideDish1 + ","
+                                       + meal.sideDish2 + "," + meal.sideDish3 + "," + meal.sideDish4 + "," + meal.dessert
+        }
+        
         self.accessoryType = .disclosureIndicator
     }
     

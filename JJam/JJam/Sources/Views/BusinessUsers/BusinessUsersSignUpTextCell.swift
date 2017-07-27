@@ -24,7 +24,7 @@ final class BusinessUsersSignUpTextCell: UITableViewCell {
     }
     
     //MARK: UI
-    //아이디
+    //사용자ID
     fileprivate let idLabel = UILabel()
     fileprivate let idTextField = UITextField()
     //패스워드
@@ -57,8 +57,7 @@ final class BusinessUsersSignUpTextCell: UITableViewCell {
         super.init(style: .subtitle, reuseIdentifier: reuseIdentifier)
         self.selectionStyle = .none
         
-        //TODO :: SelectBox 처리
-        UICommonSetLabel(self.idLabel, text: "아이디")
+        UICommonSetLabel(self.idLabel, text: "사용자ID")
         UICommonSetTextFieldEnable(self.idTextField, placeholderText: self.idLabel.text!)
         
         UICommonSetLabel(self.passwordLabel, text: "패스워드")

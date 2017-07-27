@@ -92,6 +92,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
      let alertConfirm = UIAlertAction(
      title: NSLocalizedString("Confirm", comment: "확인"),
      style: .default) { _ in
+     // 확인 후 작업
      }
      alertController.addAction(alertConfirm)
      self.present(alertController, animated: true, completion: nil)

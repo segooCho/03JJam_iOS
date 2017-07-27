@@ -318,9 +318,9 @@
 			isa = PBXGroup;
 			children = (
 				843069401F1E51AA008B7DEF /* InterestRestaurantListCell.swift */,
+				843069431F1E51AA008B7DEF /* MealListCell.swift */,
 				843069411F1E51AA008B7DEF /* MealDetailImageCell.swift */,
 				843069421F1E51AA008B7DEF /* MealDetailTextCell.swift */,
-				843069431F1E51AA008B7DEF /* MealListCell.swift */,
 				843069441F1E51AA008B7DEF /* RestaurantListSearchCell.swift */,
 			);
 			path = GeneralUsers;

@@ -22,7 +22,7 @@ final class MealList: UIViewController {
     //MARK: UI
     fileprivate let activityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: .gray)
     fileprivate let segmentedControl = UISegmentedControl()
-    fileprivate let segmentedTitles: Array<String> = ["오늘 식단","계획 식단","지난 식단"]
+    fileprivate let segmentedTitles: Array<String> = ["오늘 식단","계획 식단","지난 식단","사진 식단"]
     fileprivate let label = UILabel()
     fileprivate let textView = UITextView()
     fileprivate let tableView = UITableView(frame: .zero, style: .plain)
@@ -103,6 +103,7 @@ final class MealList: UIViewController {
         self.tableView.dataSource = self
         self.tableView.delegate = self
 
+        self.view.addSubview(self.activityIndicatorView)
         self.view.addSubview(self.segmentedControl)
         self.view.addSubview(self.label)
         self.view.addSubview(self.textView)
@@ -116,6 +117,9 @@ final class MealList: UIViewController {
     override func updateViewConstraints() {
         if !self.didSetupConstraints {
             self.didSetupConstraints = true
+            self.activityIndicatorView.snp.makeConstraints { make in
+                make.center.equalToSuperview()
+            }
             self.segmentedControl.snp.makeConstraints { make in
                 make.left.equalTo(40)
                 make.right.equalTo(-40)
@@ -134,10 +138,11 @@ final class MealList: UIViewController {
                 make.top.equalTo(self.label.snp.bottom).offset(5)
                 make.height.equalTo(100)
             }
+            
             self.tableView.snp.makeConstraints { make in
                 make.top.equalTo(self.textView.snp.bottom).offset(3)
                 make.left.right.equalToSuperview()
-                make.bottom.equalTo(self.view.snp.bottom)
+                make.bottom.equalTo(self.bottomLayoutGuide.snp.top)
             }
         }
         super.updateViewConstraints()
@@ -163,14 +168,14 @@ final class MealList: UIViewController {
                     self.label.textColor = .red
 
                     let alertController = UIAlertController(
-                        title: "확인",
+                        title: self.title,
                         message: message,
                         preferredStyle: .alert
                     )
                     let alertConfirm = UIAlertAction(
                         title: "이전 화면 돌아가기",
                         style: .default) { _ in
-                            //이전 화면
+                            // 확인 후 작업
                             _ = self.navigationController?.popViewController(animated: true)
                     }
                     alertController.addAction(alertConfirm)
@@ -201,8 +206,26 @@ final class MealList: UIViewController {
         self.activityIndicatorView.startAnimating()
         GeneralUsersNetWorking.mealSearch(restaurant_Id: self.interestRestaurantId, segmentedIndexAndCode: self.segmentedIndexAndCode) { [weak self] response in
             guard let `self` = self else { return }
-            self.meal = response
             self.activityIndicatorView.stopAnimating()
+            if response.count > 0 {
+                let message = response[0].message
+                if message != nil {
+                    let alertController = UIAlertController(
+                        title: "확인",
+                        message: message,
+                        preferredStyle: .alert
+                    )
+                    let alertConfirm = UIAlertAction(
+                        title: "확인",
+                        style: .default) { _ in
+                            // 확인 후 작업
+                    }
+                    alertController.addAction(alertConfirm)
+                    self.present(alertController, animated: true, completion: nil)
+                    return
+                }
+            }
+            self.meal = response
             self.tableView.reloadData()
         }
     }
@@ -235,7 +258,7 @@ extension MealList: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "mealListCell", for: indexPath) as! MealListCell
-        cell.configure(meal: self.meal[indexPath.item])
+        cell.configure(meal: self.meal[indexPath.item],segmentedIndexAndCode: self.segmentedIndexAndCode)
         return cell
     }
 }
@@ -251,14 +274,6 @@ extension MealList: UITableViewDelegate {
     
     //cell height
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return FixedCommonSet.tableViewCellHeight
-    }
-    
-    func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "mealListCell", for: indexPath) as! MealListCell
-        cell.imageView?.kf.cancelDownloadTask()
-        
-        //self.imageView?.setImage(with: meal.foodImage)
-        
+        return FixedCommonSet.tableViewCellHeight70
     }
 }

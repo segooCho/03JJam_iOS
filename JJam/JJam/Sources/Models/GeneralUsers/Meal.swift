@@ -23,7 +23,8 @@ struct Meal: Mappable {
     var dessert: String!
     var remarks: String!
     var foodImage: String!
-    
+    var message: String?            //리턴 메시지
+
     
     var summary: String!
     
@@ -45,6 +46,7 @@ struct Meal: Mappable {
         self.dessert <- map["dessert"]
         self.remarks <- map["remarks"]
         self.foodImage <- map["foodImage"]
+        self.message <- map["message"]
     }
 }
 

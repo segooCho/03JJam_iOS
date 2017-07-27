@@ -94,7 +94,7 @@ extension MealDetail: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.row == 0 {
             let cell = tableView.dequeueReusableCell(withIdentifier: "mealDetailImageCell", for: indexPath) as! MealDetailImageCell
-            cell.configure(foodImage: self.meal[0].foodImage)
+            cell.configure(foodImage: self.meal[0].foodImage!)
             return cell
         } else {
             let cell = tableView.dequeueReusableCell(withIdentifier: "mealDetailTextCell", for: indexPath) as! MealDetailTextCell

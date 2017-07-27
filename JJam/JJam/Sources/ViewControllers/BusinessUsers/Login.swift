@@ -47,6 +47,7 @@ final class Login: UIViewController {
         UICommonSetButton(self.signUpButton, setTitleText: "회원 가입", colorInt: 1)
         self.signUpButton.addTarget(self, action: #selector(signUpButtonDidTap), for: .touchUpInside)
 
+        self.view.addSubview(self.activityIndicatorView)
         self.view.addSubview(self.usernameTextField)
         self.view.addSubview(self.passwordTextField)
         self.view.addSubview(self.loginButton)
@@ -68,6 +69,9 @@ final class Login: UIViewController {
     override func updateViewConstraints() {
         if !self.didSetupConstraints {
             self.didSetupConstraints = true
+            self.activityIndicatorView.snp.makeConstraints { make in
+                make.center.equalToSuperview()
+            }
             self.usernameTextField.snp.makeConstraints { make in
                 make.left.equalTo(15)
                 make.right.equalTo(-15)
@@ -107,8 +111,21 @@ final class Login: UIViewController {
         textField.textColor = .black
     }
     
-    //로그인
+    //UICommonSetShakeTextField() 다른 포커스에서 넘어오면 위치 오류가 있어 포커스를 먼저 이동 후 delay 가 필요함
+    //UICommonSetShakeTextField() 내 포커스이동 처리는 유지함
     func loginButtonDidTap() {
+        if let username = self.usernameTextField.text, username.isEmpty {
+            self.usernameTextField.becomeFirstResponder()
+        } else if let password = self.passwordTextField.text, password.isEmpty {
+            self.passwordTextField.becomeFirstResponder()
+        }
+        
+        let delay = 0.1 // time in seconds
+        Timer.scheduledTimer(timeInterval: delay, target: self, selector: #selector(loginValidation), userInfo: nil, repeats: false)
+    }
+    
+    //로그인
+    func loginValidation() {
         guard let username = self.usernameTextField.text, !username.isEmpty else {
             UICommonSetShakeTextField(self.usernameTextField)
             return
@@ -117,14 +134,8 @@ final class Login: UIViewController {
             UICommonSetShakeTextField(self.passwordTextField)
             return
         }
-        
-        //로그인
+        //로그인 Nerworking
         restaurantLogin()
-    }
-    
-    //회원 가입
-    func signUpButtonDidTap() {
-        AppDelegate.instance?.BusinessUsersSignUpScreen()
     }
     
     //로그인
@@ -145,8 +156,12 @@ final class Login: UIViewController {
                     let alertConfirm = UIAlertAction(
                         title: "확인",
                         style: .default) { _ in
-                            //TODO : message를 이용한 focus 처리
-                            //TODO : 서버 단절시 확인
+                            // 확인 후 작업
+                            if message == "패스워드가 잘못되었습니다." {
+                                self.passwordTextField.becomeFirstResponder()
+                            } else if message == "존재하는 않는 사용자ID 입니다." {
+                                self.usernameTextField.becomeFirstResponder()
+                            }
                     }
                     alertController.addAction(alertConfirm)
                     self.present(alertController, animated: true, completion: nil)
@@ -156,26 +171,17 @@ final class Login: UIViewController {
             }
         }
     }
+    
+    //회원 가입
+    func signUpButtonDidTap() {
+        AppDelegate.instance?.BusinessUsersSignUpScreen()
+    }
 }
 
 extension Login: UITextFieldDelegate {
     //TextField 리턴키 처리
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        if(textField.isEqual(self.usernameTextField)){
-            guard let username = self.usernameTextField.text, !username.isEmpty else {
-                UICommonSetShakeTextField(self.usernameTextField)
-                return true
-            }
-            self.passwordTextField.becomeFirstResponder()
-            return true
-        } else if(textField.isEqual(self.passwordTextField)){
-            guard let password = self.passwordTextField.text, !password.isEmpty else {
-                UICommonSetShakeTextField(self.passwordTextField)
-                return true
-            }
-            loginButtonDidTap()
-            return true
-        }
+        loginButtonDidTap()
         return true
     }
 }
