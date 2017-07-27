@@ -17,7 +17,5 @@ extension UIImageView {
             self.kf.setImage(with: nil)
         }
     }
-    
-    
 }
 

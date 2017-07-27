@@ -10,7 +10,7 @@ import UIKit
 
 final class Login: UIViewController {
     //MARK: Properties
-    var didSetupConstraints = false
+    fileprivate var didSetupConstraints = false
     
     // MARK: UI
     fileprivate let activityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: .gray)
@@ -174,7 +174,8 @@ final class Login: UIViewController {
     
     //회원 가입
     func signUpButtonDidTap() {
-        AppDelegate.instance?.BusinessUsersSignUpScreen()
+        let businessUsersSignUp = BusinessUsersSignUp()
+        self.navigationController?.pushViewController(businessUsersSignUp, animated: true)
     }
 }
 

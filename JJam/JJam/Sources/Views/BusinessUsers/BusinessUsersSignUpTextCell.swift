@@ -10,6 +10,18 @@
 import UIKit
 
 final class BusinessUsersSignUpTextCell: UITableViewCell {
+    //MARK: Properties
+    struct signUp {
+        static var id = ""
+        static var password = ""
+        static var password2 = ""
+        static var businessNumber = ""
+        static var companyName = ""
+        static var address = ""
+        static var contactNumber = ""
+        static var representative = ""
+    }
+    
     //MARK: Constants
     fileprivate struct Metric {
         static let labelLeft = CGFloat(10)
@@ -29,7 +41,7 @@ final class BusinessUsersSignUpTextCell: UITableViewCell {
     fileprivate let idTextField = UITextField()
     //패스워드
     fileprivate let passwordLabel = UILabel()
-    fileprivate let passwordTextField = UITextField()
+    public let passwordTextField = UITextField()
     //패스워드2
     fileprivate let password2Label = UILabel()
     fileprivate let password2TextField = UITextField()
@@ -48,9 +60,6 @@ final class BusinessUsersSignUpTextCell: UITableViewCell {
     //대표자
     fileprivate let representativeLabel = UILabel()
     fileprivate let representativeTextField = UITextField()
-    
-    
-    
     
     //MARK: init
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
@@ -99,6 +108,10 @@ final class BusinessUsersSignUpTextCell: UITableViewCell {
         self.contentView.addSubview(self.contactNumberTextField)
         self.contentView.addSubview(self.representativeLabel)
         self.contentView.addSubview(self.representativeTextField)
+        
+        self.idTextField.delegate = self
+        self.passwordTextField.delegate = self
+        
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -116,6 +129,18 @@ final class BusinessUsersSignUpTextCell: UITableViewCell {
         self.contactNumberTextField.text = signUp.contactNumber
         self.representativeTextField.text = signUp.representative
         self.setNeedsLayout()
+    }
+
+    func setInputData(){
+        signUp.id = self.idTextField.text!
+        signUp.password = self.passwordTextField.text!
+        signUp.password2 = self.password2TextField.text!
+        signUp.businessNumber = self.businessNumberTextField.text!
+        signUp.companyName = self.companyNameTextField.text!
+        signUp.address = self.addressTextView.text!
+        signUp.contactNumber = self.contactNumberTextField.text!
+        signUp.representative = self.representativeTextField.text!
+        print("setInputData / id :", signUp.id)
     }
     
     //MARK: Size
@@ -247,3 +272,25 @@ final class BusinessUsersSignUpTextCell: UITableViewCell {
         }
     }
 }
+
+
+extension BusinessUsersSignUpTextCell: UITextFieldDelegate {
+    //TextField 포커스 아웃
+    func textFieldShouldEndEditing(_ textField: UITextField) -> Bool {
+        //signUp.id = self.idTextField.text!
+        //signUp.password = self.passwordTextField.text!
+        return true
+    }
+    
+    func textFieldDidEndEditing(_ textField: UITextField) -> Bool {
+        //signUp.id = self.idTextField.text!
+        //signUp.password = self.passwordTextField.text!
+        return true
+        
+    }
+    
+}
+
+
+
+

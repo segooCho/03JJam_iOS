@@ -11,17 +11,11 @@ import UIKit
 
 final class BusinessUsersSignUp: UIViewController {
     //MARK: Properties
-    var didSetupConstraints = false
-    var signUp: [SignUp] = [] /*{
-     didSet {
-     self.saveAll()
-     }
-     }
-     */
+    fileprivate var didSetupConstraints = false
+    fileprivate var signUp: [SignUp] = []
     
     //MARK: UI
-    fileprivate let detailTableView = UITableView(frame: .zero, style: .plain)
-    //fileprivate let progressView = UIProgressView()
+    fileprivate let tableView = UITableView(frame: .zero, style: .plain)
     
     //MARK: init
     init() {
@@ -55,11 +49,11 @@ final class BusinessUsersSignUp: UIViewController {
             action: #selector(addButtonDidTap)
         )
 
-        self.detailTableView.register(BusinessUsersSignUpTextCell.self, forCellReuseIdentifier: "businessUsersSignUpTextCell")
-        self.detailTableView.register(BusinessUsersSignUpImageCell.self, forCellReuseIdentifier: "businessUsersSignUpImageCell")
-        self.detailTableView.dataSource = self
-        self.detailTableView.delegate = self
-        self.view.addSubview(self.detailTableView)
+        self.tableView.register(BusinessUsersSignUpTextCell.self, forCellReuseIdentifier: "businessUsersSignUpTextCell")
+        self.tableView.register(BusinessUsersSignUpImageCell.self, forCellReuseIdentifier: "businessUsersSignUpImageCell")
+        self.tableView.dataSource = self
+        self.tableView.delegate = self
+        self.view.addSubview(self.tableView)
         //updateViewConstraints 자동 호출
         self.view.setNeedsUpdateConstraints()
     }
@@ -69,7 +63,7 @@ final class BusinessUsersSignUp: UIViewController {
     override func updateViewConstraints() {
         if !self.didSetupConstraints {
             self.didSetupConstraints = true
-            self.detailTableView.snp.makeConstraints { make in
+            self.tableView.snp.makeConstraints { make in
                 make.edges.equalToSuperview()
             }
         }
@@ -83,12 +77,23 @@ final class BusinessUsersSignUp: UIViewController {
     
     //MARK: ACTION
     func cancelButtonDidTap() {
-        AppDelegate.instance?.LoginScreen()
+        _ = self.navigationController?.popViewController(animated: true)
     }
     
     func addButtonDidTap() {
-        AppDelegate.instance?.LoginScreen()
+        //AppDelegate.instance?.LoginScreen()
+        //TODO :: 저장
+
+        let index = IndexPath(row: 0, section: 0)
+        let cell: BusinessUsersSignUpTextCell = self.tableView.cellForRow(at: index) as! BusinessUsersSignUpTextCell
+        cell.setInputData()
+        
+        
+        print("id : ", BusinessUsersSignUpTextCell.signUp.id)
+        print("address : ", BusinessUsersSignUpTextCell.signUp.address)
+        
     }
+
 }
 
 

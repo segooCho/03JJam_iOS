@@ -59,13 +59,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         self.window?.rootViewController = navigationController
     }
     
-    //회원가입
-    func BusinessUsersSignUpScreen() {
-        let bsusinessUsersSignUp = BusinessUsersSignUp()
-        let navigationController = UINavigationController(rootViewController: bsusinessUsersSignUp)
-        self.window?.rootViewController = navigationController
-    }
-    
     //BusinessUsersTabBar(식단, 설정)
     func BusinessUsersTabBarScreen(selectIndex: Int) {
         //BusinessUsersMealList()                   : 식단
