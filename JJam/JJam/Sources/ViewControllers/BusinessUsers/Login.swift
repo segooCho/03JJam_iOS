@@ -41,10 +41,10 @@ final class Login: UIViewController {
         self.passwordTextField.addTarget(self, action: #selector(textFieldDidChangeText), for: .editingChanged)
         self.passwordTextField.delegate = self
         
-        UICommonSetButton(self.loginButton, setTitleText: "로그인", colorInt: 0)
+        UICommonSetButton(self.loginButton, setTitleText: "로그인", color: 0)
         self.loginButton.addTarget(self, action: #selector(loginButtonDidTap), for: .touchUpInside)
         
-        UICommonSetButton(self.signUpButton, setTitleText: "회원 가입", colorInt: 1)
+        UICommonSetButton(self.signUpButton, setTitleText: "회원 가입", color: 1)
         self.signUpButton.addTarget(self, action: #selector(signUpButtonDidTap), for: .touchUpInside)
 
         self.view.addSubview(self.activityIndicatorView)

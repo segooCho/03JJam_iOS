@@ -304,12 +304,12 @@
 		8430693E1F1E51AA008B7DEF /* BusinessUsers */ = {
 			isa = PBXGroup;
 			children = (
+				845C07D21F20B39D008A6F9F /* BusinessUsersSignUpTextCell.swift */,
+				845C07D41F20B3BB008A6F9F /* BusinessUsersSignUpImageCell.swift */,
 				843069681F1E5AAA008B7DEF /* BusinessUsersMealListCell.swift */,
 				843069701F1E5E79008B7DEF /* BusinessUsersMealDetailImageCell.swift */,
 				843069721F1E5E86008B7DEF /* BusinessUsersMealDetailTextCell.swift */,
 				84183C1F1F1F25FC00EECDD0 /* BusinessUsersMenuCell.swift */,
-				845C07D21F20B39D008A6F9F /* BusinessUsersSignUpTextCell.swift */,
-				845C07D41F20B3BB008A6F9F /* BusinessUsersSignUpImageCell.swift */,
 			);
 			path = BusinessUsers;
 			sourceTree = "<group>";

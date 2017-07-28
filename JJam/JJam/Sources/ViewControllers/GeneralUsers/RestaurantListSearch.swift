@@ -53,7 +53,7 @@ final class RestaurantListSearch: UIViewController {
         self.textField.addTarget(self, action: #selector(textFieldDidChangeText), for: .editingChanged)
         self.textField.delegate = self
         
-        UICommonSetButton(self.button, setTitleText: "찾기", colorInt: 0)
+        UICommonSetButton(self.button, setTitleText: "찾기", color: 0)
         self.button.addTarget(self, action: #selector(searchButtonDidTap), for: .touchUpInside)
 
         self.tableView.register(RestaurantListSearchCell.self, forCellReuseIdentifier: "restaurantListSearchCell")

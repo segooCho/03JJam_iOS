@@ -12,14 +12,14 @@ import UIKit
 final class BusinessUsersSignUpTextCell: UITableViewCell {
     //MARK: Properties
     struct signUp {
-        static var id = ""
-        static var password = ""
-        static var password2 = ""
-        static var businessNumber = ""
-        static var companyName = ""
-        static var address = ""
-        static var contactNumber = ""
-        static var representative = ""
+        static var id: String = ""
+        static var password: String = ""
+        static var password2: String = ""
+        static var businessNumber: String = ""
+        static var companyName: String = ""
+        static var address: String = ""
+        static var contactNumber: String = ""
+        static var representative: String = ""
     }
     
     //MARK: Constants
@@ -109,9 +109,7 @@ final class BusinessUsersSignUpTextCell: UITableViewCell {
         self.contentView.addSubview(self.representativeLabel)
         self.contentView.addSubview(self.representativeTextField)
         
-        self.idTextField.delegate = self
-        self.passwordTextField.delegate = self
-        
+        self.idTextField.becomeFirstResponder()
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -131,6 +129,7 @@ final class BusinessUsersSignUpTextCell: UITableViewCell {
         self.setNeedsLayout()
     }
 
+    //BusinessUsersSignUp에서 struct의 값을 접근하기 전에 값을 셋팅힌다.
     func setInputData(){
         signUp.id = self.idTextField.text!
         signUp.password = self.passwordTextField.text!
@@ -140,7 +139,6 @@ final class BusinessUsersSignUpTextCell: UITableViewCell {
         signUp.address = self.addressTextView.text!
         signUp.contactNumber = self.contactNumberTextField.text!
         signUp.representative = self.representativeTextField.text!
-        print("setInputData / id :", signUp.id)
     }
     
     //MARK: Size
@@ -272,25 +270,4 @@ final class BusinessUsersSignUpTextCell: UITableViewCell {
         }
     }
 }
-
-
-extension BusinessUsersSignUpTextCell: UITextFieldDelegate {
-    //TextField 포커스 아웃
-    func textFieldShouldEndEditing(_ textField: UITextField) -> Bool {
-        //signUp.id = self.idTextField.text!
-        //signUp.password = self.passwordTextField.text!
-        return true
-    }
-    
-    func textFieldDidEndEditing(_ textField: UITextField) -> Bool {
-        //signUp.id = self.idTextField.text!
-        //signUp.password = self.passwordTextField.text!
-        return true
-        
-    }
-    
-}
-
-
-
 

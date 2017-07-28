@@ -28,11 +28,12 @@ func UICommonSetLabel(_ uIKit: UILabel, text: String) {
 }
 
 //MARK: UIButton Common Set
-func UICommonSetButton(_ uIKit: UIButton, setTitleText: String, colorInt: Int) {
-    if (colorInt == 0){
-        uIKit.backgroundColor = uIKit.tintColor
-    } else {
+func UICommonSetButton(_ uIKit: UIButton, setTitleText: String, color: Int) {
+    switch color {
+    case 1:
         uIKit.backgroundColor = .red
+    default:
+        uIKit.backgroundColor = uIKit.tintColor
     }
     
     uIKit.layer.cornerRadius = 5
