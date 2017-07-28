@@ -68,29 +68,39 @@ final class BusinessUsersSignUpTextCell: UITableViewCell {
         
         UICommonSetLabel(self.idLabel, text: "사용자ID")
         UICommonSetTextFieldEnable(self.idTextField, placeholderText: self.idLabel.text!)
-        
+        self.idTextField.delegate = self
+
         UICommonSetLabel(self.passwordLabel, text: "패스워드")
         UICommonSetTextFieldEnable(self.passwordTextField, placeholderText: self.passwordLabel.text!)
+        self.passwordTextField.delegate = self
         self.passwordTextField.isSecureTextEntry = true
         
         UICommonSetLabel(self.password2Label, text: "패스워드 확인")
         UICommonSetTextFieldEnable(self.password2TextField, placeholderText: self.password2Label.text!)
+        self.password2TextField.delegate = self
         self.password2TextField.isSecureTextEntry = true
         
         UICommonSetLabel(self.businessNumberLabel, text: "사업자 번호")
         UICommonSetTextFieldEnable(self.businessNumberTextField, placeholderText: self.businessNumberLabel.text!)
+        self.businessNumberTextField.delegate = self
         
         UICommonSetLabel(self.companyNameLabel, text: "상호")
         UICommonSetTextFieldEnable(self.companyNameTextField, placeholderText: self.companyNameLabel.text!)
+        self.companyNameTextField.delegate = self
         
         UICommonSetLabel(self.addressLabel, text: "주소")
         UICommonSetTextViewEnable(self.addressTextView, placeholderText: self.addressLabel.text!)
+        //self.addressTextView.delegate = self
         
         UICommonSetLabel(self.contactNumberLabel, text: "연락처")
         UICommonSetTextFieldEnable(self.contactNumberTextField, placeholderText: self.contactNumberLabel.text!)
+        self.contactNumberTextField.delegate = self
         
         UICommonSetLabel(self.representativeLabel, text: "대표자")
         UICommonSetTextFieldEnable(self.representativeTextField, placeholderText: self.representativeLabel.text!)
+        self.representativeTextField.delegate = self
+
+
         
         self.contentView.addSubview(self.idLabel)
         self.contentView.addSubview(self.idTextField)
@@ -118,9 +128,20 @@ final class BusinessUsersSignUpTextCell: UITableViewCell {
     
     //MARK: configure
     func configure(signUp: SignUp) {
+        /*
+        signUp.id = self.idTextField.text!
+        signUp.password = self.passwordTextField.text!
+        signUp.password2 = self.password2TextField.text!
+        signUp.businessNumber = self.businessNumberTextField.text!
+        signUp.companyName = self.companyNameTextField.text!
+        signUp.address = self.addressTextView.text!
+        signUp.contactNumber = self.contactNumberTextField.text!
+        signUp.representative = self.representativeTextField.text!
+        */
+        
         self.idTextField.text = signUp.id
-        self.passwordTextField.text = signUp.password
-        self.password2TextField.text = signUp.password2
+        self.passwordTextField.text = ""
+        self.password2TextField.text = ""
         self.businessNumberTextField.text = signUp.businessNumber
         self.companyNameTextField.text = signUp.companyName
         self.addressTextView.text = signUp.address
@@ -130,7 +151,17 @@ final class BusinessUsersSignUpTextCell: UITableViewCell {
     }
 
     //BusinessUsersSignUp에서 struct의 값을 접근하기 전에 값을 셋팅힌다.
-    func setInputData(){
+    func setInputData() -> Bool {
+        var text = ""
+        if text == self.idTextField.text, text.isEmpty {
+            //return [false: "사용자 ID를 입력하세요."]
+            return false
+        }
+        
+        if text == self.passwordTextField.text, text.isEmpty {
+            return false
+        }
+        
         signUp.id = self.idTextField.text!
         signUp.password = self.passwordTextField.text!
         signUp.password2 = self.password2TextField.text!
@@ -139,6 +170,9 @@ final class BusinessUsersSignUpTextCell: UITableViewCell {
         signUp.address = self.addressTextView.text!
         signUp.contactNumber = self.contactNumberTextField.text!
         signUp.representative = self.representativeTextField.text!
+        
+        return true
+        //return [true: ""]
     }
     
     //MARK: Size
@@ -270,4 +304,13 @@ final class BusinessUsersSignUpTextCell: UITableViewCell {
         }
     }
 }
+
+extension BusinessUsersSignUpTextCell: UITextFieldDelegate {
+    //TextField 리턴키 처리
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        self.contentView.endEditing(true)
+        return true
+    }
+}
+
 

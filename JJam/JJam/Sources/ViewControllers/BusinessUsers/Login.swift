@@ -182,7 +182,8 @@ final class Login: UIViewController {
 extension Login: UITextFieldDelegate {
     //TextField 리턴키 처리
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        loginButtonDidTap()
+        self.view.endEditing(true)
+        //loginButtonDidTap()
         return true
     }
 }

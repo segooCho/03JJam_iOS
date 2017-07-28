@@ -1,6 +1,6 @@
 PODS:
   - Alamofire (4.5.0)
-  - Kingfisher (3.10.3)
+  - Kingfisher (3.10.4)
   - ObjectMapper (2.2.8)
   - SnapKit (3.2.0)
   - SwiftyHash (0.7.0)
@@ -14,7 +14,7 @@ DEPENDENCIES:
 
 SPEC CHECKSUMS:
   Alamofire: f28cdffd29de33a7bfa022cbd63ae95a27fae140
-  Kingfisher: a0ac82dc5bcf0388dd74b294cf2cc13730c63436
+  Kingfisher: dc3a4983e86d2dfa89513664983a82340c11a289
   ObjectMapper: 3d571bb5af471c779e1160828cd9ad5c4ef90958
   SnapKit: 1ca44df72cfa543218d177cb8aab029d10d86ea7
   SwiftyHash: 7b7a7b7275e1c8f94ac70153ac73a12c40b36fa2

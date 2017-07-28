@@ -20,7 +20,6 @@ final class RestaurantListSearch: UIViewController {
     fileprivate let button = UIButton()
     fileprivate let tableView = UITableView(frame: .zero, style: .plain)
     
-    
     //MARK: init
     init() {
         super.init(nibName: nil, bundle: nil)
@@ -52,6 +51,7 @@ final class RestaurantListSearch: UIViewController {
         UICommonSetTextFieldEnable(self.textField, placeholderText:"상호 or 주소(읍,면,동)")
         self.textField.addTarget(self, action: #selector(textFieldDidChangeText), for: .editingChanged)
         self.textField.delegate = self
+        //self.textField.isUserInteractionEnabled = true;
         
         UICommonSetButton(self.button, setTitleText: "찾기", color: 0)
         self.button.addTarget(self, action: #selector(searchButtonDidTap), for: .touchUpInside)
@@ -60,11 +60,11 @@ final class RestaurantListSearch: UIViewController {
         self.tableView.dataSource = self
         self.tableView.delegate = self
 
+        self.view.addSubview(self.activityIndicatorView)
         self.view.addSubview(self.textField)
         self.view.addSubview(self.button)
         self.view.addSubview(self.tableView)
-        self.view.addSubview(self.activityIndicatorView)
-
+        
         //updateViewConstraints 자동 호출
         self.view.setNeedsUpdateConstraints()
     }
@@ -75,15 +75,11 @@ final class RestaurantListSearch: UIViewController {
         self.textField.becomeFirstResponder()
     }
     
-    
     //MARK: 애플 추천 방식으로 한번만 화면을 그리도록 한다.
     //setNeedsUpdateConstraints() 필요
     override func updateViewConstraints() {
         if !self.didSetupConstraints {
             self.didSetupConstraints = true
-            self.activityIndicatorView.snp.makeConstraints { make in
-                make.center.equalToSuperview()
-            }
             self.activityIndicatorView.snp.makeConstraints { make in
                 make.center.equalToSuperview()
             }
@@ -119,11 +115,29 @@ final class RestaurantListSearch: UIViewController {
     }
     
     func addButtonDidTap() {
+        var isCheck = false
         for data in self.restaurantSearch {
             if (data.isDone){
                 self.interestRestaurant.append(InterestRestaurant(_id: data._id!, companyName: data.companyName!))
+                isCheck = true
             }
         }
+        if !isCheck {
+            let alertController = UIAlertController(
+                title: self.title,
+                message: "체크된 식당 정보가 없습니다.",
+                preferredStyle: .alert
+            )
+            let alertConfirm = UIAlertAction(
+                title: "확인",
+                style: .default) { _ in
+                    // 확인 후 작업
+            }
+            alertController.addAction(alertConfirm)
+            self.present(alertController, animated: true, completion: nil)
+            return
+        }
+
         NotificationCenter.default.post(name: .interestRestaurantDidAdd, object: self, userInfo: ["interestRestaurant": self.interestRestaurant])
         _ = self.navigationController?.popViewController(animated: true)
     }
@@ -154,6 +168,7 @@ final class RestaurantListSearch: UIViewController {
                         title: "확인",
                         style: .default) { _ in
                             // 확인 후 작업
+                            self.textField.becomeFirstResponder()
                     }
                     alertController.addAction(alertConfirm)
                     self.present(alertController, animated: true, completion: nil)
@@ -199,7 +214,11 @@ extension RestaurantListSearch: UITableViewDelegate {
 extension RestaurantListSearch: UITextFieldDelegate {
     //TextField 리턴키 처리
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        searchButtonDidTap()
+        self.view.endEditing(true)
+        //searchButtonDidTap()
+        //화면 터치 이벤트가 발생하지 않음으로 기존 다음 작업 처리에서 키보드 닫기호 활용
+        //override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {}
+        //self.view.userInteractionEnabled = true => 소용 없음!!!
         return true
     }
 }

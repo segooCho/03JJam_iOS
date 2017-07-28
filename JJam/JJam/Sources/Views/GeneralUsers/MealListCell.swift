@@ -37,7 +37,10 @@ final class MealListCell: UITableViewCell {
         self.imageView!.image?.draw(in:imageRect)
         self.imageView!.image? = UIGraphicsGetImageFromCurrentImageContext()!
         UIGraphicsEndImageContext()
+        
         //image 라운드
+        imageViewBorder(self.imageView!, view: self)
+        /*
         self.imageView!.layer.frame = (self.layer.frame).insetBy(dx: 0, dy: 0)
         self.imageView!.layer.borderWidth = 0.5
         self.imageView!.layer.borderColor = UIColor.gray.cgColor
@@ -45,6 +48,7 @@ final class MealListCell: UITableViewCell {
         self.imageView!.layer.masksToBounds = false
         self.imageView!.clipsToBounds = true
         self.imageView!.contentMode = UIViewContentMode.scaleAspectFill
+        */
  
         
         self.detailTextLabel!.numberOfLines = 3

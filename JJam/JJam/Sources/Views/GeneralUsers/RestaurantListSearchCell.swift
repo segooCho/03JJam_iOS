@@ -52,5 +52,4 @@ final class RestaurantListSearchCell: UITableViewCell {
     override func layoutSubviews() {
         super.layoutSubviews()
     }
-
 }

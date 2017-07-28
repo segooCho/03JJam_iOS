@@ -26,10 +26,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window.backgroundColor = .white
         
         //로그인
-        //LoginScreen()
+        LoginScreen()
         
         //회원 가입
-        BusinessUsersSignUpScreen()
+        //UsersSignUpScreen()
+        //BusinessUsersSignUpScreen()
+        
         /*
         //GeneralUsersTabBar
         let generalUsersTabBar = GeneralUsersTabBar(selectIndex : 0)
@@ -67,7 +69,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let navigationController = UINavigationController(rootViewController: businessUsersSignUp)
         self.window?.rootViewController = navigationController
     }
-
     
     //BusinessUsersTabBar(식단, 설정)
     func BusinessUsersTabBarScreen(selectIndex: Int) {

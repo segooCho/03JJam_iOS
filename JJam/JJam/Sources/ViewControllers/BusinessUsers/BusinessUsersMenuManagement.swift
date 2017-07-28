@@ -88,6 +88,7 @@ final class BusinessUsersMenuManagement: UIViewController {
         //textField
         UICommonSetTextFieldEnable(self.textField, placeholderText: self.segmentedIndexPlaceholderText)
         self.textField.addTarget(self, action: #selector(textFieldDidChangeText), for: .editingChanged)
+        self.textField.delegate = self
         
         self.tableView.register(BusinessUsersMenuCell.self, forCellReuseIdentifier: "businessUsersMenuCell")
         self.tableView.dataSource = self
@@ -250,6 +251,13 @@ extension BusinessUsersMenuManagement: UITableViewDelegate {
         tableView.deleteRows(at: [indexPath], with: .automatic)
         //TODO :: 저장 필요
     }
-    
+}
+
+extension BusinessUsersMenuManagement: UITextFieldDelegate {
+    //TextField 리턴키 처리
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        self.view.endEditing(true)
+        return true
+    }
 }
 

@@ -329,8 +329,8 @@
 		846417331F2242C20029BC78 /* Networking */ = {
 			isa = PBXGroup;
 			children = (
-				846417341F2243270029BC78 /* GeneralUsersNetWorking.swift */,
 				849D93A91F28C1BE004776E7 /* BusinessUsersNetWorking.swift */,
+				846417341F2243270029BC78 /* GeneralUsersNetWorking.swift */,
 			);
 			path = Networking;
 			sourceTree = "<group>";
@@ -397,6 +397,7 @@
 				TargetAttributes = {
 					8403925D1F1601AB0033BCBD = {
 						CreatedOnToolsVersion = 8.3.3;
+						DevelopmentTeam = N54KWD88E8;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -664,6 +665,7 @@
 			baseConfigurationReference = B99DEBAF54EB6F56B8590BB5 /* Pods-JJam.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = N54KWD88E8;
 				INFOPLIST_FILE = "$(SRCROOT)/JJam/Supporting Files/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -678,6 +680,7 @@
 			baseConfigurationReference = 2732E5029DA1A1A8D6613992 /* Pods-JJam.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = N54KWD88E8;
 				INFOPLIST_FILE = "$(SRCROOT)/JJam/Supporting Files/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
