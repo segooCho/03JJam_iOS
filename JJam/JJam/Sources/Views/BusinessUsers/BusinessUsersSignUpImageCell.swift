@@ -44,7 +44,7 @@ final class BusinessUsersSignUpImageCell: UITableViewCell {
         //contentViewButton 반전 방지용 뷰 - 아무 설정하지 않음
         self.contentView.addSubview(self.contentViewButton)
 
-        UICommonSetLabel(self.label, text: "사업자 등록증")
+        UICommonSetLabel(self.label, text: "사업자 등록증", color: 0)
         self.contentViewButton.addSubview(self.label)
         
         //self.photoView.backgroundColor = .red

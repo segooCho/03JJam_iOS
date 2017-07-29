@@ -38,8 +38,6 @@ final class MealList: UIViewController {
         
         //식당 인증 & 공지 사항
         restaurantInfo()
-        //식단 조회
-        mealSearch()
         //데이터 임시 처리
         //self.interestRestaurantCertification = "n"
         //self.interestRestaurantNotice = "공지사항\n안녕하세요. 한라시그마 구내식당 입니다.\n*월요일 ~ 금요일 까지 영업합니다.\n*토요일, 일요일, 공휴일은 휴무입니다.\n\n\n\n감사합니다."
@@ -71,6 +69,8 @@ final class MealList: UIViewController {
         //scroll의 내부 여백 발생시 사용()
         self.automaticallyAdjustsScrollViewInsets = false
 
+        //self.activityIndicatorView.backgroundColor = .red
+        
         //cancelButton
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(
             barButtonSystemItem: .cancel,
@@ -85,12 +85,10 @@ final class MealList: UIViewController {
         
         //인증 : viewDidLoad 시점에 값을 받지 못함
         if (self.interestRestaurantCertification == "y") {
-            UICommonSetLabel(self.label, text: "사업자 등록증 인증 업체입니다.")
-            self.label.textColor = .blue
+            UICommonSetLabel(self.label, text: "사업자 등록증 인증 업체입니다.", color: 2)
             self.label.textAlignment = .center
         } else {
-            UICommonSetLabel(self.label, text: "사업자 등록증 미인증 업체입니다.")
-            self.label.textColor = .red
+            UICommonSetLabel(self.label, text: "사업자 등록증 미인증 업체입니다.", color: 1)
             self.label.textAlignment = .center
         }
 
@@ -102,12 +100,13 @@ final class MealList: UIViewController {
         self.tableView.register(MealListCell.self, forCellReuseIdentifier: "mealListCell")
         self.tableView.dataSource = self
         self.tableView.delegate = self
-
-        self.view.addSubview(self.activityIndicatorView)
+        
         self.view.addSubview(self.segmentedControl)
         self.view.addSubview(self.label)
         self.view.addSubview(self.textView)
         self.view.addSubview(self.tableView)
+        //activityIndicatorView는 경우에 따라 안보이는 경우가 있어서 항상 가장 늦게 addSubview 한다.
+        self.view.addSubview(self.activityIndicatorView)
         //updateViewConstraints 자동 호출
         self.view.setNeedsUpdateConstraints()
     }
@@ -138,7 +137,6 @@ final class MealList: UIViewController {
                 make.top.equalTo(self.label.snp.bottom).offset(5)
                 make.height.equalTo(100)
             }
-            
             self.tableView.snp.makeConstraints { make in
                 make.top.equalTo(self.textView.snp.bottom).offset(3)
                 make.left.right.equalToSuperview()
@@ -156,11 +154,11 @@ final class MealList: UIViewController {
     //MARK: ACTION
     //식당 인증 & 공지사항
     func restaurantInfo() {
-        self.activityIndicatorView.startAnimating()
+        UICommonSetLoading(self.activityIndicatorView, service: true)
         GeneralUsersNetWorking.restaurantInfo(restaurant_Id: self.interestRestaurantId) { [weak self] response in
             guard let `self` = self else { return }
-            self.activityIndicatorView.stopAnimating()
             if response.count > 0 {
+                UICommonSetLoading(self.activityIndicatorView, service: false)
                 //인증
                 let message = response[0].message
                 if message != nil {
@@ -195,21 +193,22 @@ final class MealList: UIViewController {
                     //공지사항 : \\n 처리
                     let data = self.interestRestaurantNotice.replacingOccurrences(of: "\\n", with: "\n")
                     self.textView.text = data
+                    //식단 조회
+                    self.mealSearch()
                 }
-
             }
         }
     }
     
     //식단 조회
     func mealSearch() {
-        self.activityIndicatorView.startAnimating()
+        UICommonSetLoading(self.activityIndicatorView, service: true)
         GeneralUsersNetWorking.mealSearch(restaurant_Id: self.interestRestaurantId, segmentedIndexAndCode: self.segmentedIndexAndCode) { [weak self] response in
             guard let `self` = self else { return }
-            self.activityIndicatorView.stopAnimating()
             if response.count > 0 {
                 let message = response[0].message
                 if message != nil {
+                    UICommonSetLoading(self.activityIndicatorView, service: false)
                     let alertController = UIAlertController(
                         title: "확인",
                         message: message,
@@ -226,7 +225,12 @@ final class MealList: UIViewController {
                 }
             }
             self.meal = response
-            self.tableView.reloadData()
+            //tableView 이미지 다운로딩 까지 기달려주기
+            let delayInSeconds = 2.0
+            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + delayInSeconds) {
+                self.tableView.reloadData()
+                UICommonSetLoading(self.activityIndicatorView, service: false)
+            }
         }
     }
     

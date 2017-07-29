@@ -17,6 +17,7 @@ final class InterestRestaurantList: UIViewController {
     fileprivate let fixedNotice = "www.JJam.com 에서 가맹점 검색 및 가맹점 요청이 가능합니다."
 
     //MARK: UI
+    fileprivate let activityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: .gray)
     fileprivate let textView = UITextView()
     fileprivate let tableView = UITableView(frame: .zero, style: .plain)
     
@@ -78,13 +79,15 @@ final class InterestRestaurantList: UIViewController {
         //공지사항
         self.textView.text = self.fixedNotice
         UICommonSetTextViewDisable(self.textView)
-        self.view.addSubview(self.textView)
 
         //관심 식당
         self.tableView.register(InterestRestaurantListCell.self, forCellReuseIdentifier: "interestRestaurantListCell")
         self.tableView.dataSource = self
         self.tableView.delegate = self
+        
+        self.view.addSubview(self.textView)
         self.view.addSubview(self.tableView)
+        self.view.addSubview(self.activityIndicatorView)
         //updateViewConstraints 자동 호출
         self.view.setNeedsUpdateConstraints()
     }
@@ -102,6 +105,9 @@ final class InterestRestaurantList: UIViewController {
     override func updateViewConstraints() {
         if !self.didSetupConstraints {
             self.didSetupConstraints = true
+            self.activityIndicatorView.snp.makeConstraints { make in
+                make.center.equalToSuperview()
+            }
             self.textView.snp.makeConstraints { make in
                 make.left.equalTo(10)
                 make.right.equalTo(-10)
@@ -151,6 +157,7 @@ final class InterestRestaurantList: UIViewController {
     func interestRestaurantDidAdd(_ notification: Notification ) {
         guard let interestRestaurant = notification.userInfo?["interestRestaurant"] as? [InterestRestaurant] else { return }
         
+        UICommonSetLoading(self.activityIndicatorView, service: true)
         //중복 제거 처리 및 등록
         for notificationData in interestRestaurant {
             if self.interestRestaurant.count == 0 {
@@ -167,22 +174,8 @@ final class InterestRestaurantList: UIViewController {
                 }
             }
         }
-        
-        /*
-        //중복 제거 : NSOrderedSet 안됨
-        let interestRestaurantDeduplication = NSOrderedSet(array: self.interestRestaurant)
-        print("interestRestaurantDeduplication: \(interestRestaurantDeduplication)")
-        
-        self.interestRestaurant.removeAll()
-        count = 0
-        while(count < interestRestaurantDeduplication.count) {
-            let data = interestRestaurantDeduplication[count] as! InterestRestaurant
-            //print("restaurantSearch: \(data?.companyName)")
-            self.interestRestaurant.append(InterestRestaurant(_id: data._id, companyName: data.companyName))
-            count = count + 1
-        }
-        */
         self.tableView.reloadData()
+        UICommonSetLoading(self.activityIndicatorView, service: false)
         UserDefaultsSet()
     }
     

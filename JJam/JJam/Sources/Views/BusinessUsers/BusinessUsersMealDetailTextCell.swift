@@ -62,34 +62,34 @@ final class BusinessUsersMealDetailTextCell: UITableViewCell {
         self.selectionStyle = .none
         
         //TODO :: SelectBox 처리
-        UICommonSetLabel(self.dateLabel, text: "일자")
+        UICommonSetLabel(self.dateLabel, text: "일자", color: 1)
         UICommonSetTextFieldDisable(self.dateTextField)
         
-        UICommonSetLabel(self.divisionLabel, text: "구분")
+        UICommonSetLabel(self.divisionLabel, text: "구분", color: 1)
         UICommonSetTextFieldDisable(self.divisionTextField)
         
-        UICommonSetLabel(self.stapleFoodLabel, text: "주식(밥,면)")
+        UICommonSetLabel(self.stapleFoodLabel, text: "주식(밥,면)", color: 0)
         UICommonSetTextFieldDisable(self.stapleFoodTextField)
         
-        UICommonSetLabel(self.soupLabel, text: "국")
+        UICommonSetLabel(self.soupLabel, text: "국", color: 0)
         UICommonSetTextFieldDisable(self.soupTextField)
         
-        UICommonSetLabel(self.sideDish1Label, text: "반찬1")
+        UICommonSetLabel(self.sideDish1Label, text: "반찬1", color: 0)
         UICommonSetTextFieldDisable(self.sideDish1TextField)
         
-        UICommonSetLabel(self.sideDish2Label, text: "반찬2")
+        UICommonSetLabel(self.sideDish2Label, text: "반찬2", color: 0)
         UICommonSetTextFieldDisable(self.sideDish2TextField)
         
-        UICommonSetLabel(self.sideDish3Label, text: "반찬3")
+        UICommonSetLabel(self.sideDish3Label, text: "반찬3", color: 0)
         UICommonSetTextFieldDisable(self.sideDish3TextField)
         
-        UICommonSetLabel(self.sideDish4Label, text: "반찬4")
+        UICommonSetLabel(self.sideDish4Label, text: "반찬4", color: 0)
         UICommonSetTextFieldDisable(self.sideDish4TextField)
         
-        UICommonSetLabel(self.dessertLabel, text: "후식")
+        UICommonSetLabel(self.dessertLabel, text: "후식", color: 0)
         UICommonSetTextFieldDisable(self.dessertTextField)
         
-        UICommonSetLabel(self.remarksLabel, text: "비고")
+        UICommonSetLabel(self.remarksLabel, text: "비고", color: 0)
         UICommonSetTextViewDisable(self.remarksTextView)
         
         self.contentView.addSubview(self.dateLabel)

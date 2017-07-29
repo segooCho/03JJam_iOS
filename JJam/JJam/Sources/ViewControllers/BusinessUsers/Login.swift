@@ -47,11 +47,11 @@ final class Login: UIViewController {
         UICommonSetButton(self.signUpButton, setTitleText: "회원 가입", color: 1)
         self.signUpButton.addTarget(self, action: #selector(signUpButtonDidTap), for: .touchUpInside)
 
-        self.view.addSubview(self.activityIndicatorView)
         self.view.addSubview(self.usernameTextField)
         self.view.addSubview(self.passwordTextField)
         self.view.addSubview(self.loginButton)
         self.view.addSubview(self.signUpButton)
+        self.view.addSubview(self.activityIndicatorView)
         
         //updateViewConstraints 자동 호출
         self.view.setNeedsUpdateConstraints()
@@ -111,7 +111,7 @@ final class Login: UIViewController {
         textField.textColor = .black
     }
     
-    //UICommonSetShakeTextField() 다른 포커스에서 넘어오면 위치 오류가 있어 포커스를 먼저 이동 후 delay 가 필요함
+    //UICommonSetShakeTextField() 다른 포커스에서 넘어오면 Shake 위치 오류가 있어 포커스를 먼저 이동 후 delay 가 필요함
     //UICommonSetShakeTextField() 내 포커스이동 처리는 유지함
     func loginButtonDidTap() {
         if let username = self.usernameTextField.text, username.isEmpty {
@@ -140,12 +140,12 @@ final class Login: UIViewController {
     
     //로그인
     func restaurantLogin() {
-        self.activityIndicatorView.startAnimating()
+        UICommonSetLoading(self.activityIndicatorView, service: true)
         BusinessUsersNetWorking.restaurantLogin(id: self.usernameTextField.text!, password: self.passwordTextField.text!) { [weak self] response in
             guard let `self` = self else { return }
-            self.activityIndicatorView.stopAnimating()
             if response.count > 0 {
-                //인증
+                UICommonSetLoading(self.activityIndicatorView, service: false)
+                //로그인
                 let message = response[0].message
                 if message != nil {
                     let alertController = UIAlertController(

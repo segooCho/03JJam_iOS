@@ -22,7 +22,16 @@ func UICommonSetSegmentedControl(_ uIKit: UISegmentedControl, titles: Array<Stri
 
 
 //MARK: UILabel Common Set
-func UICommonSetLabel(_ uIKit: UILabel, text: String) {
+func UICommonSetLabel(_ uIKit: UILabel, text: String, color: Int) {
+    switch color {
+    case 1:
+        uIKit.textColor = .red
+    case 2:
+        uIKit.textColor = .blue
+    default:
+        uIKit.textColor = .black
+    }
+
     uIKit.font = Font.font14
     uIKit.text = text
 }
@@ -110,3 +119,20 @@ func UICommonSetShakeTextView(_ uIKit: UITextView) {
     })
 }
 
+
+//MARK: Common Set Loading
+func UICommonSetLoading(_ uIKit: UIActivityIndicatorView, service: Bool) {
+    switch service {
+    case true:
+        uIKit.startAnimating()
+        UIApplication.shared.beginIgnoringInteractionEvents()
+        print("startAnimating")
+    default:
+        uIKit.stopAnimating()
+        UIApplication.shared.endIgnoringInteractionEvents()
+        print("stopAnimating")
+    }
+
+    
+
+}

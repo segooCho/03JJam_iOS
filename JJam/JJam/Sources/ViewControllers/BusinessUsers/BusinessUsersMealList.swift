@@ -77,12 +77,10 @@ final class BusinessUsersMealList: UIViewController {
         
         //인증
         if (self.businessUsersRestaurantCertification == "Y") {
-            UICommonSetLabel(self.label, text: "사업자 등록증 인증 상태입니다.")
-            self.label.textColor = .blue
+            UICommonSetLabel(self.label, text: "사업자 등록증 인증 상태입니다.", color: 2)
             self.label.textAlignment = .center
         } else {
-            UICommonSetLabel(self.label, text: "사업자 등록증 미인증 상태입니다.")
-            self.label.textColor = .red
+            UICommonSetLabel(self.label, text: "사업자 등록증 미인증 상태입니다.", color: 1)
             self.label.textAlignment = .center
         }
         self.view.addSubview(self.label)

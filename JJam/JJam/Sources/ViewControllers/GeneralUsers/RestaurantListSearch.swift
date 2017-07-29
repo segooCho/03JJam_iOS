@@ -36,6 +36,9 @@ final class RestaurantListSearch: UIViewController {
         
         self.title = "식당 찾기"
         self.view.backgroundColor = .white
+        //scroll의 내부 여백 발생시 사용()
+        //self.automaticallyAdjustsScrollViewInsets = false
+
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(
             barButtonSystemItem: .cancel,
             target: self,
@@ -60,11 +63,12 @@ final class RestaurantListSearch: UIViewController {
         self.tableView.dataSource = self
         self.tableView.delegate = self
 
-        self.view.addSubview(self.activityIndicatorView)
+        //self.activityIndicatorView.hidesWhenStopped = true
         self.view.addSubview(self.textField)
         self.view.addSubview(self.button)
         self.view.addSubview(self.tableView)
-        
+        self.view.addSubview(self.activityIndicatorView)
+
         //updateViewConstraints 자동 호출
         self.view.setNeedsUpdateConstraints()
     }
@@ -152,11 +156,11 @@ final class RestaurantListSearch: UIViewController {
             return
         }
         self.textField.resignFirstResponder() //키보드 숨기기
-        self.activityIndicatorView.startAnimating()
+        UICommonSetLoading(self.activityIndicatorView, service: true)
         GeneralUsersNetWorking.restaurantSearch(searchText: self.textField.text!) { [weak self] response in
             guard let `self` = self else { return }
-            self.activityIndicatorView.stopAnimating()
             if response.count > 0 {
+                UICommonSetLoading(self.activityIndicatorView, service: false)
                 let message = response[0].message
                 if message != nil {
                     let alertController = UIAlertController(

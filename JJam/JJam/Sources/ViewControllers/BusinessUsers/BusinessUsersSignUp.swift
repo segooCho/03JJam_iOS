@@ -94,6 +94,9 @@ final class BusinessUsersSignUp: UIViewController, UIImagePickerControllerDelega
     override func updateViewConstraints() {
         if !self.didSetupConstraints {
             self.didSetupConstraints = true
+            self.activityIndicatorView.snp.makeConstraints { make in
+                make.center.equalToSuperview()
+            }
             var height: CGFloat = 0
             height += Metric.commonOffset
             height += Metric.commonHeight
@@ -116,9 +119,6 @@ final class BusinessUsersSignUp: UIViewController, UIImagePickerControllerDelega
                 make.height.equalTo(Metric.commonHeight)
                 make.top.equalTo(self.bottomLayoutGuide.snp.bottom).offset(-(height))
             }
-            self.activityIndicatorView.snp.makeConstraints { make in
-                make.center.equalToSuperview()
-            }
         }
         super.updateViewConstraints()
     }
@@ -134,27 +134,44 @@ final class BusinessUsersSignUp: UIViewController, UIImagePickerControllerDelega
     }
     
     func addButtonDidTap() {
-        //TODO :: 저장
+        // TableView[0] 에서 입력 값 가지고 오기
+        // UI는 직접 처리 불가, struct만 접근 가능 제약이 많음... 병맛으로 처리 했음
+        // contentView 에서는 self.present 처리도 불가능
         let index = IndexPath(row: 0, section: 0)
         let cell: BusinessUsersSignUpTextCell = self.tableView.cellForRow(at: index) as! BusinessUsersSignUpTextCell
-        //cell.configure()
         
-        if cell.setInputData() {
-            print("signUp.id :" + BusinessUsersSignUpTextCell.signUp.id)
-            self.newSignUp.removeAll()
-            self.newSignUp.append(SignUp(id: BusinessUsersSignUpTextCell.signUp.id,
-                                         password: BusinessUsersSignUpTextCell.signUp.password,
-                                         businessNumber: BusinessUsersSignUpTextCell.signUp.businessNumber,
-                                         companyName: BusinessUsersSignUpTextCell.signUp.companyName,
-                                         address: BusinessUsersSignUpTextCell.signUp.address,
-                                         contactNumber: BusinessUsersSignUpTextCell.signUp.contactNumber,
-                                         representative: BusinessUsersSignUpTextCell.signUp.representative))
-            
-            restaurantSignUp()
+        let message = cell.setInputData()
+        if message.isEmpty {
+            //print("signUp.id :" + BusinessUsersSignUpTextCell.signUp.id)
+            if localPath == nil {
+                let alertController = UIAlertController(
+                    title: self.title,
+                    message: "사업자 등록증 사진 정보가 없습니다.\n추후 인증 업체 자격을 획득할 수 없습니다.\n그래도 계속 진행하시겠습니까?",
+                    preferredStyle: .alert
+                )
+                let alertCancel = UIAlertAction(
+                    title: "취소",
+                    style: .default) { _ in
+                        // 확인 후 작업
+                        return
+                }
+                let alertConfirm = UIAlertAction(
+                    title: "계속 진행",
+                    style: .default) { _ in
+                        // 확인 후 작업
+                        self.privacyAgree()
+                }
+                alertController.addAction(alertCancel)
+                alertController.addAction(alertConfirm)
+                self.present(alertController, animated: true, completion: nil)
+            } else {
+                self.privacyAgree()
+            }
         } else {
+            //TODO : 입력값 처리
             let alertController = UIAlertController(
                 title: self.title,
-                message: "모든 정보를 입력하세요.",
+                message: message,
                 preferredStyle: .alert
             )
             let alertConfirm = UIAlertAction(
@@ -165,44 +182,92 @@ final class BusinessUsersSignUp: UIViewController, UIImagePickerControllerDelega
             alertController.addAction(alertConfirm)
             self.present(alertController, animated: true, completion: nil)
         }
-        
-        //print("data : ", data)
-        //let data
-        
-        //print("id : ", BusinessUsersSignUpTextCell.signUp.id)
-        
-        
+    }
+    
+    //개인 정보 수집 동의 및 정보 확인
+    func privacyAgree() {
+        let alertController = UIAlertController(
+            title: self.title,
+            message: "입력된 회원정보 수집에 동의하십니까?\n*운영진의 재량권에 따라 수정 요청 또는 무 통보 삭제가 될 수 있습니다.",
+            preferredStyle: .alert
+        )
+        let alertCancel = UIAlertAction(
+            title: "취소",
+            style: .default) { _ in
+                // 확인 후 작업
+                return
+        }
+        let alertConfirm = UIAlertAction(
+            title: "동의",
+            style: .default) { _ in
+                // 확인 후 작업
+                self.newSignUp.removeAll()
+                self.newSignUp.append(SignUp(id: BusinessUsersSignUpTextCell.signUp.id,
+                                             password: BusinessUsersSignUpTextCell.signUp.password,
+                                             businessNumber: BusinessUsersSignUpTextCell.signUp.businessNumber,
+                                             companyName: BusinessUsersSignUpTextCell.signUp.companyName,
+                                             address: BusinessUsersSignUpTextCell.signUp.address,
+                                             contactNumber: BusinessUsersSignUpTextCell.signUp.contactNumber,
+                                             representative: BusinessUsersSignUpTextCell.signUp.representative))
+                
+                self.restaurantSignUp()
+        }
+        alertController.addAction(alertCancel)
+        alertController.addAction(alertConfirm)
+        self.present(alertController, animated: true, completion: nil)
     }
     
     //회원 가입
     func restaurantSignUp() {
-        self.activityIndicatorView.startAnimating()
+        UICommonSetLoading(self.activityIndicatorView, service: true)
         BusinessUsersNetWorking.restaurantSignUp(signUp: self.newSignUp, imageURL: localPath) { [weak self] response in
             guard let `self` = self else { return }
-            self.activityIndicatorView.stopAnimating()
             if response.count > 0 {
-                let message = response[0].message //무조건 메시지 발생함
+                UICommonSetLoading(self.activityIndicatorView, service: false)
+                let message = response[0].message //무조건 리턴 메시지 발생함
                 if message != nil {
-                    let alertController = UIAlertController(
-                        title: self.title,
-                        message: message,
-                        preferredStyle: .alert
-                    )
-                    let alertConfirm = UIAlertAction(
-                        title: "확인",
-                        style: .default) { _ in
-                            if message == "회원 가입이 완료되었습니다." {
+                    if message == "회원 가입이 완료되었습니다." {
+                        //OK
+                        let alertController = UIAlertController(
+                            title: self.title,
+                            message: message,
+                            preferredStyle: .alert
+                        )
+                        let alertLoginScreen = UIAlertAction(
+                            title: "로그인 페이지 이동",
+                            style: .default) { _ in
+                                //로그인 페이지
                                 _ = self.navigationController?.popViewController(animated: true)
-                            }
+                        }
+                        let alertConfirm = UIAlertAction(
+                            title: "확인",
+                            style: .default) { _ in
+                                //확인 후 처리
+                        }
+                        alertController.addAction(alertLoginScreen)
+                        alertController.addAction(alertConfirm)
+                        self.present(alertController, animated: true, completion: nil)
+                        
+                    } else {
+                        //Error 메시지
+                        let alertController = UIAlertController(
+                            title: self.title,
+                            message: message,
+                            preferredStyle: .alert
+                        )
+                        let alertConfirm = UIAlertAction(
+                            title: "확인",
+                            style: .default) { _ in
+                                //확인 후 처리
+                        }
+                        alertController.addAction(alertConfirm)
+                        self.present(alertController, animated: true, completion: nil)
                     }
-                    alertController.addAction(alertConfirm)
-                    self.present(alertController, animated: true, completion: nil)
                 }
             }
         }
     }
 
-    
     func imageButtonDidTap() {
         //photoLibrary
         if(UIImagePickerController .isSourceTypeAvailable(UIImagePickerControllerSourceType.photoLibrary)){
@@ -239,7 +304,6 @@ final class BusinessUsersSignUp: UIViewController, UIImagePickerControllerDelega
         } catch {
             // Catch exception here and act accordingly
         }
-        
         //imagePicker 닫기
         self.dismiss(animated: true, completion: nil);
     }

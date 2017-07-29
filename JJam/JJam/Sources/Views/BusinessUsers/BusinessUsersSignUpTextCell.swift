@@ -66,37 +66,37 @@ final class BusinessUsersSignUpTextCell: UITableViewCell {
         super.init(style: .subtitle, reuseIdentifier: reuseIdentifier)
         self.selectionStyle = .none
         
-        UICommonSetLabel(self.idLabel, text: "사용자ID")
+        UICommonSetLabel(self.idLabel, text: "사용자ID", color: 1)
         UICommonSetTextFieldEnable(self.idTextField, placeholderText: self.idLabel.text!)
         self.idTextField.delegate = self
 
-        UICommonSetLabel(self.passwordLabel, text: "패스워드")
+        UICommonSetLabel(self.passwordLabel, text: "암호", color: 1)
         UICommonSetTextFieldEnable(self.passwordTextField, placeholderText: self.passwordLabel.text!)
         self.passwordTextField.delegate = self
         self.passwordTextField.isSecureTextEntry = true
         
-        UICommonSetLabel(self.password2Label, text: "패스워드 확인")
+        UICommonSetLabel(self.password2Label, text: "암호 확인", color: 1)
         UICommonSetTextFieldEnable(self.password2TextField, placeholderText: self.password2Label.text!)
         self.password2TextField.delegate = self
         self.password2TextField.isSecureTextEntry = true
         
-        UICommonSetLabel(self.businessNumberLabel, text: "사업자 번호")
+        UICommonSetLabel(self.businessNumberLabel, text: "사업자 번호", color: 1)
         UICommonSetTextFieldEnable(self.businessNumberTextField, placeholderText: self.businessNumberLabel.text!)
         self.businessNumberTextField.delegate = self
         
-        UICommonSetLabel(self.companyNameLabel, text: "상호")
+        UICommonSetLabel(self.companyNameLabel, text: "상호", color: 1)
         UICommonSetTextFieldEnable(self.companyNameTextField, placeholderText: self.companyNameLabel.text!)
         self.companyNameTextField.delegate = self
         
-        UICommonSetLabel(self.addressLabel, text: "주소")
+        UICommonSetLabel(self.addressLabel, text: "주소", color: 1)
         UICommonSetTextViewEnable(self.addressTextView, placeholderText: self.addressLabel.text!)
         //self.addressTextView.delegate = self
         
-        UICommonSetLabel(self.contactNumberLabel, text: "연락처")
+        UICommonSetLabel(self.contactNumberLabel, text: "연락처", color: 1)
         UICommonSetTextFieldEnable(self.contactNumberTextField, placeholderText: self.contactNumberLabel.text!)
         self.contactNumberTextField.delegate = self
         
-        UICommonSetLabel(self.representativeLabel, text: "대표자")
+        UICommonSetLabel(self.representativeLabel, text: "대표자", color: 1)
         UICommonSetTextFieldEnable(self.representativeTextField, placeholderText: self.representativeLabel.text!)
         self.representativeTextField.delegate = self
 
@@ -151,15 +151,60 @@ final class BusinessUsersSignUpTextCell: UITableViewCell {
     }
 
     //BusinessUsersSignUp에서 struct의 값을 접근하기 전에 값을 셋팅힌다.
-    func setInputData() -> Bool {
-        var text = ""
-        if text == self.idTextField.text, text.isEmpty {
-            //return [false: "사용자 ID를 입력하세요."]
-            return false
-        }
+    func setInputData() -> String {
+        signUp.id = ""
+        signUp.password = ""
+        signUp.password2 = ""
+        signUp.businessNumber = ""
+        signUp.companyName = ""
+        signUp.address = ""
+        signUp.contactNumber = ""
+        signUp.representative = ""
+
         
-        if text == self.passwordTextField.text, text.isEmpty {
-            return false
+        var inputText = ""
+        inputText = self.idTextField.text!
+        if inputText == self.idTextField.text, inputText.isEmpty {
+            self.idTextField.becomeFirstResponder()
+            return "사용자 ID를 입력하세요."
+            //return false
+        }
+        inputText = self.passwordTextField.text!
+        if inputText.isEmpty {
+            self.passwordTextField.becomeFirstResponder()
+            return "암호를 입력하세요."
+        } else if inputText.characters.count < 4 {
+            self.passwordTextField.becomeFirstResponder()
+            return "암호를 4자리 이상 입력하세요."
+        }
+        if self.passwordTextField.text != self.password2TextField.text {
+            self.password2TextField.becomeFirstResponder()
+            return "암호가 다릅니다."
+        }
+        inputText = self.businessNumberTextField.text!
+        if inputText.isEmpty {
+            self.businessNumberTextField.becomeFirstResponder()
+            return "사업자 번호를 입력하세요."
+        }
+        inputText = self.companyNameTextField.text!
+        if inputText.isEmpty {
+            self.companyNameTextField.becomeFirstResponder()
+            return "상호를 입력하세요."
+        }
+        inputText = self.addressTextView.text!
+        if inputText.isEmpty {
+            self.addressTextView.becomeFirstResponder()
+            return "주소를 입력하세요."
+        }
+        inputText = self.contactNumberTextField.text!
+        if inputText.isEmpty {
+            self.contactNumberTextField.becomeFirstResponder()
+            return "연락처를 입력하세요."
+        }
+        inputText = self.representativeTextField.text!
+        if inputText.isEmpty {
+            self.representativeTextField.becomeFirstResponder()
+            return "대표자를 입력하세요."
         }
         
         signUp.id = self.idTextField.text!
@@ -171,8 +216,7 @@ final class BusinessUsersSignUpTextCell: UITableViewCell {
         signUp.contactNumber = self.contactNumberTextField.text!
         signUp.representative = self.representativeTextField.text!
         
-        return true
-        //return [true: ""]
+        return ""
     }
     
     //MARK: Size
