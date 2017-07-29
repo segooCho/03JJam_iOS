@@ -21,14 +21,13 @@ final class BusinessUsersSignUpImageCell: UITableViewCell {
     fileprivate struct Metric {
         static let labelLeft = CGFloat(10)
         static let labelRight = CGFloat(-250)
-        static let buttonRight = CGFloat(-250)
         
         static let imageLeft = CGFloat(130)
         static let imageRight = CGFloat(-10)
 
         
-        static let commonOffset = CGFloat(5)
-        static let commonHeight = CGFloat(30)
+        static let commonOffset = CGFloat(7)
+        static let commonHeight = CGFloat(45)
         static let commonHeightImageView = CGFloat(230)
     }
 
@@ -36,7 +35,6 @@ final class BusinessUsersSignUpImageCell: UITableViewCell {
     fileprivate let contentViewButton = UIButton()                                      //cell 선택시 반전 방지용 뷰
     fileprivate let label = UILabel()
     fileprivate let photoView = UIImageView()                                           //포토 뷰
-    fileprivate let cameraView = UIImageView()                                               //카메라 뷰
     
     //MARK: init
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
@@ -47,35 +45,13 @@ final class BusinessUsersSignUpImageCell: UITableViewCell {
         UICommonSetLabel(self.label, text: "사업자 등록증", color: 0)
         self.contentViewButton.addSubview(self.label)
         
+
         //self.photoView.backgroundColor = .red
-        //self.cameraView.backgroundColor = .red
-
         //image 라운드
-        
         imageViewBorder(self.photoView, view: self)
-        imageViewBorder(self.cameraView, view: self)
-        
-        /*
-        self.photoView.layer.frame = (self.layer.frame).insetBy(dx: 0, dy: 0)
-        self.photoView.layer.borderWidth = 0.5
-        self.photoView.layer.borderColor = UIColor.gray.cgColor
-        self.photoView.layer.cornerRadius = (self.frame.height)/5
-        self.photoView.layer.masksToBounds = false
-        self.photoView.clipsToBounds = true
-        self.photoView.contentMode = UIViewContentMode.scaleAspectFill
-
-        self.photoView.layer.frame = (self.layer.frame).insetBy(dx: 0, dy: 0)
-        self.photoView.layer.borderWidth = 0.5
-        self.photoView.layer.borderColor = UIColor.gray.cgColor
-        self.photoView.layer.cornerRadius = (self.frame.height)/5
-        self.photoView.layer.masksToBounds = false
-        self.photoView.clipsToBounds = true
-        self.photoView.contentMode = UIViewContentMode.scaleAspectFill
-        */
         
         
         self.contentViewButton.addSubview(self.photoView)
-        self.contentViewButton.addSubview(self.cameraView)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -91,8 +67,8 @@ final class BusinessUsersSignUpImageCell: UITableViewCell {
     class func height(width: CGFloat) -> CGFloat {
         var height: CGFloat = 0
         
-        height += Metric.commonOffset*3                             //상단 여백
-        height += Metric.commonHeightImageView*2
+        height += Metric.commonOffset*2                             //상단 여백
+        height += Metric.commonHeightImageView
         height += Metric.commonOffset                               //하단 여백
         return height
         //return width // 정사각형
@@ -115,13 +91,6 @@ final class BusinessUsersSignUpImageCell: UITableViewCell {
             make.left.equalTo(Metric.imageLeft)
             make.right.equalTo(Metric.imageRight)
             make.top.equalTo(self.contentViewButton.snp.top).offset(Metric.commonOffset*2)
-            make.height.equalTo(Metric.commonHeightImageView)
-        }
-        //촬영 이미지
-        self.cameraView.snp.makeConstraints { make in
-            make.left.equalTo(Metric.imageLeft)
-            make.right.equalTo(Metric.imageRight)
-            make.top.equalTo(self.photoView.snp.bottom).offset(Metric.commonOffset)
             make.height.equalTo(Metric.commonHeightImageView)
         }
     }

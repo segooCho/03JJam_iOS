@@ -69,7 +69,7 @@ final class BusinessUsersSettings: UIViewController {
         if !self.didSetupConstraints {
             self.didSetupConstraints = true
             self.tableView.snp.makeConstraints { make in
-                make.edges.equalTo(0)
+                make.edges.equalToSuperview()
             }
         }
         super.updateViewConstraints()
@@ -138,7 +138,7 @@ extension BusinessUsersSettings: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return "Section " +  "\(section+1)"
+        return "섹션 " +  "\(section+1)"
     }
     
 }

@@ -12,14 +12,17 @@ import UIKit
 final class BusinessUsersMealList: UIViewController {
     //MARK: Properties
     var didSetupConstraints = false
-    var businessUsersMeal: [BusinessUsersMeal] = [] /*{
-     didSet {
-     self.saveAll()
-     }
-     }
-     */
+    var businessUsersMeal: [BusinessUsersMeal] = []
     fileprivate let businessUsersRestaurantId:String!
     var businessUsersRestaurantCertification:String!
+
+    //MARK: Constants
+    fileprivate struct Metric {
+        static let labelMid = CGFloat(10)
+        static let labelHeight = CGFloat(20)
+        
+        static let commonOffset = CGFloat(7)
+    }
     
     //MARK: UI
     fileprivate let label = UILabel()
@@ -100,13 +103,13 @@ final class BusinessUsersMealList: UIViewController {
         if !self.didSetupConstraints {
             self.didSetupConstraints = true
             self.label.snp.makeConstraints { make in
-                make.left.equalTo(10)
-                make.right.equalTo(-10)
-                make.top.equalTo(self.topLayoutGuide.snp.bottom).offset(8)
-                make.height.equalTo(10)
+                make.left.equalTo(Metric.labelMid)
+                make.right.equalTo(-Metric.labelMid)
+                make.top.equalTo(self.topLayoutGuide.snp.bottom).offset(Metric.commonOffset)
+                make.height.equalTo(Metric.labelHeight)
             }
             self.tableView.snp.makeConstraints { make in
-                make.top.equalTo(self.label.snp.bottom).offset(3)
+                make.top.equalTo(self.label.snp.bottom).offset(Metric.commonOffset)
                 make.left.right.equalToSuperview()
                 make.bottom.equalTo(self.view.snp.bottom)
             }

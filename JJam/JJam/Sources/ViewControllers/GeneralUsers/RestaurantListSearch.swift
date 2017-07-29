@@ -14,6 +14,18 @@ final class RestaurantListSearch: UIViewController {
     fileprivate var restaurantSearch: [RestaurantSearch] = []
     fileprivate var interestRestaurant: [InterestRestaurant] = []
     
+    //MARK: Constants
+    fileprivate struct Metric {
+        static let labelLeft = CGFloat(10)
+        static let labelRight = CGFloat(-130)
+        
+        static let buttonLeft = CGFloat(250)
+        static let buttonRight = CGFloat(-10)
+        
+        static let commonOffset = CGFloat(7)
+        static let commonHeight = CGFloat(45)
+    }
+    
     //MARK: UI
     fileprivate let activityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: .gray)
     fileprivate let textField = UITextField()
@@ -88,19 +100,19 @@ final class RestaurantListSearch: UIViewController {
                 make.center.equalToSuperview()
             }
             self.textField.snp.makeConstraints { make in
-                make.left.equalTo(10)
-                make.right.equalTo(-130)
-                make.top.equalTo(self.topLayoutGuide.snp.bottom).offset(5)
-                make.height.equalTo(30)
+                make.left.equalTo(Metric.labelLeft)
+                make.right.equalTo(Metric.labelRight)
+                make.top.equalTo(self.topLayoutGuide.snp.bottom).offset(Metric.commonOffset)
+                make.height.equalTo(Metric.commonHeight)
             }
             self.button.snp.makeConstraints { make in
-                make.left.equalTo(250)
-                make.right.equalTo(-10)
-                make.top.equalTo(self.topLayoutGuide.snp.bottom).offset(5)
-                make.height.equalTo(30)
+                make.left.equalTo(Metric.buttonLeft)
+                make.right.equalTo(Metric.buttonRight)
+                make.top.equalTo(self.topLayoutGuide.snp.bottom).offset(Metric.commonOffset)
+                make.height.equalTo(Metric.commonHeight)
             }
             self.tableView.snp.makeConstraints { make in
-                make.top.equalTo(self.textField.snp.bottom).offset(3)
+                make.top.equalTo(self.textField.snp.bottom).offset(Metric.commonOffset)
                 make.left.right.equalToSuperview()
                 make.bottom.equalTo(self.bottomLayoutGuide.snp.top)
             }

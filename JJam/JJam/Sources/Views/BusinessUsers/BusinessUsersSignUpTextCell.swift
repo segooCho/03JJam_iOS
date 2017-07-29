@@ -30,8 +30,8 @@ final class BusinessUsersSignUpTextCell: UITableViewCell {
         static let textFieldLeft = CGFloat(130)
         static let textFieldRight = CGFloat(-10)
         
-        static let commonOffset = CGFloat(5)
-        static let commonHeight = CGFloat(30)
+        static let commonOffset = CGFloat(7)
+        static let commonHeight = CGFloat(45)
         static let commonHeightTextView = CGFloat(100)
     }
     
@@ -90,7 +90,6 @@ final class BusinessUsersSignUpTextCell: UITableViewCell {
         
         UICommonSetLabel(self.addressLabel, text: "주소", color: 1)
         UICommonSetTextViewEnable(self.addressTextView, placeholderText: self.addressLabel.text!)
-        //self.addressTextView.delegate = self
         
         UICommonSetLabel(self.contactNumberLabel, text: "연락처", color: 1)
         UICommonSetTextFieldEnable(self.contactNumberTextField, placeholderText: self.contactNumberLabel.text!)
@@ -161,7 +160,7 @@ final class BusinessUsersSignUpTextCell: UITableViewCell {
         signUp.contactNumber = ""
         signUp.representative = ""
 
-        
+        /*
         var inputText = ""
         inputText = self.idTextField.text!
         if inputText == self.idTextField.text, inputText.isEmpty {
@@ -206,6 +205,7 @@ final class BusinessUsersSignUpTextCell: UITableViewCell {
             self.representativeTextField.becomeFirstResponder()
             return "대표자를 입력하세요."
         }
+        */
         
         signUp.id = self.idTextField.text!
         signUp.password = self.passwordTextField.text!
@@ -248,7 +248,6 @@ final class BusinessUsersSignUpTextCell: UITableViewCell {
             make.top.equalTo(self.contentView).offset(Metric.commonOffset)
             make.height.equalTo(Metric.commonHeight)
         }
-        
         //패스워드
         self.passwordLabel.snp.makeConstraints { make in
             make.left.equalTo(Metric.labelLeft)

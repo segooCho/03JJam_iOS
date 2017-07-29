@@ -17,8 +17,8 @@ final class MealDetailTextCell: UITableViewCell {
         static let textFieldLeft = CGFloat(80)
         static let textFieldRight = CGFloat(-10)
         
-        static let commonOffset = CGFloat(5)
-        static let commonHeight = CGFloat(30)
+        static let commonOffset = CGFloat(7)
+        static let commonHeight = CGFloat(45)
         static let commonHeightTextView = CGFloat(100)
     }
     

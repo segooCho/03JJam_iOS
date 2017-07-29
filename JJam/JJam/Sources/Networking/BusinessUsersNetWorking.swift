@@ -47,7 +47,8 @@ struct BusinessUsersNetWorking {
     }
     
     //회원 가입
-    static func restaurantSignUp(signUp: [SignUp], imageURL: URL?, completion: @escaping (_ restaurantInfo: [RestaurantInfo]) -> Void) {
+    //static func restaurantSignUp(signUp: [SignUp], imageURL: URL?, completion: @escaping (_ restaurantInfo: [RestaurantInfo]) -> Void) {
+    static func restaurantSignUp(signUp: [SignUp], image: UIImage?, completion: @escaping (_ restaurantInfo: [RestaurantInfo]) -> Void) {
         // pod SwiftyHash
         let sha256Hex: String = signUp[0].password.digest.sha256
         
@@ -64,9 +65,16 @@ struct BusinessUsersNetWorking {
         var restaurantInfo: [RestaurantInfo] = []
         
         Alamofire.upload(multipartFormData: { (multipartFormData) in
+            if image != nil {
+                if let imageData = UIImageJPEGRepresentation(image!, 1) {
+                    multipartFormData.append(imageData, withName: "businessLicenseImage", fileName: "photo.jpg", mimeType: "image/jpeg")
+                }
+            }
+            /*
             if imageURL != nil {
                 multipartFormData.append(imageURL!, withName: "businessLicenseImage")
             }
+            */
             for (key, value) in parameters {
                 multipartFormData.append((value as AnyObject).data(using: String.Encoding.utf8.rawValue)!, withName: key)
             }

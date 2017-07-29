@@ -14,12 +14,19 @@ final class BusinessUsersMenuManagement: UIViewController {
     var didSetupConstraints = false
     var segmentedIndexAndCode: Int
     var segmentedIndexPlaceholderText = ""
-    var menu: [Menu] = [] /*{
-     didSet {
-     self.saveAll()
-     }
-     }
-     */
+    var menu: [Menu] = []
+    
+    //MARK: Constants
+    fileprivate struct Metric {
+        static let segmentedMid = CGFloat(20)
+        static let segmentedHeight = CGFloat(45)
+        
+        static let textFieldMid = CGFloat(10)
+        static let textFieldHeight = CGFloat(45)
+        
+        static let commonOffset = CGFloat(7)
+    }
+
     
     //MARK: UI
     fileprivate let segmentedControl = UISegmentedControl()
@@ -114,19 +121,19 @@ final class BusinessUsersMenuManagement: UIViewController {
         if !self.didSetupConstraints {
             self.didSetupConstraints = true
             self.segmentedControl.snp.makeConstraints { make in
-                make.left.equalTo(40)
-                make.right.equalTo(-40)
-                make.top.equalTo(self.topLayoutGuide.snp.bottom).offset(5)
-                make.height.equalTo(30)
+                make.left.equalTo(Metric.segmentedMid)
+                make.right.equalTo(-Metric.segmentedMid)
+                make.top.equalTo(self.topLayoutGuide.snp.bottom).offset(Metric.commonOffset)
+                make.height.equalTo(Metric.segmentedHeight)
             }
             self.textField.snp.makeConstraints { make in
-                make.left.equalTo(10)
-                make.right.equalTo(-10)
-                make.top.equalTo(self.segmentedControl.snp.bottom).offset(5)
-                make.height.equalTo(30)
+                make.left.equalTo(Metric.textFieldMid)
+                make.right.equalTo(-Metric.textFieldMid)
+                make.top.equalTo(self.segmentedControl.snp.bottom).offset(Metric.commonOffset)
+                make.height.equalTo(Metric.textFieldHeight)
             }
             self.tableView.snp.makeConstraints { make in
-                make.top.equalTo(self.textField.snp.bottom).offset(3)
+                make.top.equalTo(self.textField.snp.bottom).offset(Metric.commonOffset)
                 make.left.right.equalToSuperview()
                 make.bottom.equalTo(self.view.snp.bottom)
             }

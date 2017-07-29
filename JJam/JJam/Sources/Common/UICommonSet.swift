@@ -10,7 +10,7 @@ import UIKit
 
 //MARK: Constants
 fileprivate struct Font {
-    static let font14 = UIFont.systemFont(ofSize: 14)
+    static let font14 = UIFont.systemFont(ofSize: 18)
 }
 
 //MARK: UISegmentedControl Common Set

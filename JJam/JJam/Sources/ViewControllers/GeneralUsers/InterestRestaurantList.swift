@@ -15,6 +15,14 @@ final class InterestRestaurantList: UIViewController {
     fileprivate var didSetupConstraints = false
     fileprivate var interestRestaurant: [InterestRestaurant] = []
     fileprivate let fixedNotice = "www.JJam.com 에서 가맹점 검색 및 가맹점 요청이 가능합니다."
+    
+    //MARK: Constants
+    fileprivate struct Metric {
+        static let textViewMid = CGFloat(10)
+        static let textViewHeight = CGFloat(70)
+        
+        static let commonOffset = CGFloat(7)
+    }
 
     //MARK: UI
     fileprivate let activityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: .gray)
@@ -109,13 +117,13 @@ final class InterestRestaurantList: UIViewController {
                 make.center.equalToSuperview()
             }
             self.textView.snp.makeConstraints { make in
-                make.left.equalTo(10)
-                make.right.equalTo(-10)
-                make.top.equalTo(self.topLayoutGuide.snp.bottom).offset(5)
-                make.height.equalTo(50)
+                make.left.equalTo(Metric.textViewMid)
+                make.right.equalTo(-Metric.textViewMid)
+                make.top.equalTo(self.topLayoutGuide.snp.bottom).offset(Metric.commonOffset)
+                make.height.equalTo(Metric.textViewHeight)
             }
             self.tableView.snp.makeConstraints { make in
-                make.top.equalTo(self.textView.snp.bottom).offset(3)
+                make.top.equalTo(self.textView.snp.bottom).offset(Metric.commonOffset)
                 make.left.right.equalToSuperview()
                 make.bottom.equalTo(self.view.snp.bottom)
             }

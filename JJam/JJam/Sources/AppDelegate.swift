@@ -26,17 +26,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window.backgroundColor = .white
         
         //로그인
-        LoginScreen()
+        //LoginScreen()
         
         //회원 가입
         //UsersSignUpScreen()
         //BusinessUsersSignUpScreen()
         
-        /*
         //GeneralUsersTabBar
         let generalUsersTabBar = GeneralUsersTabBar(selectIndex : 0)
         self.window?.rootViewController = generalUsersTabBar
-        */
         
         /*
         //BusinessUsersTabBar

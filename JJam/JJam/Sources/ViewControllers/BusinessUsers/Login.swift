@@ -76,7 +76,7 @@ final class Login: UIViewController {
                 make.left.equalTo(15)
                 make.right.equalTo(-15)
                 make.top.equalTo(self.topLayoutGuide.snp.bottom).offset(15)
-                make.height.equalTo(30)
+                make.height.equalTo(60)
             }
             self.passwordTextField.snp.makeConstraints { make in
                 make.top.equalTo(self.usernameTextField.snp.bottom).offset(10)
@@ -85,12 +85,12 @@ final class Login: UIViewController {
             self.loginButton.snp.makeConstraints { make in
                 make.top.equalTo(self.passwordTextField.snp.bottom).offset(15)
                 make.left.right.equalTo(self.usernameTextField)
-                make.height.equalTo(40)
+                make.height.equalTo(60)
             }
             self.signUpButton.snp.makeConstraints { make in
                 make.top.equalTo(self.loginButton.snp.bottom).offset(15)
                 make.left.right.equalTo(self.usernameTextField)
-                make.height.equalTo(40)
+                make.height.equalTo(60)
             }
         }
         super.updateViewConstraints()

@@ -11,22 +11,19 @@ import UIKit
 final class BusinessUsersSignUp: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     //MARK: Properties
     fileprivate var didSetupConstraints = false
-    fileprivate var EditSignUp: [SignUp] = []
+    fileprivate var editSignUp: [SignUp] = []
     fileprivate var newSignUp: [SignUp] = []
-    fileprivate var localPath:URL!
+    fileprivate var image:UIImage!
+    //let image
     
     //MARK: Constants
     fileprivate struct Metric {
-        static let imageLabelLeft = CGFloat(10)
-        static let labelRight = CGFloat(-250)
-        static let buttonRight = CGFloat(-250)
+        static let buttonLeft = CGFloat(10)
+        static let buttonRight = CGFloat(-10)
+        static let buttonWidth = CGFloat(170)
+        static let buttonHeight = CGFloat(45)
         
-        static let imageLeft = CGFloat(130)
-        static let imageRight = CGFloat(-10)
-        
-        static let commonOffset = CGFloat(5)
-        static let commonHeight = CGFloat(30)
-        static let commonHeightImageView = CGFloat(230)
+        static let commonOffset = CGFloat(7)
     }
     
     //MARK: UI
@@ -42,7 +39,7 @@ final class BusinessUsersSignUp: UIViewController, UIImagePickerControllerDelega
         self.title = "회원 가입"
 
         //데이터 임시 처리
-        self.EditSignUp.append(SignUp(id: "", password: "",businessNumber: "", companyName: "", address: "", contactNumber: "", representative: ""))
+        self.editSignUp.append(SignUp(id: "", password: "",businessNumber: "", companyName: "", address: "", contactNumber: "", representative: ""))
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -99,7 +96,7 @@ final class BusinessUsersSignUp: UIViewController, UIImagePickerControllerDelega
             }
             var height: CGFloat = 0
             height += Metric.commonOffset
-            height += Metric.commonHeight
+            height += Metric.buttonHeight
             //tableView
             self.tableView.snp.makeConstraints { make in
                 make.top.left.right.equalToSuperview()
@@ -107,16 +104,16 @@ final class BusinessUsersSignUp: UIViewController, UIImagePickerControllerDelega
             }
             //사진 버튼
             self.imageButton.snp.makeConstraints { make in
-                make.left.equalTo(10)
-                make.width.equalTo(170)
-                make.height.equalTo(Metric.commonHeight)
+                make.left.equalTo(Metric.buttonLeft)
+                make.width.equalTo(Metric.buttonWidth)
+                make.height.equalTo(Metric.buttonHeight)
                 make.top.equalTo(self.bottomLayoutGuide.snp.bottom).offset(-(height))
             }
             //촬영 버튼
             self.cameraButton.snp.makeConstraints { make in
-                make.right.equalTo(-10)
-                make.width.equalTo(170)
-                make.height.equalTo(Metric.commonHeight)
+                make.right.equalTo(Metric.buttonRight)
+                make.width.equalTo(Metric.buttonWidth)
+                make.height.equalTo(Metric.buttonHeight)
                 make.top.equalTo(self.bottomLayoutGuide.snp.bottom).offset(-(height))
             }
         }
@@ -143,7 +140,7 @@ final class BusinessUsersSignUp: UIViewController, UIImagePickerControllerDelega
         let message = cell.setInputData()
         if message.isEmpty {
             //print("signUp.id :" + BusinessUsersSignUpTextCell.signUp.id)
-            if localPath == nil {
+            if self.image == nil {
                 let alertController = UIAlertController(
                     title: self.title,
                     message: "사업자 등록증 사진 정보가 없습니다.\n추후 인증 업체 자격을 획득할 수 없습니다.\n그래도 계속 진행하시겠습니까?",
@@ -220,7 +217,7 @@ final class BusinessUsersSignUp: UIViewController, UIImagePickerControllerDelega
     //회원 가입
     func restaurantSignUp() {
         UICommonSetLoading(self.activityIndicatorView, service: true)
-        BusinessUsersNetWorking.restaurantSignUp(signUp: self.newSignUp, imageURL: localPath) { [weak self] response in
+        BusinessUsersNetWorking.restaurantSignUp(signUp: self.newSignUp, image: image) { [weak self] response in
             guard let `self` = self else { return }
             if response.count > 0 {
                 UICommonSetLoading(self.activityIndicatorView, service: false)
@@ -285,31 +282,27 @@ final class BusinessUsersSignUp: UIViewController, UIImagePickerControllerDelega
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any])
     {
         //tableView[1].imageView 이미지 변경
-        let image = info[UIImagePickerControllerOriginalImage]as! UIImage
+        self.image = info[UIImagePickerControllerOriginalImage]as! UIImage
         let index = IndexPath(row: 1, section: 0)
         let cell: BusinessUsersSignUpImageCell = self.tableView.cellForRow(at: index) as! BusinessUsersSignUpImageCell
-        cell.configure(image: image)
-        
-        //이미지 파일 URL
-        let imageUrl = info[UIImagePickerControllerReferenceURL] as! NSURL
-        let imageName = imageUrl.lastPathComponent
-        let documentDirectory = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!
-        let photoURL = NSURL(fileURLWithPath: documentDirectory)
-        localPath = photoURL.appendingPathComponent(imageName!)
+        cell.configure(image: self.image!)
 
-        //아래 작업을 하지 않으면 다른 이미지를 선택(회원 가입 완료 후 )해도 변화가 없다..!!!
-        let data = UIImagePNGRepresentation(image)
-        do {
-            try data?.write(to: localPath!, options: Data.WritingOptions.atomic)
-        } catch {
-            // Catch exception here and act accordingly
-        }
         //imagePicker 닫기
         self.dismiss(animated: true, completion: nil);
     }
     
     func cameraButtonDidTap() {
-        //self.tableView.reloadData()
+        //camera
+        if(UIImagePickerController .isSourceTypeAvailable(UIImagePickerControllerSourceType.camera)){
+            imagePicker.allowsEditing = false
+            imagePicker.sourceType = UIImagePickerControllerSourceType.camera
+            present(imagePicker, animated: true, completion: nil)
+        }else{
+            let alert = UIAlertController(title: "Camera Not Found", message: "This device has no Camera", preferredStyle: .alert)
+            let ok = UIAlertAction(title: "OK", style:.default, handler: nil)
+            alert.addAction(ok)
+            present(alert, animated: true, completion: nil)
+        }
     }
 
 }
@@ -323,7 +316,7 @@ extension BusinessUsersSignUp: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.row == 0 {
             let cell = tableView.dequeueReusableCell(withIdentifier: "businessUsersSignUpTextCell", for: indexPath) as! BusinessUsersSignUpTextCell
-            cell.configure(signUp: self.EditSignUp[0])
+            cell.configure(signUp: self.editSignUp[0])
             //cell.configure()
             return cell
         } else {

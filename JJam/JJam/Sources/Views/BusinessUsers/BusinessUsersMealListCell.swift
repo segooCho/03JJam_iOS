@@ -10,6 +10,14 @@
 import UIKit
 
 final class BusinessUsersMealListCell: UITableViewCell {
+    //MARK: Properties
+    fileprivate var segmentedIndexAndCode = 0
+    
+    //MARK: Constants
+    fileprivate struct Metric {
+        static let imageSize = CGFloat(57.0)
+    }
+    
     //MARK: init
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: .subtitle, reuseIdentifier: reuseIdentifier)
@@ -27,20 +35,14 @@ final class BusinessUsersMealListCell: UITableViewCell {
         
         //TODO :: image 사이즈 고정 && image 라운드 재정리 필요
         //image 사이즈 고정
-        let itemSize = CGSize(width:42.0, height:42.0)
+        let itemSize = CGSize(width:Metric.imageSize, height:Metric.imageSize)
         UIGraphicsBeginImageContextWithOptions(itemSize, false, 0.0)
         let imageRect = CGRect(x:0.0, y:0.0, width:itemSize.width, height:itemSize.height)
         self.imageView?.image!.draw(in:imageRect)
         self.imageView?.image! = UIGraphicsGetImageFromCurrentImageContext()!
         UIGraphicsEndImageContext()
         //image 라운드
-        self.imageView?.layer.frame = (self.layer.frame).insetBy(dx: 0, dy: 0)
-        self.imageView?.layer.borderWidth = 0.5
-        self.imageView?.layer.borderColor = UIColor.gray.cgColor
-        self.imageView?.layer.cornerRadius = (self.frame.height)/5
-        self.imageView?.layer.masksToBounds = false
-        self.imageView?.clipsToBounds = true
-        self.imageView?.contentMode = UIViewContentMode.scaleAspectFill
+        imageViewBorder(self.imageView!, view: self)
         
         //일자
         self.textLabel?.text = businessUsersMeal.dateString

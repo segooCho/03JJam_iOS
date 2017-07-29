@@ -15,6 +15,12 @@ final class BusinessUsersNotice: UIViewController {
     var businessUsersRestaurantId:String!
     var businessUsersRestaurantNotice:String!
 
+    //MARK: Constants
+    fileprivate struct Metric {
+        static let commonMid = CGFloat(10)
+        static let commonOffset = CGFloat(7)
+    }
+    
     // MARK: UI
     fileprivate let textView = UITextView()
     
@@ -66,14 +72,15 @@ final class BusinessUsersNotice: UIViewController {
         if !self.didSetupConstraints {
             self.didSetupConstraints = true
             self.textView.snp.makeConstraints { make in
-                make.top.equalTo(self.topLayoutGuide.snp.bottom).offset(10)
-                make.left.equalTo(10)
-                make.right.bottom.equalToSuperview().offset(-10)
+                make.top.equalTo(self.topLayoutGuide.snp.bottom).offset(Metric.commonOffset)
+                make.left.equalTo(Metric.commonMid)
+                make.right.equalTo(-Metric.commonMid)
+                make.bottom.equalToSuperview().offset(-Metric.commonOffset)
             }
         }
         super.updateViewConstraints()
     }
-    
+
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.

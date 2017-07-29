@@ -19,6 +19,22 @@ final class MealList: UIViewController {
     var interestRestaurantCertification:String!
     var interestRestaurantNotice:String!
 
+    //MARK: Constants
+    fileprivate struct Metric {
+        static let segmentedMid = CGFloat(20)
+        static let segmentedHeight = CGFloat(45)
+        
+        static let labelMid = CGFloat(10)
+        static let labelHeight = CGFloat(20)
+        
+        static let textViewMid = CGFloat(10)
+        static let textViewHeight = CGFloat(100)
+        
+        static let commonOffset = CGFloat(7)
+        static let commonHeight = CGFloat(45)
+    }
+
+    
     //MARK: UI
     fileprivate let activityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: .gray)
     fileprivate let segmentedControl = UISegmentedControl()
@@ -120,25 +136,25 @@ final class MealList: UIViewController {
                 make.center.equalToSuperview()
             }
             self.segmentedControl.snp.makeConstraints { make in
-                make.left.equalTo(40)
-                make.right.equalTo(-40)
-                make.top.equalTo(self.topLayoutGuide.snp.bottom).offset(5)
-                make.height.equalTo(30)
+                make.left.equalTo(Metric.segmentedMid)
+                make.right.equalTo(-Metric.segmentedMid)
+                make.top.equalTo(self.topLayoutGuide.snp.bottom).offset(Metric.commonOffset)
+                make.height.equalTo(Metric.segmentedHeight)
             }
             self.label.snp.makeConstraints { make in
-                make.left.equalTo(10)
-                make.right.equalTo(-10)
-                make.top.equalTo(self.segmentedControl.snp.bottom).offset(8)
-                make.height.equalTo(10)
+                make.left.equalTo(Metric.labelMid)
+                make.right.equalTo(-Metric.labelMid)
+                make.top.equalTo(self.segmentedControl.snp.bottom).offset(Metric.commonOffset)
+                make.height.equalTo(Metric.labelHeight)
             }
             self.textView.snp.makeConstraints { make in
-                make.left.equalTo(10)
-                make.right.equalTo(-10)
-                make.top.equalTo(self.label.snp.bottom).offset(5)
-                make.height.equalTo(100)
+                make.left.equalTo(Metric.textViewMid)
+                make.right.equalTo(-Metric.textViewMid)
+                make.top.equalTo(self.label.snp.bottom).offset(Metric.commonOffset)
+                make.height.equalTo(Metric.textViewHeight)
             }
             self.tableView.snp.makeConstraints { make in
-                make.top.equalTo(self.textView.snp.bottom).offset(3)
+                make.top.equalTo(self.textView.snp.bottom).offset(Metric.commonOffset)
                 make.left.right.equalToSuperview()
                 make.bottom.equalTo(self.bottomLayoutGuide.snp.top)
             }
