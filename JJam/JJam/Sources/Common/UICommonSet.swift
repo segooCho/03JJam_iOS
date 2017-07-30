@@ -10,7 +10,7 @@ import UIKit
 
 //MARK: Constants
 fileprivate struct Font {
-    static let font14 = UIFont.systemFont(ofSize: 18)
+    static let font14 = UIFont.systemFont(ofSize: 16)
 }
 
 //MARK: UISegmentedControl Common Set
@@ -121,7 +121,12 @@ func UICommonSetShakeTextView(_ uIKit: UITextView) {
 
 
 //MARK: Common Set Loading
-func UICommonSetLoading(_ uIKit: UIActivityIndicatorView, service: Bool) {
+func UICommonSetLoading(uiKit: UIActivityIndicatorView) {
+    uiKit.transform = CGAffineTransform(scaleX: 2, y: 2)
+}
+
+//MARK: Common Set Loading
+func UICommonSetLoadingService(_ uIKit: UIActivityIndicatorView, service: Bool) {
     switch service {
     case true:
         uIKit.startAnimating()
@@ -132,7 +137,6 @@ func UICommonSetLoading(_ uIKit: UIActivityIndicatorView, service: Bool) {
         UIApplication.shared.endIgnoringInteractionEvents()
         print("stopAnimating")
     }
-
-    
-
 }
+
+

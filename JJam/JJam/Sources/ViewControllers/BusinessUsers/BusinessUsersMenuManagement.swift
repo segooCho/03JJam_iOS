@@ -22,7 +22,7 @@ final class BusinessUsersMenuManagement: UIViewController {
         static let segmentedHeight = CGFloat(45)
         
         static let textFieldMid = CGFloat(10)
-        static let textFieldHeight = CGFloat(45)
+        static let textFieldHeight = CGFloat(40)
         
         static let commonOffset = CGFloat(7)
     }

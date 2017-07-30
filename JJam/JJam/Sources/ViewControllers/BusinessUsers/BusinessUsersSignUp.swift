@@ -11,6 +11,8 @@ import UIKit
 final class BusinessUsersSignUp: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     //MARK: Properties
     fileprivate var didSetupConstraints = false
+    var segmentedIndexAndCode: Int = 0
+
     fileprivate var editSignUp: [SignUp] = []
     fileprivate var newSignUp: [SignUp] = []
     fileprivate var image:UIImage!
@@ -18,20 +20,19 @@ final class BusinessUsersSignUp: UIViewController, UIImagePickerControllerDelega
     
     //MARK: Constants
     fileprivate struct Metric {
-        static let buttonLeft = CGFloat(10)
-        static let buttonRight = CGFloat(-10)
-        static let buttonWidth = CGFloat(170)
-        static let buttonHeight = CGFloat(45)
-        
+        static let segmentedMid = CGFloat(20)
+        static let segmentedHeight = CGFloat(45)
+
         static let commonOffset = CGFloat(7)
     }
     
     //MARK: UI
     fileprivate let activityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: .gray)
     fileprivate let tableView = UITableView(frame: .zero, style: .plain)
-    fileprivate let imageButton = UIButton()
-    fileprivate let cameraButton = UIButton()
     fileprivate var imagePicker: UIImagePickerController = UIImagePickerController()
+    fileprivate let segmentedControl = UISegmentedControl()
+    fileprivate let segmentedTitles: Array<String> = ["사진 지우기","사진첩","카메라"]
+
     
     //MARK: init
     init() {
@@ -63,25 +64,23 @@ final class BusinessUsersSignUp: UIViewController, UIImagePickerControllerDelega
             action: #selector(addButtonDidTap)
         )
         
-        imagePicker.delegate = self
-
-        UICommonSetButton(self.imageButton, setTitleText: "사진", color: 0)
-        self.imageButton.addTarget(self, action: #selector(imageButtonDidTap), for: .touchUpInside)
-
-        UICommonSetButton(self.cameraButton, setTitleText: "촬영", color: 0)
-        self.cameraButton.addTarget(self, action: #selector(cameraButtonDidTap), for: .touchUpInside)
-
+        UICommonSetLoading(uiKit: self.activityIndicatorView)
+        
         self.tableView.register(BusinessUsersSignUpTextCell.self, forCellReuseIdentifier: "businessUsersSignUpTextCell")
         self.tableView.register(BusinessUsersSignUpImageCell.self, forCellReuseIdentifier: "businessUsersSignUpImageCell")
         self.tableView.dataSource = self
         self.tableView.delegate = self
         
+        //segmentedControl
+        imagePicker.delegate = self
+        UICommonSetSegmentedControl(self.segmentedControl, titles: segmentedTitles)
+        self.segmentedControl.addTarget(self, action: #selector(changeSegmentedControl), for: .valueChanged)
+        self.segmentedControl.selectedSegmentIndex = self.segmentedIndexAndCode
+        
         self.view.addSubview(self.tableView)
-        self.view.addSubview(self.imageButton)
-        self.view.addSubview(self.cameraButton)
+        self.view.addSubview(self.segmentedControl)
         self.view.addSubview(self.activityIndicatorView)
         
-
         //updateViewConstraints 자동 호출
         self.view.setNeedsUpdateConstraints()
     }
@@ -96,25 +95,19 @@ final class BusinessUsersSignUp: UIViewController, UIImagePickerControllerDelega
             }
             var height: CGFloat = 0
             height += Metric.commonOffset
-            height += Metric.buttonHeight
+            height += Metric.segmentedHeight
             //tableView
             self.tableView.snp.makeConstraints { make in
                 make.top.left.right.equalToSuperview()
                 make.bottom.equalTo(self.bottomLayoutGuide.snp.bottom).offset(-(height + Metric.commonOffset))
             }
-            //사진 버튼
-            self.imageButton.snp.makeConstraints { make in
-                make.left.equalTo(Metric.buttonLeft)
-                make.width.equalTo(Metric.buttonWidth)
-                make.height.equalTo(Metric.buttonHeight)
+            
+            //segmented
+            self.segmentedControl.snp.makeConstraints { make in
+                make.left.equalTo(Metric.segmentedMid)
+                make.right.equalTo(-Metric.segmentedMid)
                 make.top.equalTo(self.bottomLayoutGuide.snp.bottom).offset(-(height))
-            }
-            //촬영 버튼
-            self.cameraButton.snp.makeConstraints { make in
-                make.right.equalTo(Metric.buttonRight)
-                make.width.equalTo(Metric.buttonWidth)
-                make.height.equalTo(Metric.buttonHeight)
-                make.top.equalTo(self.bottomLayoutGuide.snp.bottom).offset(-(height))
+                make.height.equalTo(Metric.segmentedHeight)
             }
         }
         super.updateViewConstraints()
@@ -130,6 +123,8 @@ final class BusinessUsersSignUp: UIViewController, UIImagePickerControllerDelega
         _ = self.navigationController?.popViewController(animated: true)
     }
     
+    /*********************************************  회원 가입  ******************************************************/
+
     func addButtonDidTap() {
         // TableView[0] 에서 입력 값 가지고 오기
         // UI는 직접 처리 불가, struct만 접근 가능 제약이 많음... 병맛으로 처리 했음
@@ -140,7 +135,8 @@ final class BusinessUsersSignUp: UIViewController, UIImagePickerControllerDelega
         let message = cell.setInputData()
         if message.isEmpty {
             //print("signUp.id :" + BusinessUsersSignUpTextCell.signUp.id)
-            if self.image == nil {
+            //if self.image == nil {
+            if self.segmentedIndexAndCode == 0 {
                 let alertController = UIAlertController(
                     title: self.title,
                     message: "사업자 등록증 사진 정보가 없습니다.\n추후 인증 업체 자격을 획득할 수 없습니다.\n그래도 계속 진행하시겠습니까?",
@@ -207,7 +203,7 @@ final class BusinessUsersSignUp: UIViewController, UIImagePickerControllerDelega
                                              contactNumber: BusinessUsersSignUpTextCell.signUp.contactNumber,
                                              representative: BusinessUsersSignUpTextCell.signUp.representative))
                 
-                self.restaurantSignUp()
+                self.restaurantSignUpNetWorking()
         }
         alertController.addAction(alertCancel)
         alertController.addAction(alertConfirm)
@@ -215,12 +211,12 @@ final class BusinessUsersSignUp: UIViewController, UIImagePickerControllerDelega
     }
     
     //회원 가입
-    func restaurantSignUp() {
-        UICommonSetLoading(self.activityIndicatorView, service: true)
+    func restaurantSignUpNetWorking() {
+        UICommonSetLoadingService(self.activityIndicatorView, service: true)
         BusinessUsersNetWorking.restaurantSignUp(signUp: self.newSignUp, image: image) { [weak self] response in
             guard let `self` = self else { return }
             if response.count > 0 {
-                UICommonSetLoading(self.activityIndicatorView, service: false)
+                UICommonSetLoadingService(self.activityIndicatorView, service: false)
                 let message = response[0].message //무조건 리턴 메시지 발생함
                 if message != nil {
                     if message == "회원 가입이 완료되었습니다." {
@@ -265,6 +261,21 @@ final class BusinessUsersSignUp: UIViewController, UIImagePickerControllerDelega
         }
     }
 
+    
+    
+    /*********************************************  이미지 처리 ******************************************************/
+    func changeSegmentedControl() {
+        self.segmentedIndexAndCode = segmentedControl.selectedSegmentIndex
+        switch self.segmentedControl.selectedSegmentIndex {
+        case 1:     //사진첩
+            imageButtonDidTap()
+        case 2:     //카메라
+            cameraButtonDidTap()
+        default:    //지우기
+            noImageButtonDidTap()
+        }
+    }
+    
     func imageButtonDidTap() {
         //photoLibrary
         if(UIImagePickerController .isSourceTypeAvailable(UIImagePickerControllerSourceType.photoLibrary)){
@@ -276,19 +287,10 @@ final class BusinessUsersSignUp: UIViewController, UIImagePickerControllerDelega
             let ok = UIAlertAction(title: "OK", style:.default, handler: nil)
             alert.addAction(ok)
             present(alert, animated: true, completion: nil)
+            self.segmentedControl.selectedSegmentIndex = 0
+            self.segmentedIndexAndCode = 0
+            noImageButtonDidTap()
         }
-    }
-    
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any])
-    {
-        //tableView[1].imageView 이미지 변경
-        self.image = info[UIImagePickerControllerOriginalImage]as! UIImage
-        let index = IndexPath(row: 1, section: 0)
-        let cell: BusinessUsersSignUpImageCell = self.tableView.cellForRow(at: index) as! BusinessUsersSignUpImageCell
-        cell.configure(image: self.image!)
-
-        //imagePicker 닫기
-        self.dismiss(animated: true, completion: nil);
     }
     
     func cameraButtonDidTap() {
@@ -302,9 +304,42 @@ final class BusinessUsersSignUp: UIViewController, UIImagePickerControllerDelega
             let ok = UIAlertAction(title: "OK", style:.default, handler: nil)
             alert.addAction(ok)
             present(alert, animated: true, completion: nil)
+            self.segmentedControl.selectedSegmentIndex = 0
+            self.segmentedIndexAndCode = 0
+            noImageButtonDidTap()
         }
     }
 
+    func noImageButtonDidTap() {
+        image = nil
+        let index = IndexPath(row: 1, section: 0)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "businessUsersSignUpImageCell", for: index) as! BusinessUsersSignUpImageCell
+        let noImage = UIImage(named: "NoImageFound.jpg")
+        cell.configure(image: noImage!)
+        self.tableView.reloadData()
+    }
+    
+
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any])
+    {
+        //tableView[1].imageView 이미지 변경
+        self.image = info[UIImagePickerControllerOriginalImage]as! UIImage
+        let index = IndexPath(row: 1, section: 0)
+        let cell: BusinessUsersSignUpImageCell = self.tableView.cellForRow(at: index) as! BusinessUsersSignUpImageCell
+        cell.configure(image: self.image!)
+
+        //imagePicker 닫기
+        self.dismiss(animated: true, completion: nil);
+    }
+    
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        //imagePicker 닫기
+        self.dismiss(animated: true, completion: nil);
+        self.segmentedControl.selectedSegmentIndex = 0
+        self.segmentedIndexAndCode = 0
+        noImageButtonDidTap()
+    }
+    
 }
 
 
@@ -321,8 +356,14 @@ extension BusinessUsersSignUp: UITableViewDataSource {
             return cell
         } else {
             let cell = tableView.dequeueReusableCell(withIdentifier: "businessUsersSignUpImageCell", for: indexPath) as! BusinessUsersSignUpImageCell
-            let image = UIImage(named: "NoImageFound.jpg")
-            cell.configure(image: image!)
+            
+            //TableView 스크롤로 새로운 이지미지가 덮어진다.
+            if self.segmentedIndexAndCode == 0 {
+                let noImage = UIImage(named: "NoImageFound.jpg")
+                cell.configure(image: noImage!)
+            } else {
+                cell.configure(image: self.image!)
+            }
             return cell
         }
     }

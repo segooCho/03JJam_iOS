@@ -32,6 +32,8 @@ final class Login: UIViewController {
             action: #selector(cancelButtonDidTap)
         )
 
+        UICommonSetLoading(uiKit: self.activityIndicatorView)
+
         UICommonSetTextFieldEnable(self.usernameTextField, placeholderText: "사용자 ID")
         self.usernameTextField.addTarget(self, action: #selector(textFieldDidChangeText), for: .editingChanged)
         self.usernameTextField.delegate = self
@@ -73,27 +75,38 @@ final class Login: UIViewController {
                 make.center.equalToSuperview()
             }
             self.usernameTextField.snp.makeConstraints { make in
-                make.left.equalTo(15)
-                make.right.equalTo(-15)
-                make.top.equalTo(self.topLayoutGuide.snp.bottom).offset(15)
-                make.height.equalTo(60)
+                make.left.equalTo(Metric.commonMid)
+                make.right.equalTo(-Metric.commonMid)
+                make.top.equalTo(self.topLayoutGuide.snp.bottom).offset(Metric.commonOffset)
+                make.height.equalTo(Metric.commonHeight)
             }
             self.passwordTextField.snp.makeConstraints { make in
-                make.top.equalTo(self.usernameTextField.snp.bottom).offset(10)
+                make.top.equalTo(self.usernameTextField.snp.bottom).offset(Metric.commonOffset)
                 make.left.right.height.equalTo(self.usernameTextField)
             }
             self.loginButton.snp.makeConstraints { make in
-                make.top.equalTo(self.passwordTextField.snp.bottom).offset(15)
+                make.top.equalTo(self.passwordTextField.snp.bottom).offset(Metric.buttonOffset)
                 make.left.right.equalTo(self.usernameTextField)
-                make.height.equalTo(60)
+                make.height.equalTo(Metric.buttonHeight)
             }
             self.signUpButton.snp.makeConstraints { make in
-                make.top.equalTo(self.loginButton.snp.bottom).offset(15)
+                make.top.equalTo(self.loginButton.snp.bottom).offset(Metric.commonOffset)
                 make.left.right.equalTo(self.usernameTextField)
-                make.height.equalTo(60)
+                make.height.equalTo(Metric.buttonHeight)
             }
         }
         super.updateViewConstraints()
+    }
+    
+    fileprivate struct Metric {
+        static let commonMid = CGFloat(15)
+        static let commonHeight = CGFloat(45)
+
+        static let buttonHeight = CGFloat(60)
+
+        static let commonOffset = CGFloat(15)
+        static let buttonOffset = CGFloat(80)
+        
     }
     
     override func didReceiveMemoryWarning() {
@@ -140,11 +153,11 @@ final class Login: UIViewController {
     
     //로그인
     func restaurantLogin() {
-        UICommonSetLoading(self.activityIndicatorView, service: true)
+        UICommonSetLoadingService(self.activityIndicatorView, service: true)
         BusinessUsersNetWorking.restaurantLogin(id: self.usernameTextField.text!, password: self.passwordTextField.text!) { [weak self] response in
             guard let `self` = self else { return }
             if response.count > 0 {
-                UICommonSetLoading(self.activityIndicatorView, service: false)
+                UICommonSetLoadingService(self.activityIndicatorView, service: false)
                 //로그인
                 let message = response[0].message
                 if message != nil {

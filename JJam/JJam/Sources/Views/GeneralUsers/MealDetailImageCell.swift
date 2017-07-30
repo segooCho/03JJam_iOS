@@ -42,6 +42,8 @@ final class MealDetailImageCell: UITableViewCell {
     //MARK: Layout
     override func layoutSubviews() {
         super.layoutSubviews()
+        //ZoomScale 초기화 하지 않으면 다음 Zoom에서 오류가 발생한다.
+        self.scrollView.setZoomScale(0, animated: false)
         self.scrollView.frame = self.contentView.bounds
         self.photoView.frame = self.scrollView.bounds
     }

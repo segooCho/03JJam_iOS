@@ -13,9 +13,9 @@ final class BusinessUsersMealDetailTextCell: UITableViewCell {
     //MARK: Constants
     fileprivate struct Metric {
         static let labelLeft = CGFloat(10)
-        static let labelRight = CGFloat(-300)
+        static let labelRight = CGFloat(-270)
         
-        static let textFieldLeft = CGFloat(80)
+        static let textFieldLeft = CGFloat(120)
         static let textFieldRight = CGFloat(-10)
         
         static let commonOffset = CGFloat(7)

@@ -31,7 +31,7 @@ final class MealList: UIViewController {
         static let textViewHeight = CGFloat(100)
         
         static let commonOffset = CGFloat(7)
-        static let commonHeight = CGFloat(45)
+        static let commonHeight = CGFloat(40)
     }
 
     
@@ -85,7 +85,7 @@ final class MealList: UIViewController {
         //scroll의 내부 여백 발생시 사용()
         self.automaticallyAdjustsScrollViewInsets = false
 
-        //self.activityIndicatorView.backgroundColor = .red
+        UICommonSetLoading(uiKit: self.activityIndicatorView)
         
         //cancelButton
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(
@@ -170,11 +170,11 @@ final class MealList: UIViewController {
     //MARK: ACTION
     //식당 인증 & 공지사항
     func restaurantInfo() {
-        UICommonSetLoading(self.activityIndicatorView, service: true)
+        UICommonSetLoadingService(self.activityIndicatorView, service: true)
         GeneralUsersNetWorking.restaurantInfo(restaurant_Id: self.interestRestaurantId) { [weak self] response in
             guard let `self` = self else { return }
             if response.count > 0 {
-                UICommonSetLoading(self.activityIndicatorView, service: false)
+                UICommonSetLoadingService(self.activityIndicatorView, service: false)
                 //인증
                 let message = response[0].message
                 if message != nil {
@@ -218,13 +218,13 @@ final class MealList: UIViewController {
     
     //식단 조회
     func mealSearch() {
-        UICommonSetLoading(self.activityIndicatorView, service: true)
+        UICommonSetLoadingService(self.activityIndicatorView, service: true)
         GeneralUsersNetWorking.mealSearch(restaurant_Id: self.interestRestaurantId, segmentedIndexAndCode: self.segmentedIndexAndCode) { [weak self] response in
             guard let `self` = self else { return }
             if response.count > 0 {
                 let message = response[0].message
                 if message != nil {
-                    UICommonSetLoading(self.activityIndicatorView, service: false)
+                    UICommonSetLoadingService(self.activityIndicatorView, service: false)
                     let alertController = UIAlertController(
                         title: "확인",
                         message: message,
@@ -245,7 +245,7 @@ final class MealList: UIViewController {
             let delayInSeconds = 2.0
             DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + delayInSeconds) {
                 self.tableView.reloadData()
-                UICommonSetLoading(self.activityIndicatorView, service: false)
+                UICommonSetLoadingService(self.activityIndicatorView, service: false)
             }
         }
     }

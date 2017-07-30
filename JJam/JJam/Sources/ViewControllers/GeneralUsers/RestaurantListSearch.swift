@@ -51,6 +51,8 @@ final class RestaurantListSearch: UIViewController {
         //scroll의 내부 여백 발생시 사용()
         //self.automaticallyAdjustsScrollViewInsets = false
 
+        UICommonSetLoading(uiKit: self.activityIndicatorView)
+        
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(
             barButtonSystemItem: .cancel,
             target: self,
@@ -168,11 +170,11 @@ final class RestaurantListSearch: UIViewController {
             return
         }
         self.textField.resignFirstResponder() //키보드 숨기기
-        UICommonSetLoading(self.activityIndicatorView, service: true)
+        UICommonSetLoadingService(self.activityIndicatorView, service: true)
         GeneralUsersNetWorking.restaurantSearch(searchText: self.textField.text!) { [weak self] response in
             guard let `self` = self else { return }
             if response.count > 0 {
-                UICommonSetLoading(self.activityIndicatorView, service: false)
+                UICommonSetLoadingService(self.activityIndicatorView, service: false)
                 let message = response[0].message
                 if message != nil {
                     let alertController = UIAlertController(

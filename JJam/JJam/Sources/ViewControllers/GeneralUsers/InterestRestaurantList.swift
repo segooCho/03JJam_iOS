@@ -84,6 +84,8 @@ final class InterestRestaurantList: UIViewController {
             action: #selector(addButtonDidTap)
         )
         
+        UICommonSetLoading(uiKit: self.activityIndicatorView)
+        
         //공지사항
         self.textView.text = self.fixedNotice
         UICommonSetTextViewDisable(self.textView)
@@ -164,8 +166,7 @@ final class InterestRestaurantList: UIViewController {
     //Notification 관심 목록 저장
     func interestRestaurantDidAdd(_ notification: Notification ) {
         guard let interestRestaurant = notification.userInfo?["interestRestaurant"] as? [InterestRestaurant] else { return }
-        
-        UICommonSetLoading(self.activityIndicatorView, service: true)
+        UICommonSetLoadingService(self.activityIndicatorView, service: true)
         //중복 제거 처리 및 등록
         for notificationData in interestRestaurant {
             if self.interestRestaurant.count == 0 {
@@ -183,7 +184,7 @@ final class InterestRestaurantList: UIViewController {
             }
         }
         self.tableView.reloadData()
-        UICommonSetLoading(self.activityIndicatorView, service: false)
+        UICommonSetLoadingService(self.activityIndicatorView, service: false)
         UserDefaultsSet()
     }
     
