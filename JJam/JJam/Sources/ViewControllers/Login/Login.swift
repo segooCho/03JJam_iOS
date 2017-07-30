@@ -159,27 +159,30 @@ final class Login: UIViewController {
             if response.count > 0 {
                 UICommonSetLoadingService(self.activityIndicatorView, service: false)
                 //로그인
-                let message = response[0].message
-                if message != nil {
-                    let alertController = UIAlertController(
-                        title: "로그인",
-                        message: message,
-                        preferredStyle: .alert
-                    )
-                    let alertConfirm = UIAlertAction(
-                        title: "확인",
-                        style: .default) { _ in
-                            // 확인 후 작업
-                            if message == "패스워드가 잘못되었습니다." {
-                                self.passwordTextField.becomeFirstResponder()
-                            } else if message == "존재하는 않는 사용자ID 입니다." {
-                                self.usernameTextField.becomeFirstResponder()
-                            }
-                    }
-                    alertController.addAction(alertConfirm)
-                    self.present(alertController, animated: true, completion: nil)
+                let _id = response[0]._id
+                if _id != nil {
+                    AppDelegate.instance?.BusinessUsersTabBarScreen(_id: _id!, selectIndex: 0)
                 } else {
-                    AppDelegate.instance?.BusinessUsersTabBarScreen(selectIndex: 0)
+                    let message = response[0].message
+                    if message != nil {
+                        let alertController = UIAlertController(
+                            title: "로그인",
+                            message: message,
+                            preferredStyle: .alert
+                        )
+                        let alertConfirm = UIAlertAction(
+                            title: "확인",
+                            style: .default) { _ in
+                                // 확인 후 작업
+                                if message == "패스워드가 잘못되었습니다." {
+                                    self.passwordTextField.becomeFirstResponder()
+                                } else if message == "존재하는 않는 사용자ID 입니다." {
+                                    self.usernameTextField.becomeFirstResponder()
+                                }
+                        }
+                        alertController.addAction(alertConfirm)
+                        self.present(alertController, animated: true, completion: nil)
+                    }
                 }
             }
         }

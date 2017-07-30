@@ -69,16 +69,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     //BusinessUsersTabBar(식단, 설정)
-    func BusinessUsersTabBarScreen(selectIndex: Int) {
+    func BusinessUsersTabBarScreen(_id: String ,selectIndex: Int) {
         //BusinessUsersMealList()                   : 식단
         //BusinessUsersSettings()                   : 설정
-        let businessUsersTabBar = BusinessUsersTabBar(selectIndex: selectIndex)
+        let businessUsersTabBar = BusinessUsersTabBar(_id: _id, selectIndex: selectIndex)
         self.window?.rootViewController = businessUsersTabBar
     }
 
     //공지사항
-    func BusinessUsersNoticeScreen() {
-        let businessUsersNotice = BusinessUsersNotice(businessUsersRestaurantId: "1" )
+    func BusinessUsersNoticeScreen(_id: String) {
+        let businessUsersNotice = BusinessUsersNotice(_id: _id)
         let navigationController = UINavigationController(rootViewController: businessUsersNotice)
         self.window?.rootViewController = navigationController
     }

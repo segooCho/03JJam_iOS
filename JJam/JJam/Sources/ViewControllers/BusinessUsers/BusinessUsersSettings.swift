@@ -10,6 +10,7 @@ import UIKit
 
 final class BusinessUsersSettings: UIViewController {
     //MARK: Properties
+    fileprivate let _id: String
     var didSetupConstraints = false
     
     fileprivate struct Section {
@@ -42,7 +43,8 @@ final class BusinessUsersSettings: UIViewController {
     //MARK: UI
     fileprivate let tableView = UITableView(frame: .zero, style: .grouped)
     
-    init() {
+    init(_id: String) {
+        self._id = _id
         super.init(nibName: nil, bundle: nil)
         self.title = "설정"
         self.tabBarItem.image = UIImage(named: "tab-settings")
@@ -120,7 +122,7 @@ extension BusinessUsersSettings: UITableViewDelegate {
         let sectionItem = self.sections[indexPath.section].items[indexPath.row]
         switch sectionItem {
         case .notice:
-            AppDelegate.instance?.BusinessUsersNoticeScreen()
+            AppDelegate.instance?.BusinessUsersNoticeScreen(_id: self._id)
         case .profile:
             break
         case .logout:

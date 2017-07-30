@@ -10,18 +10,20 @@
 import UIKit
 
 final class BusinessUsersTabBar: UITabBarController {
+    public var _id:String!
+    
     //ViewControllers
-    let businessUsersMealList = BusinessUsersMealList(businessUsersRestaurantId: "1")           //업체 ID
-    let businessUsersMenuManagement = BusinessUsersMenuManagement(segmentedIndexAndCode: 0)     //메뉴 관리
+    let businessUsersMealList = BusinessUsersMealList(_id: "")           //업체 ID
+    let businessUsersMenuManagement = BusinessUsersMenuManagement(_id: "", segmentedIndexAndCode: 0)     //메뉴 관리
     //let businessUsersStapleFood = BusinessUsersStapleFood()
     //let businessUsersSoup = BusinessUsersSoup()
     //let businessUsersSideDish = BusinessUsersSideDish()
     //let businessUsersDessert = BusinessUsersDessert()
-    let businessUsersSettings = BusinessUsersSettings()                                         //설정
+    let businessUsersSettings = BusinessUsersSettings(_id: "")                                         //설정
     
-    init(selectIndex: Int) {
+    init(_id : String, selectIndex: Int) {
+        self._id = _id;
         super.init(nibName: nil, bundle: nil)
-        //self.delegate = self
         self.viewControllers = [
             UINavigationController(rootViewController: self.businessUsersMealList),
             UINavigationController(rootViewController: self.businessUsersMenuManagement),
@@ -31,7 +33,6 @@ final class BusinessUsersTabBar: UITabBarController {
             //UINavigationController(rootViewController: self.businessUsersDessert),
             UINavigationController(rootViewController: self.businessUsersSettings),
         ]
-        
         self.selectedIndex = selectIndex;
     }
     

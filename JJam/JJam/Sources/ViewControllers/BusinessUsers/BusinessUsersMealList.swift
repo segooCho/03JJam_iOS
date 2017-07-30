@@ -11,9 +11,9 @@ import UIKit
 
 final class BusinessUsersMealList: UIViewController {
     //MARK: Properties
+    fileprivate let _id: String
     var didSetupConstraints = false
     var businessUsersMeal: [BusinessUsersMeal] = []
-    fileprivate let businessUsersRestaurantId:String!
     var businessUsersRestaurantCertification:String!
 
     //MARK: Constants
@@ -30,8 +30,8 @@ final class BusinessUsersMealList: UIViewController {
     fileprivate let tableView = UITableView(frame: .zero, style: .plain)
     
     //MARK: init
-    init(businessUsersRestaurantId: String) {
-        self.businessUsersRestaurantId = businessUsersRestaurantId
+    init(_id: String) {
+        self._id = _id
         super.init(nibName: nil, bundle: nil)
         
         self.title = "식단"

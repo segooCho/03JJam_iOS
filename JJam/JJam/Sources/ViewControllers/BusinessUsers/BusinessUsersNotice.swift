@@ -11,8 +11,8 @@ import UIKit
 
 final class BusinessUsersNotice: UIViewController {
     //MARK: Properties
+    fileprivate let _id: String
     var didSetupConstraints = false
-    var businessUsersRestaurantId:String!
     var businessUsersRestaurantNotice:String!
 
     //MARK: Constants
@@ -25,8 +25,8 @@ final class BusinessUsersNotice: UIViewController {
     fileprivate let textView = UITextView()
     
     //MARK: init
-    init(businessUsersRestaurantId: String) {
-        self.businessUsersRestaurantId = businessUsersRestaurantId
+    init(_id: String) {
+        self._id = _id
         super.init(nibName: nil, bundle: nil)
         
         //데이터 임시 처리
@@ -88,7 +88,7 @@ final class BusinessUsersNotice: UIViewController {
     
     // MARK: Actions
     func cancelButtonDidTap() {
-        AppDelegate.instance?.BusinessUsersTabBarScreen(selectIndex: 2)
+        AppDelegate.instance?.BusinessUsersTabBarScreen(_id: self._id, selectIndex: 2)
     }
     
     func textFieldDidChangeText(_ textField: UITextField) {
@@ -101,6 +101,6 @@ final class BusinessUsersNotice: UIViewController {
             return
         }
         //TODO ::통신 처리
-        AppDelegate.instance?.BusinessUsersTabBarScreen(selectIndex: 2)
+        AppDelegate.instance?.BusinessUsersTabBarScreen(_id: self._id, selectIndex: 2)
     }
 }

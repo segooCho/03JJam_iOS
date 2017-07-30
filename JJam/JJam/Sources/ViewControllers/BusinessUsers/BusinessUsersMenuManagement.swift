@@ -11,6 +11,7 @@ import UIKit
 
 final class BusinessUsersMenuManagement: UIViewController {
     //MARK: Properties
+    fileprivate let _id: String
     var didSetupConstraints = false
     var segmentedIndexAndCode: Int
     var segmentedIndexPlaceholderText = ""
@@ -37,7 +38,8 @@ final class BusinessUsersMenuManagement: UIViewController {
     
     
     //MARK: init
-    init(segmentedIndexAndCode: Int) {
+    init(_id: String, segmentedIndexAndCode: Int) {
+        self._id = _id
         self.segmentedIndexAndCode = segmentedIndexAndCode
         super.init(nibName: nil, bundle: nil)
         
