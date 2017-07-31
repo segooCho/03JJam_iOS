@@ -5,8 +5,6 @@
 //  Created by admin on 2017. 7. 20..
 //  Copyright © 2017년 admin. All rights reserved.
 //
-
-
 import UIKit
 
 final class BusinessUsersNotice: UIViewController {

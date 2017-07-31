@@ -154,7 +154,7 @@ final class Login: UIViewController {
     //로그인
     func restaurantLogin() {
         UICommonSetLoadingService(self.activityIndicatorView, service: true)
-        BusinessUsersNetWorking.restaurantLogin(id: self.usernameTextField.text!, password: self.passwordTextField.text!) { [weak self] response in
+        LoginNetWorking.restaurantLogin(id: self.usernameTextField.text!, password: self.passwordTextField.text!) { [weak self] response in
             guard let `self` = self else { return }
             if response.count > 0 {
                 UICommonSetLoadingService(self.activityIndicatorView, service: false)

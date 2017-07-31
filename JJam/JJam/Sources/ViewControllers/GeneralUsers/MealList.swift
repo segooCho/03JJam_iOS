@@ -54,20 +54,6 @@ final class MealList: UIViewController {
         
         //식당 인증 & 공지 사항
         restaurantInfo()
-        //데이터 임시 처리
-        //self.interestRestaurantCertification = "n"
-        //self.interestRestaurantNotice = "공지사항\n안녕하세요. 한라시그마 구내식당 입니다.\n*월요일 ~ 금요일 까지 영업합니다.\n*토요일, 일요일, 공휴일은 휴무입니다.\n\n\n\n감사합니다."
-        /*
-        self.meal.append(Meal(id: "1", imageString: "01.jpg", dateString: "2017-07-11일(화) 아침", summary: "등록 내용 없음"))
-        self.meal.append(Meal(id: "2", imageString: "02.jpg", dateString: "2017-07-11일(화) 점심", summary: "현미밥, 된장국, 김치, 돈까스, 김, 불고기"))
-        self.meal.append(Meal(id: "3", imageString: "03.jpg", dateString: "2017-07-11일(화) 저녁", summary: "등록 내용 없음"))
-        self.meal.append(Meal(id: "4", imageString: "04.jpg", dateString: "2017-07-10일(월) 아침", summary: "등록 내용 없음"))
-        self.meal.append(Meal(id: "5", imageString: "05.jpg", dateString: "2017-07-10일(월) 점심", summary: "현미밥, 된장국, 김치, 돈까스, 김, 불고기"))
-        self.meal.append(Meal(id: "6", imageString: "06.jpg", dateString: "2017-07-10일(월) 저녁", summary: "등록 내용 없음"))
-        self.meal.append(Meal(id: "7", imageString: "07.jpg", dateString: "2017-07-07일(금) 아침", summary: "등록 내용 없음"))
-        self.meal.append(Meal(id: "8", imageString: "08.jpg", dateString: "2017-07-07일(금) 점심", summary: "현미밥, 된장국, 김치, 돈까스, 김, 불고기"))
-        self.meal.append(Meal(id: "9", imageString: "09.jpg", dateString: "2017-07-07일(금) 저녁", summary: "등록 내용 없음"))
-        */
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -198,13 +184,11 @@ final class MealList: UIViewController {
                     //인증
                     self.interestRestaurantCertification = response[0].certification
                     if (self.interestRestaurantCertification == "y") {
-                        self.label.text = "사업자 등록증 인증 업체입니다."
-                        self.label.textColor = .blue
+                        UICommonSetLabel(self.label, text: "사업자 등록증 인증 업체입니다.", color: 2)
                     } else {
-                        self.label.text = "사업자 등록증 미인증 업체입니다."
-                        self.label.textColor = .red
+                        UICommonSetLabel(self.label, text: "사업자 등록증 미인증 업체입니다.", color: 1)
                     }
-                    //인증
+                    //공지사항
                     self.interestRestaurantNotice = response[0].notice
                     //공지사항 : \\n 처리
                     let data = self.interestRestaurantNotice.replacingOccurrences(of: "\\n", with: "\n")

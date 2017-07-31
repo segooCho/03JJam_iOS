@@ -11,6 +11,7 @@ import SnapKit
 import Kingfisher
 import SwiftyHash
 
+
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
@@ -32,15 +33,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         //UsersSignUpScreen()
         //BusinessUsersSignUpScreen()
         
+        /*
         //GeneralUsersTabBar
         let generalUsersTabBar = GeneralUsersTabBar(selectIndex : 0)
         self.window?.rootViewController = generalUsersTabBar
-        
-        /*
-        //BusinessUsersTabBar
-        let businessUsersTabBar = BusinessUsersTabBar(selectIndex: 0)
-        self.window?.rootViewController = businessUsersTabBar
         */
+        
+        //BusinessUsersTabBar
+        let businessUsersTabBar = BusinessUsersTabBar(_id: "5978502d57deb6283537150e", selectIndex: 0)
+        self.window?.rootViewController = businessUsersTabBar
         
         
         return true
@@ -69,7 +70,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     //BusinessUsersTabBar(식단, 설정)
-    func BusinessUsersTabBarScreen(_id: String ,selectIndex: Int) {
+    func BusinessUsersTabBarScreen(_id: String, selectIndex: Int) {
         //BusinessUsersMealList()                   : 식단
         //BusinessUsersSettings()                   : 설정
         let businessUsersTabBar = BusinessUsersTabBar(_id: _id, selectIndex: selectIndex)

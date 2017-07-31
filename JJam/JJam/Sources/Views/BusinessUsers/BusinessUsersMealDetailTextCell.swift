@@ -8,6 +8,7 @@
 
 
 import UIKit
+import DownPicker
 
 final class BusinessUsersMealDetailTextCell: UITableViewCell {
     //MARK: Constants
@@ -22,6 +23,8 @@ final class BusinessUsersMealDetailTextCell: UITableViewCell {
         static let commonHeight = CGFloat(45)
         static let commonHeightTextView = CGFloat(100)
     }
+    var divisionDownPicker: DownPicker!
+
     
     //MARK: UI
     //일자
@@ -66,7 +69,12 @@ final class BusinessUsersMealDetailTextCell: UITableViewCell {
         UICommonSetTextFieldDisable(self.dateTextField)
         
         UICommonSetLabel(self.divisionLabel, text: "구분", color: 1)
-        UICommonSetTextFieldDisable(self.divisionTextField)
+        UICommonSetTextFieldEnable(self.divisionTextField, placeholderText: self.divisionLabel.text!)
+        
+        let persons: NSMutableArray = ["Architect", "Designer"]
+        self.divisionDownPicker = DownPicker(textField: self.divisionTextField, withData:persons as! [Any])
+
+        
         
         UICommonSetLabel(self.stapleFoodLabel, text: "주식(밥,면)", color: 0)
         UICommonSetTextFieldDisable(self.stapleFoodTextField)

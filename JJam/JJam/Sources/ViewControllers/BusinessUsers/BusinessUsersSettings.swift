@@ -46,6 +46,7 @@ final class BusinessUsersSettings: UIViewController {
     init(_id: String) {
         self._id = _id
         super.init(nibName: nil, bundle: nil)
+
         self.title = "설정"
         self.tabBarItem.image = UIImage(named: "tab-settings")
         self.tabBarItem.selectedImage = UIImage(named: "tab-settings-selected")

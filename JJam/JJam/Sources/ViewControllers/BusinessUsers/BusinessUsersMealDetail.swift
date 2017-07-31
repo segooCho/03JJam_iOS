@@ -12,12 +12,7 @@ import UIKit
 final class BusinessUsersMealDetail: UIViewController {
     //MARK: Properties
     var didSetupConstraints = false
-    var businessUsersDetail: [BusinessUsersDetail] = [] /*{
-     didSet {
-     self.saveAll()
-     }
-     }
-     */
+    var businessUsersDetail: [BusinessUsersDetail] = []
     fileprivate let businessUsersMealDetailId:String!
     
     //MARK: UI

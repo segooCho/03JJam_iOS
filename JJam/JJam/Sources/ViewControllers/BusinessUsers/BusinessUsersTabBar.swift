@@ -10,28 +10,19 @@
 import UIKit
 
 final class BusinessUsersTabBar: UITabBarController {
-    public var _id:String!
     
-    //ViewControllers
-    let businessUsersMealList = BusinessUsersMealList(_id: "")           //업체 ID
-    let businessUsersMenuManagement = BusinessUsersMenuManagement(_id: "", segmentedIndexAndCode: 0)     //메뉴 관리
-    //let businessUsersStapleFood = BusinessUsersStapleFood()
-    //let businessUsersSoup = BusinessUsersSoup()
-    //let businessUsersSideDish = BusinessUsersSideDish()
-    //let businessUsersDessert = BusinessUsersDessert()
-    let businessUsersSettings = BusinessUsersSettings(_id: "")                                         //설정
-    
-    init(_id : String, selectIndex: Int) {
-        self._id = _id;
+    init(_id: String, selectIndex: Int) {
         super.init(nibName: nil, bundle: nil)
+        
+        //ViewControllers 생성 작업을 _id 값을 필수 작업이어서 내부에서 진행 한다.
+        let businessUsersMealList = BusinessUsersMealList(_id: _id)                                          //업체 ID
+        let businessUsersMenuManagement = BusinessUsersMenuManagement(_id: _id, segmentedIndexAndCode: 0)    //메뉴 관리
+        let businessUsersSettings = BusinessUsersSettings(_id: _id)                                          //설정
+
         self.viewControllers = [
-            UINavigationController(rootViewController: self.businessUsersMealList),
-            UINavigationController(rootViewController: self.businessUsersMenuManagement),
-            //UINavigationController(rootViewController: self.businessUsersStapleFood),
-            //UINavigationController(rootViewController: self.businessUsersSoup),
-            //UINavigationController(rootViewController: self.businessUsersSideDish),
-            //UINavigationController(rootViewController: self.businessUsersDessert),
-            UINavigationController(rootViewController: self.businessUsersSettings),
+            UINavigationController(rootViewController: businessUsersMealList),
+            UINavigationController(rootViewController: businessUsersMenuManagement),
+            UINavigationController(rootViewController: businessUsersSettings),
         ]
         self.selectedIndex = selectIndex;
     }
@@ -40,4 +31,3 @@ final class BusinessUsersTabBar: UITabBarController {
         fatalError("init(coder:) has not been implemented")
     }
 }
-

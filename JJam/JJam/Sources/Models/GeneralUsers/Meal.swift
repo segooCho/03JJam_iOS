@@ -49,21 +49,3 @@ struct Meal: Mappable {
         self.message <- map["message"]
     }
 }
-
-
-
-/*
-struct Meal {
-    var id: String
-    var imageString: String
-    var dateString: String
-    var summary: String
-    
-    init(id: String, imageString: String, dateString: String, summary: String) {
-        self.id = id
-        self.imageString = imageString
-        self.dateString = dateString
-        self.summary = summary
-    }
-}
-*/

@@ -213,7 +213,7 @@ final class BusinessUsersSignUp: UIViewController, UIImagePickerControllerDelega
     //회원 가입
     func restaurantSignUpNetWorking() {
         UICommonSetLoadingService(self.activityIndicatorView, service: true)
-        BusinessUsersNetWorking.restaurantSignUp(signUp: self.newSignUp, image: image) { [weak self] response in
+        LoginNetWorking.restaurantSignUp(signUp: self.newSignUp, image: image) { [weak self] response in
             guard let `self` = self else { return }
             if response.count > 0 {
                 UICommonSetLoadingService(self.activityIndicatorView, service: false)
