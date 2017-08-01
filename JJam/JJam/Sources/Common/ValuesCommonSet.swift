@@ -11,8 +11,8 @@ import UIKit
 //MARK: Constants
 struct Url {
     //Server URL
-    //static let BaseUrl = "http://127.0.0.1:3000/"         //local
-    static let BaseUrl = "http://106.245.251.59:3000/"  //조은 Server
+    static let BaseUrl = "http://127.0.0.1:3000/"         //local
+    //static let BaseUrl = "http://106.245.251.59:3000/"  //조은 Server
     
     /* ============== 조회 ============== */
     //관심 식당
@@ -29,9 +29,6 @@ struct Url {
     static let uploads = BaseUrl + "uploads"
     
     
-    
-    
-    
     /* ============== 등록 & 수정 ============== */
     //회원 가입
     static let restaurantSignUp = BaseUrl + "restaurantSignUp"
@@ -42,6 +39,19 @@ struct Url {
     //식당 공지사항 수정
     static let restaurantNoticeEdit = BaseUrl + "restaurantNoticeEdit"
 }
+
+
+struct categoryArray {
+    static var location: NSMutableArray = []
+    static var division: NSMutableArray = []
+    static var stapleFood: NSMutableArray = []
+    static var soup: NSMutableArray = []
+    static var sideDish: NSMutableArray = []
+    static var dessert: NSMutableArray = []
+}
+
+
+
 
 struct SuperConstants {
     //tableView 높이 지정

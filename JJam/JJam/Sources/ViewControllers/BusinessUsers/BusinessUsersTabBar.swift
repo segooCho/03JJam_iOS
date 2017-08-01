@@ -34,10 +34,10 @@ final class BusinessUsersTabBar: UITabBarController {
         BusinessUsersNetWorking.restaurantGroup(_id: _id) { [weak self] response in
             guard let `self` = self else { return }
             if response.count > 0 {
-                //TempViewController에서 시작된 것을 종료
-                UICommonSetLoadingService(self.activityIndicatorView, service: false)
                 let message = response[0].message
                 if message != nil {
+                    //TempViewController에서 시작된 것을 종료
+                    UICommonSetLoadingService(self.activityIndicatorView, service: false)
                     let alertController = UIAlertController(
                         title: "로그인",
                         message: message,
@@ -52,8 +52,8 @@ final class BusinessUsersTabBar: UITabBarController {
                     alertController.addAction(alertConfirm)
                     self.present(alertController, animated: true, completion: nil)
                 } else {
-                    //group.restaurantGroup = response
                     //로컬 파일로 저장
+                    /*
                     let dicts:[[String: Any]] = response.map {
                         (restaurantGroup: RestaurantGroup) -> [String: Any] in
                         return [
@@ -63,7 +63,30 @@ final class BusinessUsersTabBar: UITabBarController {
                     }
                     UserDefaults.standard.set(dicts, forKey: SuperConstants.JJamUserDefaultsKeyRestaurantGroup)
                     UserDefaults.standard.synchronize()
+                    */
                     
+                    for data in response {
+                        switch data.category {
+                        case "location":
+                            categoryArray.location.add(data.text)
+                        case "division":
+                            categoryArray.division.add(data.text)
+                        case "stapleFood":
+                            categoryArray.stapleFood.add(data.text)
+                        case "soup":
+                            categoryArray.soup.add(data.text)
+                        case "sideDish":
+                            categoryArray.sideDish.add(data.text)
+                        case "dessert":
+                            categoryArray.dessert.add(data.text)
+                        default:
+                            print("No Category")
+                        }
+                    }
+                    
+                    //TempViewController에서 시작된 것을 종료
+                    UICommonSetLoadingService(self.activityIndicatorView, service: false)
+
                     //ViewControllers 생성 작업을 _id 값을 필수 작업이어서 내부에서 진행 한다.
                     let businessUsersMealList = BusinessUsersMealList(_id: _id)                                             //업체 ID
                     let businessUsersMenuManagement = BusinessUsersMenuManagement(_id: _id)                                 //메뉴 관리

@@ -52,10 +52,10 @@ struct BusinessUsersNetWorking {
         var param: String
         if mealDetailTuple.writeMode {
             urlString = Url.mealWrite
-            param = "restaurant_Id"         //Meal 신규   (조건 : restaurant_Id)
+            param = "restaurant_Id"                         //Meal 신규   (조건 : restaurant_Id)
         } else {
             urlString = Url.mealEdit
-            param = "_id"                   //Meal 수정   (조건 : _id)
+            param = "_id"                                   //Meal 수정   (조건 : _id)
         }
         
         let parameters: [String: Any] = [
@@ -71,7 +71,7 @@ struct BusinessUsersNetWorking {
             "sideDish4": businessUsersMeal[0].sideDish4,
             "dessert": businessUsersMeal[0].dessert,
             "remarks": businessUsersMeal[0].remarks,
-            "editImage": editImage,
+            "editImage": editImage,                         //"NoImageFound.jpg" 가 설정되면 기존 이미지 파일 삭제(변경시에만 사용)
             ]
         
         var restaurantInfo: [RestaurantInfo] = []

@@ -63,6 +63,7 @@ final class MealListCell: UITableViewCell {
             //요약 내용
             self.detailTextLabel!.numberOfLines = 3
             
+            //메뉴 문자열 처리
             var detailText = "메뉴 : " + meal.stapleFood + "," + meal.soup + "," + meal.sideDish1 + ","
                 + meal.sideDish2 + "," + meal.sideDish3 + "," + meal.sideDish4 + "," + meal.dessert + "@"
             detailText = detailText.replacingOccurrences(of: ",,", with: "")

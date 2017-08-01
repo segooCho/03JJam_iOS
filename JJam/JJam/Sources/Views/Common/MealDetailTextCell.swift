@@ -89,13 +89,13 @@ final class MealDetailTextCell: UITableViewCell {
     //MARK: configure
     func configure(meal: Meal) {
         if mealDetailTuple.editMode {
+            /*
             let location: NSMutableArray = []
             let division: NSMutableArray = []
             let stapleFood: NSMutableArray = []
             let soup: NSMutableArray = []
             let sideDish: NSMutableArray = []
             let dessert: NSMutableArray = []
-            
             //로컬 저장 정보 불러오기
             if let dicts = UserDefaults.standard.array(forKey: SuperConstants.JJamUserDefaultsKeyRestaurantGroup) as? [[String: Any]] {
                 for disc in dicts {
@@ -118,6 +118,7 @@ final class MealDetailTextCell: UITableViewCell {
                     }
                 }
             }
+            */
             
             UICommonSetLabel(self.dateLabel, text: "일자", color: 1)
             if mealDetailTuple.writeMode {
@@ -144,39 +145,39 @@ final class MealDetailTextCell: UITableViewCell {
             
             UICommonSetLabel(self.locationLabel, text: "위치", color: 1)
             UICommonSetTextFieldEnable(self.locationTextField, placeholderText: "")
-            self.locationDownPicker = DownPicker(textField: self.locationTextField, withData:location as! [Any])
+            self.locationDownPicker = DownPicker(textField: self.locationTextField, withData:categoryArray.location as! [Any])
             
             UICommonSetLabel(self.divisionLabel, text: "구분", color: 1)
             UICommonSetTextFieldEnable(self.divisionTextField, placeholderText: "")
-            self.divisionDownPicker = DownPicker(textField: self.divisionTextField, withData:division as! [Any])
+            self.divisionDownPicker = DownPicker(textField: self.divisionTextField, withData:categoryArray.division as! [Any])
             
             UICommonSetLabel(self.stapleFoodLabel, text: "주식(밥,면)", color: 0)
             UICommonSetTextFieldEnable(self.stapleFoodTextField, placeholderText: "")
-            self.stapleFoodDownPicker = DownPicker(textField: self.stapleFoodTextField, withData:stapleFood as! [Any])
+            self.stapleFoodDownPicker = DownPicker(textField: self.stapleFoodTextField, withData:categoryArray.stapleFood as! [Any])
             
             UICommonSetLabel(self.soupLabel, text: "국", color: 0)
             UICommonSetTextFieldEnable(self.soupTextField, placeholderText: "")
-            self.soupDownPicker = DownPicker(textField: self.soupTextField, withData:soup as! [Any])
+            self.soupDownPicker = DownPicker(textField: self.soupTextField, withData:categoryArray.soup as! [Any])
             
             UICommonSetLabel(self.sideDish1Label, text: "반찬1", color: 0)
             UICommonSetTextFieldEnable(self.sideDish1TextField, placeholderText: "")
-            self.sideDish1DownPicker = DownPicker(textField: self.sideDish1TextField, withData:sideDish as! [Any])
+            self.sideDish1DownPicker = DownPicker(textField: self.sideDish1TextField, withData:categoryArray.sideDish as! [Any])
             
             UICommonSetLabel(self.sideDish2Label, text: "반찬2", color: 0)
             UICommonSetTextFieldEnable(self.sideDish2TextField, placeholderText: "")
-            self.sideDish2DownPicker = DownPicker(textField: self.sideDish2TextField, withData:sideDish as! [Any])
+            self.sideDish2DownPicker = DownPicker(textField: self.sideDish2TextField, withData:categoryArray.sideDish as! [Any])
             
             UICommonSetLabel(self.sideDish3Label, text: "반찬3", color: 0)
             UICommonSetTextFieldEnable(self.sideDish3TextField, placeholderText: "")
-            self.sideDish3DownPicker = DownPicker(textField: self.sideDish3TextField, withData:sideDish as! [Any])
+            self.sideDish3DownPicker = DownPicker(textField: self.sideDish3TextField, withData:categoryArray.sideDish as! [Any])
             
             UICommonSetLabel(self.sideDish4Label, text: "반찬4", color: 0)
             UICommonSetTextFieldEnable(self.sideDish4TextField, placeholderText: "")
-            self.sideDish4DownPicker = DownPicker(textField: self.sideDish4TextField, withData:sideDish as! [Any])
+            self.sideDish4DownPicker = DownPicker(textField: self.sideDish4TextField, withData:categoryArray.sideDish as! [Any])
             
             UICommonSetLabel(self.dessertLabel, text: "후식", color: 0)
             UICommonSetTextFieldEnable(self.dessertTextField, placeholderText: "")
-            self.dessertDownPicker = DownPicker(textField: self.dessertTextField, withData:dessert as! [Any])
+            self.dessertDownPicker = DownPicker(textField: self.dessertTextField, withData:categoryArray.dessert as! [Any])
             
             UICommonSetLabel(self.remarksLabel, text: "비고", color: 0)
             UICommonSetTextViewEnable(self.remarksTextView, placeholderText: "")
@@ -240,6 +241,7 @@ final class MealDetailTextCell: UITableViewCell {
         
         if mealDetailTuple.editMode {
             self.dateTextField.text = meal.mealDate
+            self.dateTextField.becomeFirstResponder()
         } else {
             self.dateTextField.text = meal.mealDate + " (" + meal.mealDateLabel + ")"
         }
