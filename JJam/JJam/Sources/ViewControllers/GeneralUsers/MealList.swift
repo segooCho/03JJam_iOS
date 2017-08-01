@@ -33,7 +33,6 @@ final class MealList: UIViewController {
         static let commonOffset = CGFloat(7)
         static let commonHeight = CGFloat(40)
     }
-
     
     //MARK: UI
     fileprivate let activityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: .gray)
@@ -48,7 +47,7 @@ final class MealList: UIViewController {
         self.interestRestaurantId = interestRestaurantId
         self.interestRestaurantName = interestRestaurantName
         super.init(nibName: nil, bundle: nil)
-        
+        setMealDetailTuple(false,false)
         self.interestRestaurantCertification = "n"
         self.interestRestaurantNotice = ""
         
@@ -71,7 +70,7 @@ final class MealList: UIViewController {
         //scroll의 내부 여백 발생시 사용()
         self.automaticallyAdjustsScrollViewInsets = false
 
-        UICommonSetLoading(uiKit: self.activityIndicatorView)
+        UICommonSetLoading(self.activityIndicatorView)
         
         //cancelButton
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(
@@ -208,7 +207,10 @@ final class MealList: UIViewController {
             if response.count > 0 {
                 let message = response[0].message
                 if message != nil {
-                    UICommonSetLoadingService(self.activityIndicatorView, service: false)
+                    let delayInSeconds = SuperConstants.msgDelayInSeconds
+                    DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + delayInSeconds) {
+                        UICommonSetLoadingService(self.activityIndicatorView, service: false)
+                    }
                     let alertController = UIAlertController(
                         title: "확인",
                         message: message,
@@ -225,10 +227,11 @@ final class MealList: UIViewController {
                 }
             }
             self.meal = response
+            self.tableView.reloadData()         //식단이 없을때 빠른 클릭시 오류 발생 방지용
             //tableView 이미지 다운로딩 까지 기달려주기
-            let delayInSeconds = 2.0
+            let delayInSeconds = SuperConstants.tableViewReloadDelayInSeconds
             DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + delayInSeconds) {
-                self.tableView.reloadData()
+                self.tableView.reloadData()     //최종 적으로 보여주기
                 UICommonSetLoadingService(self.activityIndicatorView, service: false)
             }
         }
@@ -272,12 +275,12 @@ extension MealList: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         //print("\(indexPath)가 선택!")
         //NavigationController pushViewController
-        let meal = MealDetail(meal: [self.meal[indexPath.row]])
+        let meal = MealDetail(viewMeal: [self.meal[indexPath.row]])
         self.navigationController?.pushViewController(meal, animated: true)
     }
     
     //cell height
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return FixedCommonSet.tableViewCellHeight70
+        return SuperConstants.tableViewCellHeight70
     }
 }

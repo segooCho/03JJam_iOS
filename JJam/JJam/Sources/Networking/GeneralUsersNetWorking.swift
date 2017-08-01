@@ -11,7 +11,6 @@ import Alamofire
 struct GeneralUsersNetWorking {
     //식당 찾기
     static func restaurantSearch(searchText: String, completion: @escaping (_ restaurantSearch: [RestaurantSearch]) -> Void) {
-        let urlString = FixedCommonSet.networkinkBaseUrl + "restaurantSearch"
         let parameters: [String: Any] = [
             "searchText": searchText,
             ]
@@ -21,7 +20,7 @@ struct GeneralUsersNetWorking {
         
         var restaurantSearch: [RestaurantSearch] = []
         
-        Alamofire.request(urlString, method: .get, parameters: parameters, headers: headers)
+        Alamofire.request(Url.restaurantSearch, method: .get, parameters: parameters, headers: headers)
             .validate(statusCode: 200..<400)
             .responseJSON {
                     response in
@@ -45,7 +44,6 @@ struct GeneralUsersNetWorking {
     
     //식당 인증 & 공지사항
     static func restaurantInfo(restaurant_Id: String, completion: @escaping (_ restaurantInfo: [RestaurantInfo]) -> Void) {
-        let urlString = FixedCommonSet.networkinkBaseUrl + "restaurantInfo"
         let parameters: [String: Any] = [
             "restaurant_Id": restaurant_Id,
             ]
@@ -55,7 +53,7 @@ struct GeneralUsersNetWorking {
         
         var restaurantInfo: [RestaurantInfo] = []
         
-        Alamofire.request(urlString, method: .get, parameters: parameters, headers: headers)
+        Alamofire.request(Url.restaurantInfo, method: .get, parameters: parameters, headers: headers)
             .validate(statusCode: 200..<400)
             .responseJSON {
                 response in
@@ -78,7 +76,6 @@ struct GeneralUsersNetWorking {
     
     //식단 조회
     static func mealSearch(restaurant_Id: String, segmentedIndexAndCode: Int, completion: @escaping (_ meal: [Meal]) -> Void) {
-        let urlString = FixedCommonSet.networkinkBaseUrl + "mealSearch"
         let parameters: [String: Any] = [
             "restaurant_Id": restaurant_Id,
             "segmentedId": segmentedIndexAndCode,
@@ -88,7 +85,7 @@ struct GeneralUsersNetWorking {
             ]
         
         var meal: [Meal] = []
-        Alamofire.request(urlString, method: .get, parameters: parameters, headers: headers)
+        Alamofire.request(Url.mealSearch, method: .get, parameters: parameters, headers: headers)
             .validate(statusCode: 200..<400)
             .responseJSON {
                 response in

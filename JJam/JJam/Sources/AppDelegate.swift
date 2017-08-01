@@ -27,7 +27,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window.backgroundColor = .white
         
         //로그인
-        //LoginScreen()
+        LoginScreen()
         
         //회원 가입
         //UsersSignUpScreen()
@@ -40,8 +40,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         */
         
         //BusinessUsersTabBar
-        let businessUsersTabBar = BusinessUsersTabBar(_id: "5978502d57deb6283537150e", selectIndex: 0)
-        self.window?.rootViewController = businessUsersTabBar
+        //let businessUsersTabBar = BusinessUsersTabBar(_id: "5978502d57deb6283537150e", selectIndex: 0)
+        //self.window?.rootViewController = businessUsersTabBar
         
         
         return true
@@ -73,7 +73,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func BusinessUsersTabBarScreen(_id: String, selectIndex: Int) {
         //BusinessUsersMealList()                   : 식단
         //BusinessUsersSettings()                   : 설정
-        let businessUsersTabBar = BusinessUsersTabBar(_id: _id, selectIndex: selectIndex)
+        //let businessUsersTabBar = BusinessUsersTabBar(_id: _id, selectIndex: selectIndex)
+        let businessUsersTabBar = BusinessUsersTabBar(_id: _id)
         self.window?.rootViewController = businessUsersTabBar
     }
 

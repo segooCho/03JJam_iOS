@@ -14,7 +14,6 @@ struct SignUp {
     var address: String
     var contactNumber : String
     var representative : String
-    //var foodImage : String
     
     init(id: String, password: String, businessNumber: String,
          companyName: String, address: String, contactNumber: String, representative: String) {

@@ -6,20 +6,12 @@
 //  Copyright © 2017년 admin. All rights reserved.
 //
 
-
 import UIKit
 
 final class BusinessUsersSignUpTextCell: UITableViewCell {
     //MARK: Properties
-    struct signUp {
-        static var id: String = ""
-        static var password: String = ""
-        static var password2: String = ""
-        static var businessNumber: String = ""
-        static var companyName: String = ""
-        static var address: String = ""
-        static var contactNumber: String = ""
-        static var representative: String = ""
+    struct tableViewCellSignUp {
+        static var signUp: [SignUp] = []
     }
     
     //MARK: Constants
@@ -98,8 +90,6 @@ final class BusinessUsersSignUpTextCell: UITableViewCell {
         UICommonSetLabel(self.representativeLabel, text: "대표자", color: 1)
         UICommonSetTextFieldEnable(self.representativeTextField, placeholderText: self.representativeLabel.text!)
         self.representativeTextField.delegate = self
-
-
         
         self.contentView.addSubview(self.idLabel)
         self.contentView.addSubview(self.idTextField)
@@ -127,17 +117,7 @@ final class BusinessUsersSignUpTextCell: UITableViewCell {
     
     //MARK: configure
     func configure(signUp: SignUp) {
-        /*
-        signUp.id = self.idTextField.text!
-        signUp.password = self.passwordTextField.text!
-        signUp.password2 = self.password2TextField.text!
-        signUp.businessNumber = self.businessNumberTextField.text!
-        signUp.companyName = self.companyNameTextField.text!
-        signUp.address = self.addressTextView.text!
-        signUp.contactNumber = self.contactNumberTextField.text!
-        signUp.representative = self.representativeTextField.text!
-        */
-        
+        //TODO :: 공용 사용 가능성 확인
         self.idTextField.text = signUp.id
         self.passwordTextField.text = ""
         self.password2TextField.text = ""
@@ -151,22 +131,19 @@ final class BusinessUsersSignUpTextCell: UITableViewCell {
 
     //BusinessUsersSignUp에서 struct의 값을 접근하기 전에 값을 셋팅힌다.
     func setInputData() -> String {
-        signUp.id = ""
-        signUp.password = ""
-        signUp.password2 = ""
-        signUp.businessNumber = ""
-        signUp.companyName = ""
-        signUp.address = ""
-        signUp.contactNumber = ""
-        signUp.representative = ""
-
-        /*
+        tableViewCellSignUp.signUp.removeAll()
+        tableViewCellSignUp.signUp.append(SignUp(id: "",
+                                                 password: "",
+                                                 businessNumber: "",
+                                                 companyName: "",
+                                                 address: "",
+                                                 contactNumber: "",
+                                                 representative: ""))
         var inputText = ""
         inputText = self.idTextField.text!
-        if inputText == self.idTextField.text, inputText.isEmpty {
+        if inputText.isEmpty {
             self.idTextField.becomeFirstResponder()
             return "사용자 ID를 입력하세요."
-            //return false
         }
         inputText = self.passwordTextField.text!
         if inputText.isEmpty {
@@ -205,17 +182,15 @@ final class BusinessUsersSignUpTextCell: UITableViewCell {
             self.representativeTextField.becomeFirstResponder()
             return "대표자를 입력하세요."
         }
-        */
         
-        signUp.id = self.idTextField.text!
-        signUp.password = self.passwordTextField.text!
-        signUp.password2 = self.password2TextField.text!
-        signUp.businessNumber = self.businessNumberTextField.text!
-        signUp.companyName = self.companyNameTextField.text!
-        signUp.address = self.addressTextView.text!
-        signUp.contactNumber = self.contactNumberTextField.text!
-        signUp.representative = self.representativeTextField.text!
-        
+        tableViewCellSignUp.signUp.removeAll()
+        tableViewCellSignUp.signUp.append(SignUp(id: self.idTextField.text!,
+                                                 password: self.passwordTextField.text!,
+                                                 businessNumber: self.businessNumberTextField.text!,
+                                                 companyName: self.companyNameTextField.text!,
+                                                 address: self.addressTextView.text!,
+                                                 contactNumber: self.contactNumberTextField.text!,
+                                                 representative: self.representativeTextField.text!))
         return ""
     }
     

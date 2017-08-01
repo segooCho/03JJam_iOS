@@ -14,7 +14,7 @@ final class BusinessUsersMealList: UIViewController {
     fileprivate var didSetupConstraints = false
     fileprivate var segmentedIndexAndCode = 0
     fileprivate var meal: [Meal] = []
-    var restaurantCertification:String!
+    fileprivate var restaurantCertification:String!
 
     //MARK: Constants
     fileprivate struct Metric {
@@ -35,11 +35,16 @@ final class BusinessUsersMealList: UIViewController {
     fileprivate let label = UILabel()
     fileprivate let tableView = UITableView(frame: .zero, style: .plain)
     
+    //NotificationCenter에 등록된 옵저버의 타겟 객체가 소멸
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
+    
     //MARK: init
     init(_id: String) {
         self._id = _id
         super.init(nibName: nil, bundle: nil)
-        
+        setMealDetailTuple(true,false)
         self.title = "식단"
         self.tabBarItem.image = UIImage(named: "tab-restaurant")
         self.tabBarItem.selectedImage = UIImage(named: "tab-restaurant-selected")
@@ -75,6 +80,7 @@ final class BusinessUsersMealList: UIViewController {
             action: #selector(addButtonDidTap)
         )
 
+        UICommonSetLoading(self.activityIndicatorView)
         //segmentedControl
         UICommonSetSegmentedControl(self.segmentedControl, titles: segmentedTitles)
         self.segmentedControl.addTarget(self, action: #selector(changeSegmentedControl), for: .valueChanged)
@@ -103,6 +109,13 @@ final class BusinessUsersMealList: UIViewController {
         self.view.addSubview(self.activityIndicatorView)
         //updateViewConstraints 자동 호출
         self.view.setNeedsUpdateConstraints()
+    }
+    
+    //XIB로 view 를 생성하지 않고 view을 로드할때 사용된다
+    override func loadView() {
+        super.loadView()
+        //NotificationCenter에 등록
+        NotificationCenter.default.addObserver(self, selector: #selector(businessUsersMealListDidAdd), name: .businessUsersMealListDidAdd, object: nil)
     }
     
     //MARK: 애플 추천 방식으로 한번만 화면을 그리도록 한다.
@@ -176,9 +189,25 @@ final class BusinessUsersMealList: UIViewController {
         self.tableView.setEditing(false, animated: true)
     }
     
+    //신규 식단 추가
     func addButtonDidTap() {
-        let businessUsersMealDetail = BusinessUsersMealDetail(businessUsersMealDetailId: "")
-        self.navigationController?.pushViewController(businessUsersMealDetail, animated: true)
+        let newMeal = [Meal](JSONArray: [["_id": "",
+                                          "restaurant_Id": _id,     //필수
+                                          "mealDate": "",
+                                          "location": "",
+                                          "division": "",
+                                          "stapleFood": "",
+                                          "soup": "",
+                                          "sideDish1": "",
+                                          "sideDish2": "",
+                                          "sideDish3": "",
+                                          "sideDish4": "",
+                                          "dessert": "",
+                                          "remarks": "",            //필수
+                                          "foodImage": ""]])        //필수
+        setMealDetailTuple(true,true)
+        let mealDetail = MealDetail(viewMeal: newMeal)
+        self.navigationController?.pushViewController(mealDetail, animated: true)
     }
 
     //MARK: ACTION
@@ -231,7 +260,10 @@ final class BusinessUsersMealList: UIViewController {
             if response.count > 0 {
                 let message = response[0].message
                 if message != nil {
-                    UICommonSetLoadingService(self.activityIndicatorView, service: false)
+                    let delayInSeconds = SuperConstants.msgDelayInSeconds
+                    DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + delayInSeconds) {
+                        UICommonSetLoadingService(self.activityIndicatorView, service: false)
+                    }
                     let alertController = UIAlertController(
                         title: "확인",
                         message: message,
@@ -248,10 +280,11 @@ final class BusinessUsersMealList: UIViewController {
                 }
             }
             self.meal = response
+            self.tableView.reloadData()         //식단이 없을때 빠른 클릭시 오류 발생 방지용
             //tableView 이미지 다운로딩 까지 기달려주기
-            let delayInSeconds = 2.0
+            let delayInSeconds = SuperConstants.tableViewReloadDelayInSeconds
             DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + delayInSeconds) {
-                self.tableView.reloadData()
+                self.tableView.reloadData()     //최종 적으로 보여주기
                 UICommonSetLoadingService(self.activityIndicatorView, service: false)
             }
         }
@@ -260,6 +293,12 @@ final class BusinessUsersMealList: UIViewController {
     //세그먼트 메뉴 클릭
     func changeSegmentedControl() {
         self.segmentedIndexAndCode = segmentedControl.selectedSegmentIndex
+        mealSearch()
+    }
+    
+    //Notification 관심 목록 저장
+    func businessUsersMealListDidAdd(_ notification: Notification ) {
+        setMealDetailTuple(true,false)
         mealSearch()
     }
     
@@ -280,7 +319,7 @@ extension BusinessUsersMealList: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        //MealListCell 공통으로 사용?????
+        //MealListCell 공통으로 사용
         let cell = tableView.dequeueReusableCell(withIdentifier: "mealListCell", for: indexPath) as! MealListCell
         cell.configure(meal: self.meal[indexPath.item], segmentedIndexAndCode: self.segmentedIndexAndCode)
         return cell
@@ -291,15 +330,19 @@ extension BusinessUsersMealList: UITableViewDelegate {
     //선택
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         //print("\(indexPath)가 선택!")
-        //NavigationController pushViewController
-        //TODO :: 디테일 수정 처리
-        let businessUsersMealDetail = BusinessUsersMealDetail(businessUsersMealDetailId: self.meal[indexPath.row]._id)
-        self.navigationController?.pushViewController(businessUsersMealDetail, animated: true)
+        //지난 식단 수정 불가
+        if self.segmentedIndexAndCode == 2 {
+            setMealDetailTuple(false,false)
+        } else {
+            setMealDetailTuple(true,false)
+        }
+        let meal = MealDetail(viewMeal: [self.meal[indexPath.row]])
+        self.navigationController?.pushViewController(meal, animated: true)
     }
     
     //cell height
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return FixedCommonSet.tableViewCellHeight70
+        return SuperConstants.tableViewCellHeight70
     }
     
 }

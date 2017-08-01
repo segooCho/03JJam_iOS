@@ -1,5 +1,5 @@
 //
-//  BusinessUsersGroup.swift
+//  RestaurantGroup.swift
 //  JJam
 //
 //  Created by admin on 2017. 7. 30..
@@ -8,22 +8,28 @@
 
 import ObjectMapper
 
-struct BusinessUsersGroup: Mappable {
-    var _id: String!
+struct RestaurantGroup: Mappable {
     var category: String!
     var text: String!
     var message: String?            //리턴 메시지
-    
-    
-    var summary: String!
     
     init?(map: Map) {
     }
     
     mutating func mapping(map: Map) {
-        self._id <- map["_id"]
         self.category <- map["category"]
         self.text <- map["text"]
         self.message <- map["message"]
     }
 }
+
+struct RestaurantGroupUserDefaults {
+     var category: String
+     var text: String
+    
+     init(category: String, text: String) {
+     self.category = category
+     self.text = text
+     }
+}
+

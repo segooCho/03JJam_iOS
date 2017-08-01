@@ -10,8 +10,8 @@ import UIKit
 
 final class GeneralUsersTabBar: UITabBarController {
     //ViewControllers
-    let interestRestaurantList = InterestRestaurantList()
-    let generalUsersSettings = GeneralUsersSettings()
+    fileprivate let interestRestaurantList = InterestRestaurantList()
+    fileprivate let generalUsersSettings = GeneralUsersSettings()
     
     init(selectIndex: Int) {
         super.init(nibName: nil, bundle: nil)
@@ -20,7 +20,6 @@ final class GeneralUsersTabBar: UITabBarController {
             UINavigationController(rootViewController: self.interestRestaurantList),
             UINavigationController(rootViewController: self.generalUsersSettings),
         ]
-        
         self.selectedIndex = selectIndex;
     }
     

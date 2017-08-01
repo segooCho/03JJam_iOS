@@ -6,16 +6,15 @@
 //  Copyright © 2017년 admin. All rights reserved.
 //
 
-
 import UIKit
 
 final class BusinessUsersMenuManagement: UIViewController {
     //MARK: Properties
     fileprivate let _id: String
-    var didSetupConstraints = false
-    var segmentedIndexAndCode: Int
-    var segmentedIndexPlaceholderText = ""
-    var menu: [Menu] = []
+    fileprivate var didSetupConstraints = false
+    fileprivate var segmentedIndexAndCode = 0
+    fileprivate var segmentedIndexPlaceholderText = ""
+    fileprivate var menu: [Menu] = []
     
     //MARK: Constants
     fileprivate struct Metric {
@@ -38,9 +37,8 @@ final class BusinessUsersMenuManagement: UIViewController {
     
     
     //MARK: init
-    init(_id: String, segmentedIndexAndCode: Int) {
+    init(_id: String) {
         self._id = _id
-        self.segmentedIndexAndCode = segmentedIndexAndCode
         super.init(nibName: nil, bundle: nil)
         
         self.title = "메뉴관리"
@@ -50,6 +48,13 @@ final class BusinessUsersMenuManagement: UIViewController {
         self.menu.append(Menu(id: "1", code: "0", food: "현미밥"))
         self.menu.append(Menu(id: "1", code: "0", food: "보리밥"))
         self.menu.append(Menu(id: "1", code: "0", food: "짜장면"))
+        
+        /*
+        let restaurantGroup = group.restaurantGroup
+        print(self.title! + ":")
+        print(restaurantGroup)
+        */
+
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -242,7 +247,7 @@ extension BusinessUsersMenuManagement: UITableViewDataSource {
 extension BusinessUsersMenuManagement: UITableViewDelegate {
     //cell height
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return FixedCommonSet.tableViewCellHeight
+        return SuperConstants.tableViewCellHeight
     }
     
     //cell 선택

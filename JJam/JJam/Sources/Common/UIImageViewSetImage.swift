@@ -21,7 +21,8 @@ func imageViewBorder(_ uIKit: UIImageView, view: UIView) {
 extension UIImageView {
     func setImage(with foodImage: String?) {
         if let foodImage = foodImage {
-            let url = URL(string: FixedCommonSet.networkinkBaseUrl + "uploads/\(foodImage)")
+            let url = URL(string: Url.uploads + "/\(foodImage)")
+            
             self.kf.setImage(with: url, placeholder: UIImage(named: "NoImageFound.jpg"))
         }else {
             self.kf.setImage(with: nil)

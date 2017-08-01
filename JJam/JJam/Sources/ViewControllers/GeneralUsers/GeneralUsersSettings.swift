@@ -6,12 +6,12 @@
 //  Copyright © 2017년 admin. All rights reserved.
 //
 
-import SafariServices   //(사파리와 연동등 기능적으로 좋음)
 import UIKit
+import SafariServices   //(사파리와 연동등 기능적으로 좋음)
 
 final class GeneralUsersSettings: UIViewController {
     //MARK: Properties
-    var didSetupConstraints = false
+    fileprivate var didSetupConstraints = false
     
     fileprivate struct Section {
         let items: [SectionItem]

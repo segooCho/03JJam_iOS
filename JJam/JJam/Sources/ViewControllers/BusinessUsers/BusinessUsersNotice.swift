@@ -5,13 +5,14 @@
 //  Created by admin on 2017. 7. 20..
 //  Copyright © 2017년 admin. All rights reserved.
 //
+
 import UIKit
 
 final class BusinessUsersNotice: UIViewController {
     //MARK: Properties
     fileprivate let _id: String
-    var didSetupConstraints = false
-    var businessUsersRestaurantNotice:String!
+    fileprivate var didSetupConstraints = false
+    fileprivate var businessUsersRestaurantNotice:String!
 
     //MARK: Constants
     fileprivate struct Metric {

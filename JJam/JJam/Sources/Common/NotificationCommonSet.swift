@@ -10,4 +10,5 @@ import UIKit
 
 extension Notification.Name{
     static var interestRestaurantDidAdd: Notification.Name {return .init("interestRestaurant")}
+    static var businessUsersMealListDidAdd: Notification.Name {return .init("businessUsersMealList")}
 }

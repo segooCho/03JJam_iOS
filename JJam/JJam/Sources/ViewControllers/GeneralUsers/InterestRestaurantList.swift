@@ -11,7 +11,6 @@ import UIKit
 final class InterestRestaurantList: UIViewController {
     
     //MARK: Properties
-    fileprivate let JJamUserDefaultsKey = "JJamUserDefaultsKey"
     fileprivate var didSetupConstraints = false
     fileprivate var interestRestaurant: [InterestRestaurant] = []
     fileprivate let fixedNotice = "www.JJam.com 에서 가맹점 검색 및 가맹점 요청이 가능합니다."
@@ -43,7 +42,7 @@ final class InterestRestaurantList: UIViewController {
         self.tabBarItem.selectedImage = UIImage(named: "tab-restaurant-selected")
         
         //로컬 저장 정보 불러오기
-        if let dicts = UserDefaults.standard.array(forKey: JJamUserDefaultsKey) as? [[String: Any]] {
+        if let dicts = UserDefaults.standard.array(forKey: SuperConstants.JJamUserDefaultsKeyInterestRestaurantList) as? [[String: Any]] {
             self.interestRestaurant = dicts.flatMap { (disc: [String: Any]) -> InterestRestaurant? in
                 if let _id = disc["_id"] as? String, let companyName = disc["companyName"] as? String {
                     return InterestRestaurant(_id: _id, companyName: companyName)
@@ -84,7 +83,7 @@ final class InterestRestaurantList: UIViewController {
             action: #selector(addButtonDidTap)
         )
         
-        UICommonSetLoading(uiKit: self.activityIndicatorView)
+        UICommonSetLoading(self.activityIndicatorView)
         
         //공지사항
         self.textView.text = self.fixedNotice
@@ -197,7 +196,7 @@ final class InterestRestaurantList: UIViewController {
                 "companyName": interestRestaurant.companyName,
                 ]
         }
-        UserDefaults.standard.set(dicts, forKey: JJamUserDefaultsKey)
+        UserDefaults.standard.set(dicts, forKey: SuperConstants.JJamUserDefaultsKeyInterestRestaurantList)
         //로컬 파일로 저장
         UserDefaults.standard.synchronize()
     }
@@ -242,7 +241,7 @@ extension InterestRestaurantList: UITableViewDelegate {
     }
     //cell height
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return FixedCommonSet.tableViewCellHeight
+        return SuperConstants.tableViewCellHeight
     }
 }
 

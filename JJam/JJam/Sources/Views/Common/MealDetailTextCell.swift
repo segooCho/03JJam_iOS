@@ -7,8 +7,15 @@
 //
 
 import UIKit
+import DownPicker
 
 final class MealDetailTextCell: UITableViewCell {
+    //MARK: Properties
+    struct tableViewCellMeal {
+        static var businessUsersMeal: [BusinessUsersMeal] = []
+    }
+    fileprivate var restaurantGroupUserDefaults: [RestaurantGroupUserDefaults] = []
+    
     //MARK: Constants
     fileprivate struct Metric {
         static let labelLeft = CGFloat(10)
@@ -26,33 +33,43 @@ final class MealDetailTextCell: UITableViewCell {
     //일자
     fileprivate let dateLabel = UILabel()
     fileprivate let dateTextField = UITextField()
+    fileprivate var datePicker = UIDatePicker()
     //위치
     fileprivate let locationLabel = UILabel()
     fileprivate let locationTextField = UITextField()
+    fileprivate var locationDownPicker: DownPicker!
     //구분
     fileprivate let divisionLabel = UILabel()
     fileprivate let divisionTextField = UITextField()
+    fileprivate var divisionDownPicker: DownPicker!
     //주식
     fileprivate let stapleFoodLabel = UILabel()
     fileprivate let stapleFoodTextField = UITextField()
+    fileprivate var stapleFoodDownPicker: DownPicker!
     //국
     fileprivate let soupLabel = UILabel()
     fileprivate let soupTextField = UITextField()
+    fileprivate var soupDownPicker: DownPicker!
     //반찬1
     fileprivate let sideDish1Label = UILabel()
     fileprivate let sideDish1TextField = UITextField()
+    fileprivate var sideDish1DownPicker: DownPicker!
     //반찬2
     fileprivate let sideDish2Label = UILabel()
     fileprivate let sideDish2TextField = UITextField()
+    fileprivate var sideDish2DownPicker: DownPicker!
     //반찬3
     fileprivate let sideDish3Label = UILabel()
     fileprivate let sideDish3TextField = UITextField()
+    fileprivate var sideDish3DownPicker: DownPicker!
     //반찬4
     fileprivate let sideDish4Label = UILabel()
     fileprivate let sideDish4TextField = UITextField()
+    fileprivate var sideDish4DownPicker: DownPicker!
     //후식
     fileprivate let dessertLabel = UILabel()
     fileprivate let dessertTextField = UITextField()
+    fileprivate var dessertDownPicker: DownPicker!
     //비고
     fileprivate let remarksLabel = UILabel()
     fileprivate let remarksTextView = UITextView()
@@ -63,38 +80,140 @@ final class MealDetailTextCell: UITableViewCell {
         super.init(style: .subtitle, reuseIdentifier: reuseIdentifier)
         self.selectionStyle = .none
         
-        UICommonSetLabel(self.dateLabel, text: "일자", color: 0)
-        UICommonSetTextFieldDisable(self.dateTextField)
-        
-        UICommonSetLabel(self.locationLabel, text: "위치", color: 0)
-        UICommonSetTextFieldDisable(self.locationTextField)
-        
-        UICommonSetLabel(self.divisionLabel, text: "구분", color: 0)
-        UICommonSetTextFieldDisable(self.divisionTextField)
-        
-        UICommonSetLabel(self.stapleFoodLabel, text: "주식(밥,면)", color: 0)
-        UICommonSetTextFieldDisable(self.stapleFoodTextField)
-        
-        UICommonSetLabel(self.soupLabel, text: "국", color: 0)
-        UICommonSetTextFieldDisable(self.soupTextField)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    //MARK: configure
+    func configure(meal: Meal) {
+        if mealDetailTuple.editMode {
+            let location: NSMutableArray = []
+            let division: NSMutableArray = []
+            let stapleFood: NSMutableArray = []
+            let soup: NSMutableArray = []
+            let sideDish: NSMutableArray = []
+            let dessert: NSMutableArray = []
+            
+            //로컬 저장 정보 불러오기
+            if let dicts = UserDefaults.standard.array(forKey: SuperConstants.JJamUserDefaultsKeyRestaurantGroup) as? [[String: Any]] {
+                for disc in dicts {
+                    //let category = disc["category"] as! String
+                    switch disc["category"] as! String {
+                    case "location":
+                        location.add(disc["text"] as! String)
+                    case "division":
+                        division.add(disc["text"] as! String)
+                    case "stapleFood":
+                        stapleFood.add(disc["text"] as! String)
+                    case "soup":
+                        soup.add(disc["text"] as! String)
+                    case "sideDish":
+                        sideDish.add(disc["text"] as! String)
+                    case "dessert":
+                        dessert.add(disc["text"] as! String)
+                    default:
+                        print("No Category")
+                    }
+                }
+            }
+            
+            UICommonSetLabel(self.dateLabel, text: "일자", color: 1)
+            if mealDetailTuple.writeMode {
+                UICommonSetTextFieldEnable(self.dateTextField, placeholderText: "")
+            } else {
+                UICommonSetTextFieldDisable(self.dateTextField)
+            }
 
-        UICommonSetLabel(self.sideDish1Label, text: "반찬1", color: 0)
-        UICommonSetTextFieldDisable(self.sideDish1TextField)
-
-        UICommonSetLabel(self.sideDish2Label, text: "반찬2", color: 0)
-        UICommonSetTextFieldDisable(self.sideDish2TextField)
-
-        UICommonSetLabel(self.sideDish3Label, text: "반찬3", color: 0)
-        UICommonSetTextFieldDisable(self.sideDish3TextField)
-        
-        UICommonSetLabel(self.sideDish4Label, text: "반찬4", color: 0)
-        UICommonSetTextFieldDisable(self.sideDish4TextField)
-        
-        UICommonSetLabel(self.dessertLabel, text: "후식", color: 0)
-        UICommonSetTextFieldDisable(self.dessertTextField)
-
-        UICommonSetLabel(self.remarksLabel, text: "비고", color: 0)
-        UICommonSetTextViewDisable(self.remarksTextView)
+            //datePicker
+            //UICommonSetDatePicker(self.datePicker, view: self.contentView, textField: )
+            self.datePicker.datePickerMode = .date
+            let toolbar = UIToolbar();
+            toolbar.sizeToFit()
+            //done button & cancel button
+            let doneButton = UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.bordered, target: self, action: "donedatePicker")
+            let spaceButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: nil, action: nil)
+            let cancelButton = UIBarButtonItem(title: "Cancel", style: UIBarButtonItemStyle.bordered, target: self, action: "cancelDatePicker")
+            toolbar.setItems([cancelButton,spaceButton,doneButton], animated: false)
+            // add toolbar to textField
+            self.dateTextField.inputAccessoryView = toolbar
+            // add datepicker to textField
+            self.dateTextField.inputView = self.datePicker
+            
+            
+            UICommonSetLabel(self.locationLabel, text: "위치", color: 1)
+            UICommonSetTextFieldEnable(self.locationTextField, placeholderText: "")
+            self.locationDownPicker = DownPicker(textField: self.locationTextField, withData:location as! [Any])
+            
+            UICommonSetLabel(self.divisionLabel, text: "구분", color: 1)
+            UICommonSetTextFieldEnable(self.divisionTextField, placeholderText: "")
+            self.divisionDownPicker = DownPicker(textField: self.divisionTextField, withData:division as! [Any])
+            
+            UICommonSetLabel(self.stapleFoodLabel, text: "주식(밥,면)", color: 0)
+            UICommonSetTextFieldEnable(self.stapleFoodTextField, placeholderText: "")
+            self.stapleFoodDownPicker = DownPicker(textField: self.stapleFoodTextField, withData:stapleFood as! [Any])
+            
+            UICommonSetLabel(self.soupLabel, text: "국", color: 0)
+            UICommonSetTextFieldEnable(self.soupTextField, placeholderText: "")
+            self.soupDownPicker = DownPicker(textField: self.soupTextField, withData:soup as! [Any])
+            
+            UICommonSetLabel(self.sideDish1Label, text: "반찬1", color: 0)
+            UICommonSetTextFieldEnable(self.sideDish1TextField, placeholderText: "")
+            self.sideDish1DownPicker = DownPicker(textField: self.sideDish1TextField, withData:sideDish as! [Any])
+            
+            UICommonSetLabel(self.sideDish2Label, text: "반찬2", color: 0)
+            UICommonSetTextFieldEnable(self.sideDish2TextField, placeholderText: "")
+            self.sideDish2DownPicker = DownPicker(textField: self.sideDish2TextField, withData:sideDish as! [Any])
+            
+            UICommonSetLabel(self.sideDish3Label, text: "반찬3", color: 0)
+            UICommonSetTextFieldEnable(self.sideDish3TextField, placeholderText: "")
+            self.sideDish3DownPicker = DownPicker(textField: self.sideDish3TextField, withData:sideDish as! [Any])
+            
+            UICommonSetLabel(self.sideDish4Label, text: "반찬4", color: 0)
+            UICommonSetTextFieldEnable(self.sideDish4TextField, placeholderText: "")
+            self.sideDish4DownPicker = DownPicker(textField: self.sideDish4TextField, withData:sideDish as! [Any])
+            
+            UICommonSetLabel(self.dessertLabel, text: "후식", color: 0)
+            UICommonSetTextFieldEnable(self.dessertTextField, placeholderText: "")
+            self.dessertDownPicker = DownPicker(textField: self.dessertTextField, withData:dessert as! [Any])
+            
+            UICommonSetLabel(self.remarksLabel, text: "비고", color: 0)
+            UICommonSetTextViewEnable(self.remarksTextView, placeholderText: "")
+        } else {
+            UICommonSetLabel(self.dateLabel, text: "일자", color: 0)
+            UICommonSetTextFieldDisable(self.dateTextField)
+            
+            UICommonSetLabel(self.locationLabel, text: "위치", color: 0)
+            UICommonSetTextFieldDisable(self.locationTextField)
+            
+            UICommonSetLabel(self.divisionLabel, text: "구분", color: 0)
+            UICommonSetTextFieldDisable(self.divisionTextField)
+            
+            UICommonSetLabel(self.stapleFoodLabel, text: "주식(밥,면)", color: 0)
+            UICommonSetTextFieldDisable(self.stapleFoodTextField)
+            
+            UICommonSetLabel(self.soupLabel, text: "국", color: 0)
+            UICommonSetTextFieldDisable(self.soupTextField)
+            
+            UICommonSetLabel(self.sideDish1Label, text: "반찬1", color: 0)
+            UICommonSetTextFieldDisable(self.sideDish1TextField)
+            
+            UICommonSetLabel(self.sideDish2Label, text: "반찬2", color: 0)
+            UICommonSetTextFieldDisable(self.sideDish2TextField)
+            
+            UICommonSetLabel(self.sideDish3Label, text: "반찬3", color: 0)
+            UICommonSetTextFieldDisable(self.sideDish3TextField)
+            
+            UICommonSetLabel(self.sideDish4Label, text: "반찬4", color: 0)
+            UICommonSetTextFieldDisable(self.sideDish4TextField)
+            
+            UICommonSetLabel(self.dessertLabel, text: "후식", color: 0)
+            UICommonSetTextFieldDisable(self.dessertTextField)
+            
+            UICommonSetLabel(self.remarksLabel, text: "비고", color: 0)
+            UICommonSetTextViewDisable(self.remarksTextView)
+        }
         
         self.contentView.addSubview(self.dateLabel)
         self.contentView.addSubview(self.dateTextField)
@@ -118,15 +237,13 @@ final class MealDetailTextCell: UITableViewCell {
         self.contentView.addSubview(self.dessertTextField)
         self.contentView.addSubview(self.remarksLabel)
         self.contentView.addSubview(self.remarksTextView)
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    //MARK: configure
-    func configure(meal: Meal) {
-        self.dateTextField.text = meal.mealDate + " (" + meal.mealDateLabel + ")"
+        
+        if mealDetailTuple.editMode {
+            self.dateTextField.text = meal.mealDate
+        } else {
+            self.dateTextField.text = meal.mealDate + " (" + meal.mealDateLabel + ")"
+        }
+        
         self.locationTextField.text = meal.location
         self.divisionTextField.text = meal.division
         self.stapleFoodTextField.text = meal.stapleFood
@@ -139,6 +256,56 @@ final class MealDetailTextCell: UITableViewCell {
         self.remarksTextView.text = meal.remarks.replacingOccurrences(of: "\\n", with: "\n")
         self.setNeedsLayout()
     }
+    
+    //MealDetailTextCell에서 struct의 값을 접근하기 전에 값을 셋팅힌다.
+    func setInputData() -> String {
+        tableViewCellMeal.businessUsersMeal.removeAll()
+        tableViewCellMeal.businessUsersMeal.append(
+            BusinessUsersMeal(mealDate: "",
+                              location: "",
+                              division: "",
+                              stapleFood: "",
+                              soup: "",
+                              sideDish1: "",
+                              sideDish2: "",
+                              sideDish3: "",
+                              sideDish4: "",
+                              dessert: "",
+                              remarks: ""))
+
+        var inputText = ""
+        inputText = self.dateTextField.text!
+        if inputText.isEmpty {
+            self.dateTextField.becomeFirstResponder()
+            return "일자를 선택하세요."
+        }
+        inputText = self.locationTextField.text!
+        if inputText.isEmpty {
+            self.locationTextField.becomeFirstResponder()
+            return "위치를 선택하세요."
+        }
+        inputText = self.divisionTextField.text!
+        if inputText.isEmpty {
+            self.divisionTextField.becomeFirstResponder()
+            return "구분을 선택하세요."
+        }
+
+        tableViewCellMeal.businessUsersMeal.removeAll()
+        tableViewCellMeal.businessUsersMeal.append(
+            BusinessUsersMeal(mealDate: self.dateTextField.text!,
+                              location: self.locationTextField.text!,
+                              division: self.divisionTextField.text!,
+                              stapleFood: self.stapleFoodTextField.text!,
+                              soup: self.soupTextField.text!,
+                              sideDish1: self.sideDish1TextField.text!,
+                              sideDish2: self.sideDish2TextField.text!,
+                              sideDish3: self.sideDish3TextField.text!,
+                              sideDish4: self.sideDish4TextField.text!,
+                              dessert: self.dessertTextField.text!,
+                              remarks: self.remarksTextView.text!))
+        return ""
+    }
+
     
     //MARK: Size
     class func height() -> CGFloat {
@@ -311,5 +478,17 @@ final class MealDetailTextCell: UITableViewCell {
             make.top.equalTo(self.dessertLabel.snp.bottom).offset(Metric.commonOffset)
             make.height.equalTo(Metric.commonHeightTextView)
         }
+    }
+    
+    //MARK: Action
+    func donedatePicker(){
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd"
+        self.dateTextField.text = formatter.string(from: datePicker.date)
+        self.contentView.endEditing(true)
+    }
+    
+    func cancelDatePicker(){
+        self.contentView.endEditing(true)
     }
 }

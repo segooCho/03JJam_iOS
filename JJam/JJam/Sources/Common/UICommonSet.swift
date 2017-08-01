@@ -8,11 +8,6 @@
 
 import UIKit
 
-//MARK: Constants
-fileprivate struct Font {
-    static let font14 = UIFont.systemFont(ofSize: 16)
-}
-
 //MARK: UISegmentedControl Common Set
 func UICommonSetSegmentedControl(_ uIKit: UISegmentedControl, titles: Array<String>) {
     for (index, title) in titles.enumerated() {
@@ -32,7 +27,7 @@ func UICommonSetLabel(_ uIKit: UILabel, text: String, color: Int) {
         uIKit.textColor = .black
     }
 
-    uIKit.font = Font.font14
+    uIKit.font = Font.font16
     uIKit.text = text
 }
 
@@ -46,13 +41,13 @@ func UICommonSetButton(_ uIKit: UIButton, setTitleText: String, color: Int) {
     }
     
     uIKit.layer.cornerRadius = 5
-    uIKit.titleLabel?.font = Font.font14
+    uIKit.titleLabel?.font = Font.font16
     uIKit.setTitle(setTitleText, for: .normal)
 }
 
 //MARK: Common Set UITextField isEnabled = false
 func UICommonSetTextFieldDisable(_ uIKit: UITextField) {
-    uIKit.font = Font.font14
+    uIKit.font = Font.font16
     uIKit.borderStyle = .roundedRect
     uIKit.backgroundColor = UIColor(red: 239/255, green: 239/255, blue: 244/255, alpha: 1.0)
     uIKit.isEnabled = false
@@ -60,7 +55,7 @@ func UICommonSetTextFieldDisable(_ uIKit: UITextField) {
 
 //MARK: Common Set UITextField isEnabled = true
 func UICommonSetTextFieldEnable(_ uIKit: UITextField, placeholderText: String) {
-    uIKit.font = Font.font14
+    uIKit.font = Font.font16
     uIKit.borderStyle = .roundedRect
     uIKit.placeholder = placeholderText
     uIKit.isEnabled = true
@@ -76,7 +71,7 @@ func UICommonSetTextViewDisable(_ uIKit: UITextView) {
     uIKit.layer.borderWidth = 0.5
     uIKit.layer.cornerRadius = 5
     uIKit.backgroundColor = UIColor(red: 239/255, green: 239/255, blue: 244/255, alpha: 1.0)
-    uIKit.font = Font.font14
+    uIKit.font = Font.font16
     uIKit.isEditable = false
 }
 
@@ -86,7 +81,7 @@ func UICommonSetTextViewEnable(_ uIKit: UITextView, placeholderText: String) {
     uIKit.layer.borderColor = color
     uIKit.layer.borderWidth = 0.5
     uIKit.layer.cornerRadius = 5
-    uIKit.font = Font.font14
+    uIKit.font = Font.font16
     uIKit.placeholder = placeholderText
     uIKit.isEditable = true
 }
@@ -119,9 +114,8 @@ func UICommonSetShakeTextView(_ uIKit: UITextView) {
     })
 }
 
-
 //MARK: Common Set Loading
-func UICommonSetLoading(uiKit: UIActivityIndicatorView) {
+func UICommonSetLoading(_ uiKit: UIActivityIndicatorView) {
     uiKit.transform = CGAffineTransform(scaleX: 2, y: 2)
 }
 
@@ -139,4 +133,21 @@ func UICommonSetLoadingService(_ uIKit: UIActivityIndicatorView, service: Bool) 
     }
 }
 
-
+//MARK: Common Set UIDatePicker
+func UICommonSetDatePicker(_ uIKit: UIDatePicker, view: UIView, textField: UITextField) {
+     uIKit.datePickerMode = .date
+    
+    let toolbar = UIToolbar();
+    toolbar.sizeToFit()
+    
+    //done button & cancel button
+    let doneButton = UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.bordered, target: view, action: "donedatePicker")
+    let spaceButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: nil, action: nil)
+    let cancelButton = UIBarButtonItem(title: "Cancel", style: UIBarButtonItemStyle.bordered, target: view, action: "cancelDatePicker")
+    toolbar.setItems([doneButton,spaceButton,cancelButton], animated: false)
+    
+    // add toolbar to textField
+    textField.inputAccessoryView = toolbar
+    // add datepicker to textField
+    textField.inputView = uIKit
+}

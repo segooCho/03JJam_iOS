@@ -62,9 +62,14 @@ final class MealListCell: UITableViewCell {
             self.textLabel!.text = meal.mealDate + " (" + meal.mealDateLabel + ") " + meal.division
             //요약 내용
             self.detailTextLabel!.numberOfLines = 3
-            self.detailTextLabel!.text = "위치 : " + meal.location + "\n"
-                                       + "메뉴 : " + meal.stapleFood + "," + meal.soup + "," + meal.sideDish1 + ","
-                                       + meal.sideDish2 + "," + meal.sideDish3 + "," + meal.sideDish4 + "," + meal.dessert
+            
+            var detailText = "메뉴 : " + meal.stapleFood + "," + meal.soup + "," + meal.sideDish1 + ","
+                + meal.sideDish2 + "," + meal.sideDish3 + "," + meal.sideDish4 + "," + meal.dessert + "@"
+            detailText = detailText.replacingOccurrences(of: ",,", with: "")
+            detailText = detailText.replacingOccurrences(of: ",@", with: "")
+            detailText = detailText.replacingOccurrences(of: "@", with: "")
+            
+            self.detailTextLabel!.text = "위치 : " + meal.location + "\n" + detailText
         }
         
         self.accessoryType = .disclosureIndicator

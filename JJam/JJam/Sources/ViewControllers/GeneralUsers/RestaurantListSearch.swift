@@ -51,7 +51,7 @@ final class RestaurantListSearch: UIViewController {
         //scroll의 내부 여백 발생시 사용()
         //self.automaticallyAdjustsScrollViewInsets = false
 
-        UICommonSetLoading(uiKit: self.activityIndicatorView)
+        UICommonSetLoading(self.activityIndicatorView)
         
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(
             barButtonSystemItem: .cancel,
@@ -216,7 +216,7 @@ extension RestaurantListSearch: UITableViewDataSource {
 extension RestaurantListSearch: UITableViewDelegate {
     //cell height
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return FixedCommonSet.tableViewCellHeight100
+        return SuperConstants.tableViewCellHeight100
     }
     
     //cell 선택

@@ -32,7 +32,7 @@ final class Login: UIViewController {
             action: #selector(cancelButtonDidTap)
         )
 
-        UICommonSetLoading(uiKit: self.activityIndicatorView)
+        UICommonSetLoading(self.activityIndicatorView)
 
         UICommonSetTextFieldEnable(self.usernameTextField, placeholderText: "사용자 ID")
         self.usernameTextField.addTarget(self, action: #selector(textFieldDidChangeText), for: .editingChanged)

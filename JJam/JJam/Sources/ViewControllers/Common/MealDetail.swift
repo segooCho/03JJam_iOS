@@ -1,23 +1,22 @@
 //
-//  BusinessUsersSignUp.swift
+//  MealDetail.swift
 //  JJam
 //
-//  Created by admin on 2017. 7. 20..
+//  Created by admin on 2017. 7. 17..
 //  Copyright © 2017년 admin. All rights reserved.
 //
 
 import UIKit
 
-final class BusinessUsersSignUp: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+final class MealDetail: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     //MARK: Properties
     fileprivate var didSetupConstraints = false
+    fileprivate var viewMeal: [Meal] = []
+    fileprivate var editBusinessUsersMeal: [BusinessUsersMeal] = []
+    fileprivate var image: UIImage!
+    fileprivate var editImage: String = ""
     fileprivate var segmentedIndexAndCode: Int = 3
 
-    fileprivate var editSignUp: [SignUp] = []
-    fileprivate var newSignUp: [SignUp] = []
-    fileprivate var image:UIImage!
-    //let image
-    
     //MARK: Constants
     fileprivate struct Metric {
         static let segmentedMid = CGFloat(20)
@@ -25,22 +24,18 @@ final class BusinessUsersSignUp: UIViewController, UIImagePickerControllerDelega
 
         static let commonOffset = CGFloat(7)
     }
-    
+
     //MARK: UI
     fileprivate let activityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: .gray)
-    fileprivate let tableView = UITableView(frame: .zero, style: .plain)
-    fileprivate var imagePicker: UIImagePickerController = UIImagePickerController()
     fileprivate let segmentedControl = UISegmentedControl()
+    fileprivate var imagePicker: UIImagePickerController = UIImagePickerController()
     fileprivate let segmentedTitles: Array<String> = ["사진 지우기","사진첩","카메라"]
+    fileprivate let tableView = UITableView(frame: .zero, style: .plain)
 
-    
     //MARK: init
-    init() {
+    init(viewMeal: [Meal]) {
+        self.viewMeal = viewMeal
         super.init(nibName: nil, bundle: nil)
-        self.title = "회원 가입"
-
-        //데이터 임시 처리
-        self.editSignUp.append(SignUp(id: "", password: "",businessNumber: "", companyName: "", address: "", contactNumber: "", representative: ""))
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -51,36 +46,44 @@ final class BusinessUsersSignUp: UIViewController, UIImagePickerControllerDelega
     //MARK: View Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
+
         self.view.backgroundColor = .white
+        self.title = "상세 식단"
         
+        //cancelButton
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(
             barButtonSystemItem: .cancel,
             target: self,
             action: #selector(cancelButtonDidTap)
         )
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(
-            barButtonSystemItem: .add,
-            target: self,
-            action: #selector(addButtonDidTap)
-        )
+
+        //수정(지난 식단은 제외) 또는 신규
+        if mealDetailTuple.editMode {
+            self.navigationItem.rightBarButtonItem = UIBarButtonItem(
+                barButtonSystemItem: .save,
+                target: self,
+                action: #selector(saveButtonDidTap)
+            )
+        }
         
         UICommonSetLoading(self.activityIndicatorView)
         
-        self.tableView.register(BusinessUsersSignUpTextCell.self, forCellReuseIdentifier: "businessUsersSignUpTextCell")
-        self.tableView.register(BusinessUsersSignUpImageCell.self, forCellReuseIdentifier: "businessUsersSignUpImageCell")
-        self.tableView.dataSource = self
-        self.tableView.delegate = self
-        
-        //segmentedControl
+        //이미지
         imagePicker.delegate = self
         UICommonSetSegmentedControl(self.segmentedControl, titles: segmentedTitles)
         self.segmentedControl.addTarget(self, action: #selector(changeSegmentedControl), for: .valueChanged)
         self.segmentedControl.selectedSegmentIndex = self.segmentedIndexAndCode
+        //수정 모드 일때만 추가
+        if mealDetailTuple.editMode {
+            self.view.addSubview(self.segmentedControl)
+        }
         
-        self.view.addSubview(self.tableView)
-        self.view.addSubview(self.segmentedControl)
+        self.tableView.register(MealDetailImageCell.self, forCellReuseIdentifier: "mealDetailImageCell")
+        self.tableView.register(MealDetailTextCell.self, forCellReuseIdentifier: "mealDetailTextCell")
+        self.tableView.dataSource = self
+        self.tableView.delegate = self
         self.view.addSubview(self.activityIndicatorView)
-        
+        self.view.addSubview(self.tableView)
         //updateViewConstraints 자동 호출
         self.view.setNeedsUpdateConstraints()
     }
@@ -90,25 +93,34 @@ final class BusinessUsersSignUp: UIViewController, UIImagePickerControllerDelega
     override func updateViewConstraints() {
         if !self.didSetupConstraints {
             self.didSetupConstraints = true
+            
+            self.editImage = self.viewMeal[0].foodImage
             self.activityIndicatorView.snp.makeConstraints { make in
                 make.center.equalToSuperview()
             }
-            var height: CGFloat = 0
-            height += Metric.commonOffset
-            height += Metric.segmentedHeight
-            //tableView
-            self.tableView.snp.makeConstraints { make in
-                make.top.left.right.equalToSuperview()
-                make.bottom.equalTo(self.bottomLayoutGuide.snp.bottom).offset(-(height + Metric.commonOffset))
+            if mealDetailTuple.editMode {
+                //segmented
+                self.segmentedControl.snp.makeConstraints { make in
+                    make.left.equalTo(Metric.segmentedMid)
+                    make.right.equalTo(-Metric.segmentedMid)
+                    make.top.equalTo(self.topLayoutGuide.snp.bottom).offset(Metric.commonOffset)
+                    make.height.equalTo(Metric.segmentedHeight)
+                }
+                //tableView
+                self.tableView.snp.makeConstraints { make in
+                    make.top.equalTo(self.segmentedControl.snp.bottom).offset(Metric.commonOffset)
+                    make.left.right.bottom.equalToSuperview()
+                    make.bottom.equalTo(self.bottomLayoutGuide.snp.top)
+                }
+            } else {
+                //tableView
+                self.tableView.snp.makeConstraints { make in
+                    make.top.equalTo(self.topLayoutGuide.snp.bottom)
+                    make.left.right.bottom.equalToSuperview()
+                    make.bottom.equalTo(self.bottomLayoutGuide.snp.top)
+                }
             }
-            
-            //segmented
-            self.segmentedControl.snp.makeConstraints { make in
-                make.left.equalTo(Metric.segmentedMid)
-                make.right.equalTo(-Metric.segmentedMid)
-                make.top.equalTo(self.bottomLayoutGuide.snp.bottom).offset(-(height))
-                make.height.equalTo(Metric.segmentedHeight)
-            }
+
         }
         super.updateViewConstraints()
     }
@@ -120,47 +132,41 @@ final class BusinessUsersSignUp: UIViewController, UIImagePickerControllerDelega
     
     //MARK: ACTION
     func cancelButtonDidTap() {
+        //NavigationController popViewController
         _ = self.navigationController?.popViewController(animated: true)
     }
     
-    /*********************************************  회원 가입  ******************************************************/
-
-    func addButtonDidTap() {
+    /*********************************************  저장 처리 ******************************************************/
+    func saveButtonDidTap() {
         // TableView[0] 에서 입력 값 가지고 오기
         // UI는 직접 처리 불가, struct만 접근 가능 제약이 많음... 병맛으로 처리 했음
         // contentView 에서는 self.present 처리도 불가능
-        let index = IndexPath(row: 0, section: 0)
-        let cell: BusinessUsersSignUpTextCell = self.tableView.cellForRow(at: index) as! BusinessUsersSignUpTextCell
+        let index = IndexPath(row: 1, section: 0)
+        let cell: MealDetailTextCell = self.tableView.cellForRow(at: index) as! MealDetailTextCell
         
         //struct tableViewCellSignUp 값 저장
         let message = cell.setInputData()
         if message.isEmpty {
-            //print("signUp.id :" + BusinessUsersSignUpTextCell.signUp.id)
-            //if self.image == nil {
-            if self.segmentedIndexAndCode == 0 {
-                let alertController = UIAlertController(
-                    title: self.title,
-                    message: "사업자 등록증 사진 정보가 없습니다.\n추후 인증 업체 자격을 획득할 수 없습니다.\n그래도 계속 진행하시겠습니까?",
-                    preferredStyle: .alert
-                )
-                let alertCancel = UIAlertAction(
-                    title: "취소",
-                    style: .default) { _ in
-                        // 확인 후 작업
-                        return
-                }
-                let alertConfirm = UIAlertAction(
-                    title: "계속 진행",
-                    style: .default) { _ in
-                        // 확인 후 작업
-                        self.privacyAgree()
-                }
-                alertController.addAction(alertCancel)
-                alertController.addAction(alertConfirm)
-                self.present(alertController, animated: true, completion: nil)
-            } else {
-                self.privacyAgree()
+            let alertController = UIAlertController(
+                title: "식단",
+                message: "저장 하시겠습니까?",
+                preferredStyle: .alert
+            )
+            let alertCancel = UIAlertAction(
+                title: "취소",
+                style: .default) { _ in
+                    // 확인 후 작업
+                    return
             }
+            let alertConfirm = UIAlertAction(
+                title: "저장",
+                style: .default) { _ in
+                    // 확인 후 작업
+                    self.mealSave()
+            }
+            alertController.addAction(alertCancel)
+            alertController.addAction(alertConfirm)
+            self.present(alertController, animated: true, completion: nil)
         } else {
             //TODO : 입력값 처리
             let alertController = UIAlertController(
@@ -178,15 +184,13 @@ final class BusinessUsersSignUp: UIViewController, UIImagePickerControllerDelega
         }
     }
     
-    //개인 정보 수집 동의 및 정보 확인
-    func privacyAgree() {
-        self.newSignUp.removeAll()
-        //print(BusinessUsersSignUpTextCell.tableViewCellSignUp.signUp)
-        self.newSignUp = BusinessUsersSignUpTextCell.tableViewCellSignUp.signUp
-        if newSignUp.count < 0 {
+    func mealSave() {
+        self.editBusinessUsersMeal.removeAll()
+        self.editBusinessUsersMeal = MealDetailTextCell.tableViewCellMeal.businessUsersMeal
+        if editBusinessUsersMeal.count < 0 {
             let alertController = UIAlertController(
                 title: self.title,
-                message: "회원 가입 처리 중 오류가 발생했습니다.",
+                message: "식단 등록 처리 중 오류가 발생했습니다.",
                 preferredStyle: .alert
             )
             let alertConfirm = UIAlertAction(
@@ -198,39 +202,32 @@ final class BusinessUsersSignUp: UIViewController, UIImagePickerControllerDelega
             self.present(alertController, animated: true, completion: nil)
             return
         } else {
-            let alertController = UIAlertController(
-                title: self.title,
-                message: "입력된 회원정보 수집에 동의하십니까?\n*운영진의 재량권에 따라 수정 요청 또는 무 통보 삭제가 될 수 있습니다.",
-                preferredStyle: .alert
-            )
-            let alertCancel = UIAlertAction(
-                title: "취소",
-                style: .default) { _ in
-                    // 확인 후 작업
-                    return
-            }
-            let alertConfirm = UIAlertAction(
-                title: "동의",
-                style: .default) { _ in
-                    // 확인 후 작업
-                    self.restaurantSignUpNetWorking()
-            }
-            alertController.addAction(alertCancel)
-            alertController.addAction(alertConfirm)
-            self.present(alertController, animated: true, completion: nil)
+            print(self.viewMeal[0]._id)
+            print(self.viewMeal[0].restaurant_Id)
+            mealSaveNetWorking()
         }
     }
     
-    //회원 가입
-    func restaurantSignUpNetWorking() {
+    func mealSaveNetWorking() {
+        let id: String
+        if mealDetailTuple.writeMode {
+            id = self.viewMeal[0].restaurant_Id
+        } else {
+            id = self.viewMeal[0]._id
+        }
+        
         UICommonSetLoadingService(self.activityIndicatorView, service: true)
-        LoginNetWorking.restaurantSignUp(signUp: self.newSignUp, image: image) { [weak self] response in
+        BusinessUsersNetWorking.restaurantMeal(id: id,
+                                               businessUsersMeal: self.editBusinessUsersMeal,
+                                               image: image,
+                                               editImage: self.editImage) { [weak self] response in
             guard let `self` = self else { return }
             if response.count > 0 {
+                //Notification 포함 작동 중
                 UICommonSetLoadingService(self.activityIndicatorView, service: false)
                 let message = response[0].message //무조건 리턴 메시지 발생함
                 if message != nil {
-                    if message == "회원 가입이 완료되었습니다." {
+                    if message == "식단 저장이 완료되었습니다." {
                         //OK
                         let alertController = UIAlertController(
                             title: self.title,
@@ -238,9 +235,9 @@ final class BusinessUsersSignUp: UIViewController, UIImagePickerControllerDelega
                             preferredStyle: .alert
                         )
                         let alertLoginScreen = UIAlertAction(
-                            title: "로그인 페이지 이동",
+                            title: "이전 페이지 이동",
                             style: .default) { _ in
-                                //로그인 페이지
+                                //이전 페이지
                                 _ = self.navigationController?.popViewController(animated: true)
                         }
                         let alertConfirm = UIAlertAction(
@@ -250,6 +247,11 @@ final class BusinessUsersSignUp: UIViewController, UIImagePickerControllerDelega
                         }
                         alertController.addAction(alertLoginScreen)
                         alertController.addAction(alertConfirm)
+                        //에디터 모드 일때 이전 페이지 data reload 처리
+                        if mealDetailTuple.editMode {
+                            NotificationCenter.default.post(name: .businessUsersMealListDidAdd, object: self, userInfo: [:])
+                        }
+                        UICommonSetLoadingService(self.activityIndicatorView, service: false)
                         self.present(alertController, animated: true, completion: nil)
                         
                     } else {
@@ -271,8 +273,6 @@ final class BusinessUsersSignUp: UIViewController, UIImagePickerControllerDelega
             }
         }
     }
-
-    
     
     /*********************************************  이미지 처리 ******************************************************/
     func changeSegmentedControl() {
@@ -322,25 +322,25 @@ final class BusinessUsersSignUp: UIViewController, UIImagePickerControllerDelega
             noImageButtonDidTap()
         }
     }
-
+    
     func noImageButtonDidTap() {
         image = nil
-        //let index = IndexPath(row: 1, section: 0)
-        //let cell = tableView.dequeueReusableCell(withIdentifier: "businessUsersSignUpImageCell", for: index) as! BusinessUsersSignUpImageCell
+        //let index = IndexPath(row: 0, section: 0)
+        //let cell = tableView.dequeueReusableCell(withIdentifier: "mealDetailImageCell", for: index) as! MealDetailImageCell
         //let noImage = UIImage(named: "NoImageFound.jpg")
         //cell.configure(image: noImage!)
+        self.editImage = "NoImageFound.jpg"
         self.tableView.reloadData()
     }
     
-
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any])
     {
         //tableView[1].imageView 이미지 변경
         self.image = info[UIImagePickerControllerOriginalImage]as! UIImage
-        let index = IndexPath(row: 1, section: 0)
-        let cell: BusinessUsersSignUpImageCell = self.tableView.cellForRow(at: index) as! BusinessUsersSignUpImageCell
+        let index = IndexPath(row: 0, section: 0)
+        let cell: MealDetailImageCell = self.tableView.cellForRow(at: index) as! MealDetailImageCell
         cell.configure(image: self.image!)
-
+        
         //imagePicker 닫기
         self.dismiss(animated: true, completion: nil);
     }
@@ -348,7 +348,7 @@ final class BusinessUsersSignUp: UIViewController, UIImagePickerControllerDelega
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         //imagePicker 닫기
         self.dismiss(animated: true, completion: nil);
-        
+
         let alert = UIAlertController(title: "확인", message: "이미지가 초기화되었습니다.", preferredStyle: .alert)
         let ok = UIAlertAction(title: "OK", style:.default, handler: nil)
         alert.addAction(ok)
@@ -357,52 +357,46 @@ final class BusinessUsersSignUp: UIViewController, UIImagePickerControllerDelega
         self.segmentedIndexAndCode = 0
         noImageButtonDidTap()
     }
-    
+
 }
 
 
-extension BusinessUsersSignUp: UITableViewDataSource {
+extension MealDetail: UITableViewDataSource {
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 2
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.row == 0 {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "businessUsersSignUpTextCell", for: indexPath) as! BusinessUsersSignUpTextCell
-            cell.configure(signUp: self.editSignUp[0])
-            //cell.configure()
+            let cell = tableView.dequeueReusableCell(withIdentifier: "mealDetailImageCell", for: indexPath) as! MealDetailImageCell
+            
+            
+            if !mealDetailTuple.editMode {
+                cell.configure(editImage: self.viewMeal[0].foodImage!)
+            } else if image != nil {
+                cell.configure(image: self.image!)
+            } else {
+                cell.configure(editImage: self.editImage)
+            }
+            
+            //cell.configure(foodImage: self.viewMeal[0].foodImage!)
             return cell
         } else {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "businessUsersSignUpImageCell", for: indexPath) as! BusinessUsersSignUpImageCell
-            
-            //TableView 스크롤로 새로운 이지미지가 덮어진다.
-            if self.segmentedIndexAndCode == 0 || self.segmentedIndexAndCode == 3 {
-                let noImage = UIImage(named: "NoImageFound.jpg")
-                cell.configure(image: noImage!)
-            } else {
-                cell.configure(image: self.image!)
-            }
+            let cell = tableView.dequeueReusableCell(withIdentifier: "mealDetailTextCell", for: indexPath) as! MealDetailTextCell
+            cell.configure(meal: self.viewMeal[0])
             return cell
         }
     }
 }
 
-extension BusinessUsersSignUp: UITableViewDelegate {
+extension MealDetail: UITableViewDelegate {
     //cell height
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if indexPath.row == 0 {
-            return BusinessUsersSignUpTextCell.height()
+            return MealDetailImageCell.height(width: tableView.frame.width)
         } else {
-            return BusinessUsersSignUpImageCell.height(width: tableView.frame.width)
+            return MealDetailTextCell.height()
         }
     }
 }
-
-extension BusinessUsersSignUp: UITextFieldDelegate {
-    //TextField 리턴키 처리
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        self.view.endEditing(true)
-        return true
-    }
-}
-

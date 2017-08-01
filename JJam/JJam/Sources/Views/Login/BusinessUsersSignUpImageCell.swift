@@ -6,17 +6,9 @@
 //  Copyright © 2017년 admin. All rights reserved.
 //
 
-
 import UIKit
 
 final class BusinessUsersSignUpImageCell: UITableViewCell {
-    //MARK: Properties
-    /*
-    struct signUp {
-        static var photoView: String = ""
-    }
-    */
-    
     //MARK: Constants
     fileprivate struct Metric {
         static let labelLeft = CGFloat(10)
@@ -25,7 +17,6 @@ final class BusinessUsersSignUpImageCell: UITableViewCell {
         static let imageLeft = CGFloat(130)
         static let imageRight = CGFloat(-10)
 
-        
         static let commonOffset = CGFloat(7)
         static let commonHeight = CGFloat(45)
         static let commonHeightImageView = CGFloat(230)
@@ -39,7 +30,7 @@ final class BusinessUsersSignUpImageCell: UITableViewCell {
     //MARK: init
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: .subtitle, reuseIdentifier: reuseIdentifier)
-        //contentViewButton 반전 방지용 뷰 - 아무 설정하지 않음
+        //contentViewButton 클릭시 반전 방지용 뷰 - 아무 설정하지 않음
         self.contentView.addSubview(self.contentViewButton)
 
         UICommonSetLabel(self.label, text: "사업자 등록증", color: 0)

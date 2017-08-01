@@ -13,8 +13,6 @@ struct LoginNetWorking {
     static func restaurantLogin(id: String, password: String, completion: @escaping (_ restaurantInfo: [RestaurantInfo]) -> Void) {
         // pod SwiftyHash
         let sha256Hex: String = password.digest.sha256
-        
-        let urlString = FixedCommonSet.networkinkBaseUrl + "restaurantLogin"
         let parameters: [String: Any] = [
             "id": id,
             "password": sha256Hex,
@@ -25,7 +23,7 @@ struct LoginNetWorking {
         
         var restaurantInfo: [RestaurantInfo] = []
         
-        Alamofire.request(urlString, method: .post, parameters: parameters, headers: headers)
+        Alamofire.request(Url.restaurantLogin, method: .post, parameters: parameters, headers: headers)
             .validate(statusCode: 200..<400)
             .responseJSON {
                 response in
@@ -47,12 +45,9 @@ struct LoginNetWorking {
     }
     
     //회원 가입
-    //static func restaurantSignUp(signUp: [SignUp], imageURL: URL?, completion: @escaping (_ restaurantInfo: [RestaurantInfo]) -> Void) {
     static func restaurantSignUp(signUp: [SignUp], image: UIImage?, completion: @escaping (_ restaurantInfo: [RestaurantInfo]) -> Void) {
         // pod SwiftyHash
-        let sha256Hex: String = signUp[0].password.digest.sha256
-        
-        let urlString = FixedCommonSet.networkinkBaseUrl + "restaurantSignUp"
+        let sha256Hex: String = signUp[0].password.digest.sha256        
         let parameters: [String: Any] = [
             "id": signUp[0].id,
             "password": sha256Hex,
@@ -70,15 +65,10 @@ struct LoginNetWorking {
                     multipartFormData.append(imageData, withName: "businessLicenseImage", fileName: "photo.jpg", mimeType: "image/jpeg")
                 }
             }
-            /*
-             if imageURL != nil {
-             multipartFormData.append(imageURL!, withName: "businessLicenseImage")
-             }
-             */
             for (key, value) in parameters {
                 multipartFormData.append((value as AnyObject).data(using: String.Encoding.utf8.rawValue)!, withName: key)
             }
-        }, to: urlString, method:.post, encodingCompletion: { (result) in
+        }, to: Url.restaurantSignUp, method:.post, encodingCompletion: { (result) in
             switch result {
             case .success(let upload, _, _):
                 upload.responseJSON { response in
