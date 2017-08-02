@@ -10,7 +10,7 @@ import UIKit
 
 final class BusinessUsersSettings: UIViewController {
     //MARK: Properties
-    fileprivate let _id: String
+    fileprivate let restaurant_Id: String
     var didSetupConstraints = false
     
     fileprivate struct Section {
@@ -43,8 +43,8 @@ final class BusinessUsersSettings: UIViewController {
     //MARK: UI
     fileprivate let tableView = UITableView(frame: .zero, style: .grouped)
     
-    init(_id: String) {
-        self._id = _id
+    init(restaurant_Id: String) {
+        self.restaurant_Id = restaurant_Id
         super.init(nibName: nil, bundle: nil)
 
         self.title = "설정"
@@ -123,7 +123,7 @@ extension BusinessUsersSettings: UITableViewDelegate {
         let sectionItem = self.sections[indexPath.section].items[indexPath.row]
         switch sectionItem {
         case .notice:
-            let businessUsersNotice = BusinessUsersNotice(_id: self._id)
+            let businessUsersNotice = BusinessUsersNotice(restaurant_Id: self.restaurant_Id)
             self.navigationController?.pushViewController(businessUsersNotice, animated: true)
         case .profile:
             break

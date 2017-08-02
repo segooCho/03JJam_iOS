@@ -13,7 +13,7 @@ final class BusinessUsersTabBar: UITabBarController {
     // MARK: UI
     fileprivate let activityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: .gray)
     //MARK: init
-    init(_id: String) {
+    init(restaurant_Id: String) {
         super.init(nibName: nil, bundle: nil)
 
         let tempViewController = TempViewController()
@@ -21,7 +21,7 @@ final class BusinessUsersTabBar: UITabBarController {
         self.viewControllers = [
             tempViewController,
         ]
-        restaurantCategory(_id: _id)
+        restaurantCategory(restaurant_Id: restaurant_Id)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -29,9 +29,9 @@ final class BusinessUsersTabBar: UITabBarController {
     }
     
     //식당 category 항목(Group) 조회
-    func restaurantCategory(_id: String) {
+    func restaurantCategory(restaurant_Id: String) {
         //UICommonSetLoadingService(self.activityIndicatorView, service: true)
-        BusinessUsersNetWorking.restaurantGroup(_id: _id) { [weak self] response in
+        BusinessUsersNetWorking.restaurantGroup(restaurant_Id: restaurant_Id) { [weak self] response in
             guard let `self` = self else { return }
             if response.count > 0 {
                 let message = response[0].message
@@ -83,10 +83,10 @@ final class BusinessUsersTabBar: UITabBarController {
                     //TempViewController에서 시작된 것을 종료
                     UICommonSetLoadingService(self.activityIndicatorView, service: false)
 
-                    //ViewControllers 생성 작업을 _id 값을 필수 작업이어서 내부에서 진행 한다.
-                    let businessUsersMealList = BusinessUsersMealList(_id: _id)                                             //업체 ID
-                    let businessUsersMenuManagement = BusinessUsersMenuManagement(_id: _id)                                 //메뉴 관리
-                    let businessUsersSettings = BusinessUsersSettings(_id: _id)                                             //설정
+                    //ViewControllers 생성 작업을 restaurant_Id 값을 필수 작업이어서 내부에서 진행 한다.
+                    let businessUsersMealList = BusinessUsersMealList(restaurant_Id: restaurant_Id)                                             //업체 ID
+                    let businessUsersMenuManagement = BusinessUsersMenuManagement(restaurant_Id: restaurant_Id)                                 //메뉴 관리
+                    let businessUsersSettings = BusinessUsersSettings(restaurant_Id: restaurant_Id)                                             //설정
                     
                     self.viewControllers = [
                         UINavigationController(rootViewController: businessUsersMealList),

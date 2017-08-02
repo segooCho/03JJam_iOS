@@ -9,7 +9,7 @@
 import ObjectMapper
 
 struct Meal: Mappable {
-    var _id: String!
+    var meal_Id: String!
     var restaurant_Id: String!
     var mealDate: String!
     var mealDateLabel: String!
@@ -30,7 +30,7 @@ struct Meal: Mappable {
     }
     
     mutating func mapping(map: Map) {
-        self._id <- map["_id"]
+        self.meal_Id <- map["_id"]
         self.restaurant_Id <- map["restaurant_Id"]
         self.mealDate <- map["mealDate"]
         self.mealDateLabel <- map["mealDateLabel"]

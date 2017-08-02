@@ -9,7 +9,7 @@
 import ObjectMapper
 
 struct RestaurantInfo: Mappable {
-    var _id: String?                //Oid
+    var restaurant_Id: String?      //Oid
     var id: String?                 //사용자 ID
     var certification: String?      //인증 구분 (y,n)
     var notice: String?             //공지사항
@@ -19,7 +19,7 @@ struct RestaurantInfo: Mappable {
     }
     
     mutating func mapping(map: Map) {
-        self._id <- map["_id"]
+        self.restaurant_Id <- map["_id"]
         self.id <- map["id"]
         self.certification <- map["certification"]
         self.notice <- map["notice"]

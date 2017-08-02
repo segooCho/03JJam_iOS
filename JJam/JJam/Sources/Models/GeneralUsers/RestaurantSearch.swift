@@ -9,7 +9,7 @@
 import ObjectMapper
 
 struct RestaurantSearch: Mappable {
-    var _id: String!
+    var restaurant_Id: String!
     var companyName: String!
     var certification: String!
     var address: String!
@@ -23,7 +23,7 @@ struct RestaurantSearch: Mappable {
     }
     
     mutating func mapping(map: Map) {
-        self._id <- map["_id"]
+        self.restaurant_Id <- map["_id"]
         self.companyName <- map["companyName"]
         self.certification <- map["certification"]
         self.address <- map["address"]

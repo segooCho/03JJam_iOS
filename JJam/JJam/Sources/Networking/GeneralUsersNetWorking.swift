@@ -20,7 +20,7 @@ struct GeneralUsersNetWorking {
         
         var restaurantSearch: [RestaurantSearch] = []
         
-        Alamofire.request(Url.restaurantSearch, method: .get, parameters: parameters, headers: headers)
+        Alamofire.request(Url.restaurantSearch, method: .post, parameters: parameters, headers: headers)
             .validate(statusCode: 200..<400)
             .responseJSON {
                     response in
@@ -53,7 +53,7 @@ struct GeneralUsersNetWorking {
         
         var restaurantInfo: [RestaurantInfo] = []
         
-        Alamofire.request(Url.restaurantInfo, method: .get, parameters: parameters, headers: headers)
+        Alamofire.request(Url.restaurantInfo, method: .post, parameters: parameters, headers: headers)
             .validate(statusCode: 200..<400)
             .responseJSON {
                 response in
@@ -85,7 +85,7 @@ struct GeneralUsersNetWorking {
             ]
         
         var meal: [Meal] = []
-        Alamofire.request(Url.mealSearch, method: .get, parameters: parameters, headers: headers)
+        Alamofire.request(Url.mealSearch, method: .post, parameters: parameters, headers: headers)
             .validate(statusCode: 200..<400)
             .responseJSON {
                 response in

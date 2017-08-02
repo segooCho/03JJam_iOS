@@ -44,17 +44,13 @@ final class InterestRestaurantList: UIViewController {
         //로컬 저장 정보 불러오기
         if let dicts = UserDefaults.standard.array(forKey: SuperConstants.JJamUserDefaultsKeyInterestRestaurantList) as? [[String: Any]] {
             self.interestRestaurant = dicts.flatMap { (disc: [String: Any]) -> InterestRestaurant? in
-                if let _id = disc["_id"] as? String, let companyName = disc["companyName"] as? String {
-                    return InterestRestaurant(_id: _id, companyName: companyName)
+                if let restaurant_Id = disc["restaurant_Id"] as? String, let companyName = disc["companyName"] as? String {
+                    return InterestRestaurant(restaurant_Id: restaurant_Id, companyName: companyName)
                 } else {
                     return nil
                 }
             }
         }
-        //데이터 임시 처리
-        //self.interestRestaurant.append(InterestRestaurant(_id: "1", companyName: "한라시그마 구내식당"))
-        //self.interestRestaurant.append(InterestRestaurant(_id: "2", companyName: "벽산 구내식당"))
-        //self.interestRestaurant.append(InterestRestaurant(_id: "3", companyName: "조은 함바"))
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -173,7 +169,7 @@ final class InterestRestaurantList: UIViewController {
             } else {
                 var checkDeduplication = true
                 for data in self.interestRestaurant {
-                    if (data._id == notificationData._id) {
+                    if (data.restaurant_Id == notificationData.restaurant_Id) {
                         checkDeduplication = false
                     }
                 }
@@ -192,7 +188,7 @@ final class InterestRestaurantList: UIViewController {
         let dicts:[[String: Any]] = self.interestRestaurant.map {
             (interestRestaurant: InterestRestaurant) -> [String: Any] in
             return [
-                "_id": interestRestaurant._id,
+                "restaurant_Id": interestRestaurant.restaurant_Id,
                 "companyName": interestRestaurant.companyName,
                 ]
         }
@@ -220,7 +216,7 @@ extension InterestRestaurantList: UITableViewDelegate {
     //선택
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         //print("\(indexPath)가 선택!")
-        let mealList = MealList(interestRestaurantId : self.interestRestaurant[indexPath.row]._id, interestRestaurantName: self.interestRestaurant[indexPath.row].companyName)
+        let mealList = MealList(interestRestaurantId : self.interestRestaurant[indexPath.row].restaurant_Id, interestRestaurantName: self.interestRestaurant[indexPath.row].companyName)
         self.navigationController?.pushViewController(mealList, animated: true)
     }
     

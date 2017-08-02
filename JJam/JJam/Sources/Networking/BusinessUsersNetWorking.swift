@@ -10,9 +10,9 @@ import Alamofire
 
 struct BusinessUsersNetWorking {
     //GET : 식당 category 항목(Group) 조회
-    static func restaurantGroup(_id: String, completion: @escaping (_ restaurantGroup: [RestaurantGroup]) -> Void) {
+    static func restaurantGroup(restaurant_Id: String, completion: @escaping (_ restaurantGroup: [RestaurantGroup]) -> Void) {
         let parameters: [String: Any] = [
-            "restaurant_Id": _id,
+            "restaurant_Id": restaurant_Id,
             ]
         let headers: HTTPHeaders = [
             "Accept": "application/json",
@@ -20,7 +20,7 @@ struct BusinessUsersNetWorking {
         
         var restaurantGroup: [RestaurantGroup] = []
         
-        Alamofire.request(Url.restaurantGroup, method: .get, parameters: parameters, headers: headers)
+        Alamofire.request(Url.restaurantGroup, method: .post, parameters: parameters, headers: headers)
             .validate(statusCode: 200..<400)
             .responseJSON {
                 response in
@@ -42,7 +42,7 @@ struct BusinessUsersNetWorking {
     }
     
     //POST : 식단 Edit & New
-    static func restaurantMeal(id: String,
+    static func restaurantMeal(Oid: String,
                                businessUsersMeal: [BusinessUsersMeal],
                                image: UIImage?,
                                editImage: String!,
@@ -55,11 +55,11 @@ struct BusinessUsersNetWorking {
             param = "restaurant_Id"                         //Meal 신규   (조건 : restaurant_Id)
         } else {
             urlString = Url.mealEdit
-            param = "_id"                                   //Meal 수정   (조건 : _id)
+            param = "meal_Id"                               //Meal 수정   (조건 : meal_Id)
         }
         
         let parameters: [String: Any] = [
-            param: id,
+            param: Oid,
             "mealDate": businessUsersMeal[0].mealDate,
             "location": businessUsersMeal[0].location,
             "division": businessUsersMeal[0].division,
@@ -114,9 +114,9 @@ struct BusinessUsersNetWorking {
     }
     
     //식당 인증 & 공지사항
-    static func mealDel(_id: String, completion: @escaping (_ restaurantInfo: [RestaurantInfo]) -> Void) {
+    static func mealDel(meal_Id: String, completion: @escaping (_ restaurantInfo: [RestaurantInfo]) -> Void) {
         let parameters: [String: Any] = [
-            "_id": _id,
+            "meal_Id": meal_Id,
             ]
         let headers: HTTPHeaders = [
             "Accept": "application/json",
@@ -124,7 +124,7 @@ struct BusinessUsersNetWorking {
         
         var restaurantInfo: [RestaurantInfo] = []
         
-        Alamofire.request(Url.mealDel, method: .get, parameters: parameters, headers: headers)
+        Alamofire.request(Url.mealDel, method: .post, parameters: parameters, headers: headers)
             .validate(statusCode: 200..<400)
             .responseJSON {
                 response in
@@ -146,9 +146,9 @@ struct BusinessUsersNetWorking {
     }
     
     //식당 공지사항 수정
-    static func restaurantNoticeEdit(_id: String, notice: String, completion: @escaping (_ restaurantInfo: [RestaurantInfo]) -> Void) {
+    static func restaurantNoticeEdit(restaurant_Id: String, notice: String, completion: @escaping (_ restaurantInfo: [RestaurantInfo]) -> Void) {
         let parameters: [String: Any] = [
-            "restaurant_Id": _id,
+            "restaurant_Id": restaurant_Id,
             "notice": notice,
             ]
         let headers: HTTPHeaders = [

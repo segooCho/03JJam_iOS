@@ -10,7 +10,7 @@ import UIKit
 
 final class BusinessUsersMenuManagement: UIViewController {
     //MARK: Properties
-    fileprivate let _id: String
+    fileprivate let restaurant_Id: String
     fileprivate var didSetupConstraints = false
     fileprivate var segmentedIndexAndCode = 0
     fileprivate var segmentedIndexPlaceholderText = ""
@@ -37,8 +37,8 @@ final class BusinessUsersMenuManagement: UIViewController {
     
     
     //MARK: init
-    init(_id: String) {
-        self._id = _id
+    init(restaurant_Id: String) {
+        self.restaurant_Id = restaurant_Id
         super.init(nibName: nil, bundle: nil)
         
         self.title = "메뉴관리"
@@ -48,13 +48,6 @@ final class BusinessUsersMenuManagement: UIViewController {
         self.menu.append(Menu(id: "1", code: "0", food: "현미밥"))
         self.menu.append(Menu(id: "1", code: "0", food: "보리밥"))
         self.menu.append(Menu(id: "1", code: "0", food: "짜장면"))
-        
-        /*
-        let restaurantGroup = group.restaurantGroup
-        print(self.title! + ":")
-        print(restaurantGroup)
-        */
-
     }
     
     required init?(coder aDecoder: NSCoder) {

@@ -7,11 +7,11 @@
 //
 
 struct InterestRestaurant {
-    var _id: String
+    var restaurant_Id: String
     var companyName: String
     
-    init(_id: String, companyName: String) {
-        self._id = _id
+    init(restaurant_Id: String, companyName: String) {
+        self.restaurant_Id = restaurant_Id
         self.companyName = companyName
     }
 }

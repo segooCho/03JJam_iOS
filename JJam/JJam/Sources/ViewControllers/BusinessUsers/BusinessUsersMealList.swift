@@ -10,7 +10,7 @@ import UIKit
 
 final class BusinessUsersMealList: UIViewController {
     //MARK: Properties
-    fileprivate let _id: String
+    fileprivate let restaurant_Id: String
     fileprivate var didSetupConstraints = false
     fileprivate var segmentedIndexAndCode = 0
     fileprivate var meal: [Meal] = []
@@ -41,8 +41,8 @@ final class BusinessUsersMealList: UIViewController {
     }
     
     //MARK: init
-    init(_id: String) {
-        self._id = _id
+    init(restaurant_Id: String) {
+        self.restaurant_Id = restaurant_Id
         super.init(nibName: nil, bundle: nil)
         setMealDetailTuple(true,false)
         self.title = "식단"
@@ -195,8 +195,8 @@ final class BusinessUsersMealList: UIViewController {
     
     //신규 식단 추가
     func addButtonDidTap() {
-        let newMeal = [Meal](JSONArray: [["_id": "",
-                                          "restaurant_Id": _id,     //필수
+        let newMeal = [Meal](JSONArray: [["meal_Id": "",
+                                          "restaurant_Id": restaurant_Id,     //필수
                                           "mealDate": "",
                                           "location": "",
                                           "division": "",
@@ -218,7 +218,7 @@ final class BusinessUsersMealList: UIViewController {
     //식당 인증 & 공지 중 인증만 사용
     func restaurantInfo() {
         UICommonSetLoadingService(self.activityIndicatorView, service: true)
-        GeneralUsersNetWorking.restaurantInfo(restaurant_Id: self._id) { [weak self] response in
+        GeneralUsersNetWorking.restaurantInfo(restaurant_Id: self.restaurant_Id) { [weak self] response in
             guard let `self` = self else { return }
             if response.count > 0 {
                 UICommonSetLoadingService(self.activityIndicatorView, service: false)
@@ -259,7 +259,7 @@ final class BusinessUsersMealList: UIViewController {
     //식단 조회
     func mealSearch() {
         UICommonSetLoadingService(self.activityIndicatorView, service: true)
-        GeneralUsersNetWorking.mealSearch(restaurant_Id: self._id, segmentedIndexAndCode: self.segmentedIndexAndCode) { [weak self] response in
+        GeneralUsersNetWorking.mealSearch(restaurant_Id: self.restaurant_Id, segmentedIndexAndCode: self.segmentedIndexAndCode) { [weak self] response in
             guard let `self` = self else { return }
             if response.count > 0 {
                 let message = response[0].message
@@ -307,9 +307,9 @@ final class BusinessUsersMealList: UIViewController {
     }
     
     //식단 삭제
-    func tableViewMealDel(_id: String, index: Int) {
+    func tableViewMealDel(meal_Id: String, index: Int) {
         UICommonSetLoadingService(self.activityIndicatorView, service: true)
-        BusinessUsersNetWorking.mealDel(_id: _id) { [weak self] response in
+        BusinessUsersNetWorking.mealDel(meal_Id: meal_Id) { [weak self] response in
             guard let `self` = self else { return }
             if response.count > 0 {
                 UICommonSetLoadingService(self.activityIndicatorView, service: false)
@@ -325,7 +325,7 @@ final class BusinessUsersMealList: UIViewController {
                         style: .default) { _ in
                             // 확인 후 작업
                             if message == "식단 삭제가 완료되었습니다." {
-                                self.editButtonDidTap()
+                                self.doneButtonDidTap()
                                 self.mealSearch()
                             }
                     }
@@ -376,7 +376,7 @@ extension BusinessUsersMealList: UITableViewDelegate {
     
     //삭제
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-        //print(self.meal[indexPath.row]._id)
+        //print(self.meal[indexPath.row].meal_Id)
         
         let message = self.meal[indexPath.row].mealDate + " (" + self.meal[indexPath.row].mealDateLabel + ") " +
             self.meal[indexPath.row].division + "\n" +
@@ -397,7 +397,7 @@ extension BusinessUsersMealList: UITableViewDelegate {
             title: "삭제",
             style: .default) { _ in
                 // 확인 후 작업
-                self.tableViewMealDel(_id:self.meal[indexPath.row]._id, index: indexPath.row)
+                self.tableViewMealDel(meal_Id:self.meal[indexPath.row].meal_Id, index: indexPath.row)
         }
         alertController.addAction(alertCancel)
         alertController.addAction(alertConfirm)

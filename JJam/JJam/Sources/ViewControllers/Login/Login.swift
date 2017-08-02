@@ -159,9 +159,9 @@ final class Login: UIViewController {
             if response.count > 0 {
                 UICommonSetLoadingService(self.activityIndicatorView, service: false)
                 //로그인
-                let _id = response[0]._id
-                if _id != nil {
-                    AppDelegate.instance?.BusinessUsersTabBarScreen(_id: _id!, selectIndex: 0)
+                let restaurant_Id = response[0].restaurant_Id
+                if restaurant_Id != nil {
+                    AppDelegate.instance?.BusinessUsersTabBarScreen(restaurant_Id: restaurant_Id!, selectIndex: 0)
                 } else {
                     let message = response[0].message
                     if message != nil {

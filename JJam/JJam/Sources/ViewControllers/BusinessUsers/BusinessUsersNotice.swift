@@ -10,7 +10,7 @@ import UIKit
 
 final class BusinessUsersNotice: UIViewController {
     //MARK: Properties
-    fileprivate let _id: String
+    fileprivate let restaurant_Id: String
     fileprivate var didSetupConstraints = false
     //fileprivate var businessUsersRestaurantNotice:String!
 
@@ -25,8 +25,8 @@ final class BusinessUsersNotice: UIViewController {
     fileprivate let textView = UITextView()
     
     //MARK: init
-    init(_id: String) {
-        self._id = _id
+    init(restaurant_Id: String) {
+        self.restaurant_Id = restaurant_Id
         super.init(nibName: nil, bundle: nil)
         
         //식당 인증 & 공지 사항
@@ -98,7 +98,7 @@ final class BusinessUsersNotice: UIViewController {
     //식당 인증 & 공지 중 공지만 사용
     func restaurantInfo() {
         UICommonSetLoadingService(self.activityIndicatorView, service: true)
-        GeneralUsersNetWorking.restaurantInfo(restaurant_Id: self._id) { [weak self] response in
+        GeneralUsersNetWorking.restaurantInfo(restaurant_Id: self.restaurant_Id) { [weak self] response in
             guard let `self` = self else { return }
             if response.count > 0 {
                 UICommonSetLoadingService(self.activityIndicatorView, service: false)
@@ -130,7 +130,7 @@ final class BusinessUsersNotice: UIViewController {
     //식당 인증 & 공지 중 공지만 사용
     func restaurantNoticeEdit() {
         UICommonSetLoadingService(self.activityIndicatorView, service: true)
-        BusinessUsersNetWorking.restaurantNoticeEdit(_id: self._id, notice: self.textView.text!) { [weak self] response in
+        BusinessUsersNetWorking.restaurantNoticeEdit(restaurant_Id: self.restaurant_Id, notice: self.textView.text!) { [weak self] response in
             guard let `self` = self else { return }
             if response.count > 0 {
                 UICommonSetLoadingService(self.activityIndicatorView, service: false)

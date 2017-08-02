@@ -213,22 +213,22 @@ final class MealDetail: UIViewController, UIImagePickerControllerDelegate, UINav
             self.present(alertController, animated: true, completion: nil)
             return
         } else {
-            print(self.viewMeal[0]._id)
+            print(self.viewMeal[0].meal_Id)
             print(self.viewMeal[0].restaurant_Id)
             mealSaveNetWorking()
         }
     }
     
     func mealSaveNetWorking() {
-        let id: String
+        let Oid: String
         if mealDetailTuple.writeMode {
-            id = self.viewMeal[0].restaurant_Id
+            Oid = self.viewMeal[0].restaurant_Id
         } else {
-            id = self.viewMeal[0]._id
+            Oid = self.viewMeal[0].meal_Id
         }
         
         UICommonSetLoadingService(self.activityIndicatorView, service: true)
-        BusinessUsersNetWorking.restaurantMeal(id: id,
+        BusinessUsersNetWorking.restaurantMeal(Oid: Oid,
                                                businessUsersMeal: self.editBusinessUsersMeal,
                                                image: image,
                                                editImage: self.editImage) { [weak self] response in

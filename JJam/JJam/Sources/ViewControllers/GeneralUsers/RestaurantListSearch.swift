@@ -136,7 +136,7 @@ final class RestaurantListSearch: UIViewController {
         var isCheck = false
         for data in self.restaurantSearch {
             if (data.isDone){
-                self.interestRestaurant.append(InterestRestaurant(_id: data._id!, companyName: data.companyName!))
+                self.interestRestaurant.append(InterestRestaurant(restaurant_Id: data.restaurant_Id!, companyName: data.companyName!))
                 isCheck = true
             }
         }
