@@ -123,7 +123,8 @@ extension BusinessUsersSettings: UITableViewDelegate {
         let sectionItem = self.sections[indexPath.section].items[indexPath.row]
         switch sectionItem {
         case .notice:
-            AppDelegate.instance?.BusinessUsersNoticeScreen(_id: self._id)
+            let businessUsersNotice = BusinessUsersNotice(_id: self._id)
+            self.navigationController?.pushViewController(businessUsersNotice, animated: true)
         case .profile:
             break
         case .logout:

@@ -325,18 +325,17 @@ final class BusinessUsersSignUp: UIViewController, UIImagePickerControllerDelega
 
     func noImageButtonDidTap() {
         image = nil
-        //let index = IndexPath(row: 1, section: 0)
-        //let cell = tableView.dequeueReusableCell(withIdentifier: "businessUsersSignUpImageCell", for: index) as! BusinessUsersSignUpImageCell
-        //let noImage = UIImage(named: "NoImageFound.jpg")
-        //cell.configure(image: noImage!)
-        self.tableView.reloadData()
+        //지정된 row만 reload 한다.(전체 로드시 입력 값이 지워짐)
+        let index = IndexPath(row: 1, section: 0)
+        self.tableView.reloadRows(at: [index], with: .none)
+        //self.tableView.reloadData()
     }
     
 
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any])
     {
         //tableView[1].imageView 이미지 변경
-        self.image = info[UIImagePickerControllerOriginalImage]as! UIImage
+        self.image = setImageSize(info[UIImagePickerControllerOriginalImage]as! UIImage, size: 1)
         let index = IndexPath(row: 1, section: 0)
         let cell: BusinessUsersSignUpImageCell = self.tableView.cellForRow(at: index) as! BusinessUsersSignUpImageCell
         cell.configure(image: self.image!)
@@ -349,7 +348,7 @@ final class BusinessUsersSignUp: UIViewController, UIImagePickerControllerDelega
         //imagePicker 닫기
         self.dismiss(animated: true, completion: nil);
         
-        let alert = UIAlertController(title: "확인", message: "이미지가 초기화되었습니다.", preferredStyle: .alert)
+        let alert = UIAlertController(title: "확인", message: "사진 정보가 초기화되었습니다.", preferredStyle: .alert)
         let ok = UIAlertAction(title: "OK", style:.default, handler: nil)
         alert.addAction(ok)
         present(alert, animated: true, completion: nil)

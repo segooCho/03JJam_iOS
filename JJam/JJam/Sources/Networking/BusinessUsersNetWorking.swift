@@ -112,4 +112,72 @@ struct BusinessUsersNetWorking {
         })
         completion(restaurantInfo)
     }
+    
+    //식당 인증 & 공지사항
+    static func mealDel(_id: String, completion: @escaping (_ restaurantInfo: [RestaurantInfo]) -> Void) {
+        let parameters: [String: Any] = [
+            "_id": _id,
+            ]
+        let headers: HTTPHeaders = [
+            "Accept": "application/json",
+            ]
+        
+        var restaurantInfo: [RestaurantInfo] = []
+        
+        Alamofire.request(Url.mealDel, method: .get, parameters: parameters, headers: headers)
+            .validate(statusCode: 200..<400)
+            .responseJSON {
+                response in
+                switch response.result {
+                case .success(let value) :
+                    guard let json = value as? [[String: Any]] else {break}
+                    //TODO : 오류 처리 필요
+                    let data = [RestaurantInfo](JSONArray: json)
+                    restaurantInfo.append(contentsOf: data)
+                    completion(restaurantInfo)
+                case .failure(let error) :
+                    print("요청 실패 \(error)")
+                    let data = [RestaurantInfo](JSONArray: [["message": "네트워크 통신에 문제가 발생하여 데이터 요청 작업을 실패했습니다."]])
+                    restaurantInfo.append(contentsOf: data)
+                    completion(restaurantInfo)
+                }
+        }
+        completion(restaurantInfo)
+    }
+    
+    //식당 공지사항 수정
+    static func restaurantNoticeEdit(_id: String, notice: String, completion: @escaping (_ restaurantInfo: [RestaurantInfo]) -> Void) {
+        let parameters: [String: Any] = [
+            "restaurant_Id": _id,
+            "notice": notice,
+            ]
+        let headers: HTTPHeaders = [
+            "Accept": "application/json",
+            ]
+        
+        var restaurantInfo: [RestaurantInfo] = []
+        
+        Alamofire.request(Url.restaurantNoticeEdit, method: .post, parameters: parameters, headers: headers)
+            .validate(statusCode: 200..<400)
+            .responseJSON {
+                response in
+                switch response.result {
+                case .success(let value) :
+                    guard let json = value as? [[String: Any]] else {break}
+                    //TODO : 오류 처리 필요
+                    let data = [RestaurantInfo](JSONArray: json)
+                    restaurantInfo.append(contentsOf: data)
+                    completion(restaurantInfo)
+                case .failure(let error) :
+                    print("요청 실패 \(error)")
+                    let data = [RestaurantInfo](JSONArray: [["message": "네트워크 통신에 문제가 발생하여 데이터 요청 작업을 실패했습니다."]])
+                    restaurantInfo.append(contentsOf: data)
+                    completion(restaurantInfo)
+                }
+        }
+        completion(restaurantInfo)
+    }
+    
+    
+    
 }

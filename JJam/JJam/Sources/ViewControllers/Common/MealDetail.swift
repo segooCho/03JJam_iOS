@@ -21,6 +21,9 @@ final class MealDetail: UIViewController, UIImagePickerControllerDelegate, UINav
     fileprivate struct Metric {
         static let segmentedMid = CGFloat(20)
         static let segmentedHeight = CGFloat(45)
+        
+        static let editSegmentedMid = CGFloat(0)
+        static let editSegmentedHeight = CGFloat(0)
 
         static let commonOffset = CGFloat(7)
     }
@@ -50,6 +53,9 @@ final class MealDetail: UIViewController, UIImagePickerControllerDelegate, UINav
         self.view.backgroundColor = .white
         self.title = "상세 식단"
         
+        //scroll의 내부 여백 발생시 사용()
+        //self.automaticallyAdjustsScrollViewInsets = false
+
         //cancelButton
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(
             barButtonSystemItem: .cancel,
@@ -73,17 +79,15 @@ final class MealDetail: UIViewController, UIImagePickerControllerDelegate, UINav
         UICommonSetSegmentedControl(self.segmentedControl, titles: segmentedTitles)
         self.segmentedControl.addTarget(self, action: #selector(changeSegmentedControl), for: .valueChanged)
         self.segmentedControl.selectedSegmentIndex = self.segmentedIndexAndCode
-        //수정 모드 일때만 추가
-        if mealDetailTuple.editMode {
-            self.view.addSubview(self.segmentedControl)
-        }
+        self.view.addSubview(self.segmentedControl)
+        
         
         self.tableView.register(MealDetailImageCell.self, forCellReuseIdentifier: "mealDetailImageCell")
         self.tableView.register(MealDetailTextCell.self, forCellReuseIdentifier: "mealDetailTextCell")
         self.tableView.dataSource = self
         self.tableView.delegate = self
-        self.view.addSubview(self.activityIndicatorView)
         self.view.addSubview(self.tableView)
+        self.view.addSubview(self.activityIndicatorView)
         //updateViewConstraints 자동 호출
         self.view.setNeedsUpdateConstraints()
     }
@@ -93,7 +97,6 @@ final class MealDetail: UIViewController, UIImagePickerControllerDelegate, UINav
     override func updateViewConstraints() {
         if !self.didSetupConstraints {
             self.didSetupConstraints = true
-            
             self.editImage = self.viewMeal[0].foodImage
             self.activityIndicatorView.snp.makeConstraints { make in
                 make.center.equalToSuperview()
@@ -147,9 +150,17 @@ final class MealDetail: UIViewController, UIImagePickerControllerDelegate, UINav
         //struct tableViewCellSignUp 값 저장
         let message = cell.setInputData()
         if message.isEmpty {
+            //신규 저장
+            var writeMode:String = ""
+            if mealDetailTuple.writeMode {
+                writeMode = "새로운 식단을 저장하시겠습니까?"
+            } else {
+                writeMode = "변경된 식단을 저장하시겠습니까?"
+            }
+            
             let alertController = UIAlertController(
                 title: "식단",
-                message: "저장 하시겠습니까?",
+                message: writeMode,
                 preferredStyle: .alert
             )
             let alertCancel = UIAlertAction(
@@ -325,18 +336,17 @@ final class MealDetail: UIViewController, UIImagePickerControllerDelegate, UINav
     
     func noImageButtonDidTap() {
         image = nil
-        //let index = IndexPath(row: 0, section: 0)
-        //let cell = tableView.dequeueReusableCell(withIdentifier: "mealDetailImageCell", for: index) as! MealDetailImageCell
-        //let noImage = UIImage(named: "NoImageFound.jpg")
-        //cell.configure(image: noImage!)
         self.editImage = "NoImageFound.jpg"
-        self.tableView.reloadData()
+        //지정된 row만 reload 한다.(전체 로드시 입력 값이 지워짐)
+        let index = IndexPath(row: 0, section: 0)
+        self.tableView.reloadRows(at: [index], with: .none)
+        //self.tableView.reloadData()
     }
-    
+
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any])
     {
         //tableView[1].imageView 이미지 변경
-        self.image = info[UIImagePickerControllerOriginalImage]as! UIImage
+        self.image = setImageSize(info[UIImagePickerControllerOriginalImage]as! UIImage, size: 1)
         let index = IndexPath(row: 0, section: 0)
         let cell: MealDetailImageCell = self.tableView.cellForRow(at: index) as! MealDetailImageCell
         cell.configure(image: self.image!)
@@ -349,7 +359,7 @@ final class MealDetail: UIViewController, UIImagePickerControllerDelegate, UINav
         //imagePicker 닫기
         self.dismiss(animated: true, completion: nil);
 
-        let alert = UIAlertController(title: "확인", message: "이미지가 초기화되었습니다.", preferredStyle: .alert)
+        let alert = UIAlertController(title: "확인", message: "사진 정보가 초기화되었습니다.", preferredStyle: .alert)
         let ok = UIAlertAction(title: "OK", style:.default, handler: nil)
         alert.addAction(ok)
         present(alert, animated: true, completion: nil)

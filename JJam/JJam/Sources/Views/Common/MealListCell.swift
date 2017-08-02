@@ -35,14 +35,8 @@ final class MealListCell: UITableViewCell {
         //self.imageView?.image = UIImage(named: meal.foodImage)
         self.imageView!.setImage(with: meal.foodImage)
         
-        //TODO :: image 사이즈 고정 && image 라운드 재정리 필요
-        //image 사이즈 고정
-        let itemSize = CGSize(width:Metric.imageSize, height:Metric.imageSize)
-        UIGraphicsBeginImageContextWithOptions(itemSize, false, 0.0)
-        let imageRect = CGRect(x:0.0, y:0.0, width:itemSize.width, height:itemSize.height)
-        self.imageView!.image?.draw(in:imageRect)
-        self.imageView!.image? = UIGraphicsGetImageFromCurrentImageContext()!
-        UIGraphicsEndImageContext()
+        //image 사이즈 조정
+        self.imageView?.image = setImageSize((self.imageView?.image)!, size: 0)
         
         //image 라운드
         imageViewBorder(self.imageView!, view: self)

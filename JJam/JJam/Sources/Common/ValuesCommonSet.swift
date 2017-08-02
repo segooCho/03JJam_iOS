@@ -36,11 +36,13 @@ struct Url {
     static let mealWrite = BaseUrl + "mealWrite"
     //식단 수정
     static let mealEdit = BaseUrl + "mealEdit"
+    //식단 삭제
+    static let mealDel = BaseUrl + "mealDel"
     //식당 공지사항 수정
     static let restaurantNoticeEdit = BaseUrl + "restaurantNoticeEdit"
 }
 
-
+//식단 등록 category
 struct categoryArray {
     static var location: NSMutableArray = []
     static var division: NSMutableArray = []
@@ -61,7 +63,11 @@ struct SuperConstants {
     
     //Loding delayTime(TableView 바인딩되는 시간을 인위적으로 기다려야 한다.)
     static let msgDelayInSeconds = 0.5
-    static let tableViewReloadDelayInSeconds = 3.5
+    static let tableViewReloadDelayInSeconds = 1.0
+    
+    //image 사이즈 조정
+    static let tableViewImageSize = CGFloat(57)
+    static let imageSize = CGFloat(300)
     
     static let JJamUserDefaultsKeyInterestRestaurantList = "JJamUserDefaultsKeyInterestRestaurantList"
     static let JJamUserDefaultsKeyRestaurantGroup = "JJamUserDefaultsKeyRestaurantGroup"

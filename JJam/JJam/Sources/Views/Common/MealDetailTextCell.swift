@@ -89,37 +89,6 @@ final class MealDetailTextCell: UITableViewCell {
     //MARK: configure
     func configure(meal: Meal) {
         if mealDetailTuple.editMode {
-            /*
-            let location: NSMutableArray = []
-            let division: NSMutableArray = []
-            let stapleFood: NSMutableArray = []
-            let soup: NSMutableArray = []
-            let sideDish: NSMutableArray = []
-            let dessert: NSMutableArray = []
-            //로컬 저장 정보 불러오기
-            if let dicts = UserDefaults.standard.array(forKey: SuperConstants.JJamUserDefaultsKeyRestaurantGroup) as? [[String: Any]] {
-                for disc in dicts {
-                    //let category = disc["category"] as! String
-                    switch disc["category"] as! String {
-                    case "location":
-                        location.add(disc["text"] as! String)
-                    case "division":
-                        division.add(disc["text"] as! String)
-                    case "stapleFood":
-                        stapleFood.add(disc["text"] as! String)
-                    case "soup":
-                        soup.add(disc["text"] as! String)
-                    case "sideDish":
-                        sideDish.add(disc["text"] as! String)
-                    case "dessert":
-                        dessert.add(disc["text"] as! String)
-                    default:
-                        print("No Category")
-                    }
-                }
-            }
-            */
-            
             UICommonSetLabel(self.dateLabel, text: "일자", color: 1)
             if mealDetailTuple.writeMode {
                 UICommonSetTextFieldEnable(self.dateTextField, placeholderText: "")
@@ -133,9 +102,9 @@ final class MealDetailTextCell: UITableViewCell {
             let toolbar = UIToolbar();
             toolbar.sizeToFit()
             //done button & cancel button
-            let doneButton = UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.bordered, target: self, action: "donedatePicker")
+            let doneButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.done, target: self, action: "donedatePicker")
             let spaceButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: nil, action: nil)
-            let cancelButton = UIBarButtonItem(title: "Cancel", style: UIBarButtonItemStyle.bordered, target: self, action: "cancelDatePicker")
+            let cancelButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.cancel, target: self, action: "cancelDatePicker")
             toolbar.setItems([cancelButton,spaceButton,doneButton], animated: false)
             // add toolbar to textField
             self.dateTextField.inputAccessoryView = toolbar

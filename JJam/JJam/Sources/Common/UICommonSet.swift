@@ -133,6 +133,7 @@ func UICommonSetLoadingService(_ uIKit: UIActivityIndicatorView, service: Bool) 
     }
 }
 
+/*
 //MARK: Common Set UIDatePicker
 func UICommonSetDatePicker(_ uIKit: UIDatePicker, view: UIView, textField: UITextField) {
      uIKit.datePickerMode = .date
@@ -151,3 +152,5 @@ func UICommonSetDatePicker(_ uIKit: UIDatePicker, view: UIView, textField: UITex
     // add datepicker to textField
     textField.inputView = uIKit
 }
+*/
+

@@ -59,6 +59,10 @@ final class BusinessUsersMealList: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        setMealDetailTuple(true,false)
+    }
     
     //MARK: View Life Cycle
     override func viewDidLoad() {
@@ -211,7 +215,7 @@ final class BusinessUsersMealList: UIViewController {
     }
 
     //MARK: ACTION
-    //식당 인증
+    //식당 인증 & 공지 중 인증만 사용
     func restaurantInfo() {
         UICommonSetLoadingService(self.activityIndicatorView, service: true)
         GeneralUsersNetWorking.restaurantInfo(restaurant_Id: self._id) { [weak self] response in
@@ -302,6 +306,37 @@ final class BusinessUsersMealList: UIViewController {
         mealSearch()
     }
     
+    //식단 삭제
+    func tableViewMealDel(_id: String, index: Int) {
+        UICommonSetLoadingService(self.activityIndicatorView, service: true)
+        BusinessUsersNetWorking.mealDel(_id: _id) { [weak self] response in
+            guard let `self` = self else { return }
+            if response.count > 0 {
+                UICommonSetLoadingService(self.activityIndicatorView, service: false)
+                let message = response[0].message
+                if message != nil {
+                    let alertController = UIAlertController(
+                        title: self.title,
+                        message: message,
+                        preferredStyle: .alert
+                    )
+                    let alertConfirm = UIAlertAction(
+                        title: "확인",
+                        style: .default) { _ in
+                            // 확인 후 작업
+                            if message == "식단 삭제가 완료되었습니다." {
+                                self.editButtonDidTap()
+                                self.mealSearch()
+                            }
+                    }
+                    alertController.addAction(alertConfirm)
+                    self.present(alertController, animated: true, completion: nil)
+                    return
+                }
+            }
+        }
+    }
+    
     /*
     override func didReceiveMemoryWarning() {
     super.didReceiveMemoryWarning()
@@ -313,7 +348,6 @@ final class BusinessUsersMealList: UIViewController {
 
 
 extension BusinessUsersMealList: UITableViewDataSource {
-    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.meal.count
     }
@@ -338,6 +372,36 @@ extension BusinessUsersMealList: UITableViewDelegate {
         }
         let meal = MealDetail(viewMeal: [self.meal[indexPath.row]])
         self.navigationController?.pushViewController(meal, animated: true)
+    }
+    
+    //삭제
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        //print(self.meal[indexPath.row]._id)
+        
+        let message = self.meal[indexPath.row].mealDate + " (" + self.meal[indexPath.row].mealDateLabel + ") " +
+            self.meal[indexPath.row].division + "\n" +
+            "위치 : " + self.meal[indexPath.row].location + "\n" +
+            "식단을 삭제하시겠습니까?"
+        
+        let alertController = UIAlertController(
+            title: self.title,
+            message: message,
+            preferredStyle: .alert
+        )
+        let alertCancel = UIAlertAction(
+            title: "취소",
+            style: .default) { _ in
+                // 확인 후 작업
+        }
+        let alertConfirm = UIAlertAction(
+            title: "삭제",
+            style: .default) { _ in
+                // 확인 후 작업
+                self.tableViewMealDel(_id:self.meal[indexPath.row]._id, index: indexPath.row)
+        }
+        alertController.addAction(alertCancel)
+        alertController.addAction(alertConfirm)
+        self.present(alertController, animated: true, completion: nil)
     }
     
     //cell height

@@ -13,6 +13,11 @@ final class MealDetailImageCell: UITableViewCell {
     fileprivate let scrollView = UIScrollView()
     fileprivate let photoView = UIImageView()
 
+    //MARK: Constants
+    fileprivate struct Metric {
+        static let imageSize = CGFloat(100)
+    }
+    
     //MARK: init
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: .subtitle, reuseIdentifier: reuseIdentifier)

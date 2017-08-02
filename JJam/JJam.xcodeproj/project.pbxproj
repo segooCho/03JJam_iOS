@@ -226,8 +226,8 @@
 			children = (
 				84387DDD1F2F74AB0007E104 /* Common */,
 				84ED90671F2DC59E0087F37A /* Login */,
-				8430692A1F1E51AA008B7DEF /* GeneralUsers */,
 				843069291F1E51AA008B7DEF /* BusinessUsers */,
+				8430692A1F1E51AA008B7DEF /* GeneralUsers */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -257,8 +257,8 @@
 			children = (
 				84387DDA1F2F74800007E104 /* Common */,
 				84ED906A1F2DC5F90087F37A /* Login */,
-				843069321F1E51AA008B7DEF /* GeneralUsers */,
 				843069301F1E51AA008B7DEF /* BusinessUsers */,
+				843069321F1E51AA008B7DEF /* GeneralUsers */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -292,8 +292,8 @@
 			children = (
 				84387DD11F2F744F0007E104 /* Common */,
 				84ED906F1F2DC6340087F37A /* Login */,
-				8430693F1F1E51AA008B7DEF /* GeneralUsers */,
 				8430693E1F1E51AA008B7DEF /* BusinessUsers */,
+				8430693F1F1E51AA008B7DEF /* GeneralUsers */,
 			);
 			path = Views;
 			sourceTree = "<group>";

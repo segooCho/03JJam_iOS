@@ -33,11 +33,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         //UsersSignUpScreen()
         //BusinessUsersSignUpScreen()
         
-        /*
         //GeneralUsersTabBar
-        let generalUsersTabBar = GeneralUsersTabBar(selectIndex : 0)
-        self.window?.rootViewController = generalUsersTabBar
-        */
+        //let generalUsersTabBar = GeneralUsersTabBar(selectIndex : 0)
+        //self.window?.rootViewController = generalUsersTabBar
         
         //BusinessUsersTabBar
         //let businessUsersTabBar = BusinessUsersTabBar(_id: "5978502d57deb6283537150e", selectIndex: 0)

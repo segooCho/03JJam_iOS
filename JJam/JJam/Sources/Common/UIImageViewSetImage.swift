@@ -18,6 +18,27 @@ func imageViewBorder(_ uIKit: UIImageView, view: UIView) {
     uIKit.contentMode = UIViewContentMode.scaleAspectFill
 }
 
+//이미지 사이즈 조정
+func setImageSize(_ image: UIImage, size: Int) -> UIImage{
+    var tmpImage = image
+    var imageSize: CGFloat = 0
+    
+    switch size {
+    case 0:
+        imageSize = SuperConstants.tableViewImageSize
+    default:
+        imageSize = SuperConstants.imageSize
+    }
+    
+    let itemSize = CGSize(width:imageSize, height:imageSize)
+    UIGraphicsBeginImageContextWithOptions(itemSize, false, 0.0)
+    let imageRect = CGRect(x:0.0, y:0.0, width:itemSize.width, height:itemSize.height)
+    tmpImage.draw(in:imageRect)
+    tmpImage = UIGraphicsGetImageFromCurrentImageContext()!;
+    UIGraphicsEndImageContext();
+    return tmpImage
+}
+
 extension UIImageView {
     func setImage(with foodImage: String?) {
         if let foodImage = foodImage {

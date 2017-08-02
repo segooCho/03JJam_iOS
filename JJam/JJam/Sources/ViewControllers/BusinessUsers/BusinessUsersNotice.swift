@@ -12,7 +12,7 @@ final class BusinessUsersNotice: UIViewController {
     //MARK: Properties
     fileprivate let _id: String
     fileprivate var didSetupConstraints = false
-    fileprivate var businessUsersRestaurantNotice:String!
+    //fileprivate var businessUsersRestaurantNotice:String!
 
     //MARK: Constants
     fileprivate struct Metric {
@@ -21,6 +21,7 @@ final class BusinessUsersNotice: UIViewController {
     }
     
     // MARK: UI
+    fileprivate let activityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: .gray)
     fileprivate let textView = UITextView()
     
     //MARK: init
@@ -28,8 +29,13 @@ final class BusinessUsersNotice: UIViewController {
         self._id = _id
         super.init(nibName: nil, bundle: nil)
         
+        //식당 인증 & 공지 사항
+        restaurantInfo()
+
+        /*
         //데이터 임시 처리
         self.businessUsersRestaurantNotice = "공지사항\n안녕하세요. 한라시그마 구내식당 입니다.\n*월요일 ~ 금요일 까지 영업합니다.\n*토요일, 일요일, 공휴일은 휴무입니다.\n\n\n\n감사합니다."
+        */
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -57,10 +63,10 @@ final class BusinessUsersNotice: UIViewController {
             action: #selector(addButtonDidTap)
         )
         
-        self.textView.text = self.businessUsersRestaurantNotice
-        UICommonSetTextViewEnable(self.textView, placeholderText: "공지 사항")
-        //self.textView.addTarget(self, action: #selector(textFieldDidChangeText), for: .editingChanged)
+        UICommonSetLoading(self.activityIndicatorView)
+        UICommonSetTextViewEnable(self.textView, placeholderText: "")
         self.view.addSubview(self.textView)
+        self.view.addSubview(self.activityIndicatorView)
         //updateViewConstraints 자동 호출
         self.view.setNeedsUpdateConstraints()
     }
@@ -70,11 +76,14 @@ final class BusinessUsersNotice: UIViewController {
     override func updateViewConstraints() {
         if !self.didSetupConstraints {
             self.didSetupConstraints = true
+            self.activityIndicatorView.snp.makeConstraints { make in
+                make.center.equalToSuperview()
+            }
             self.textView.snp.makeConstraints { make in
                 make.top.equalTo(self.topLayoutGuide.snp.bottom).offset(Metric.commonOffset)
                 make.left.equalTo(Metric.commonMid)
                 make.right.equalTo(-Metric.commonMid)
-                make.bottom.equalToSuperview().offset(-Metric.commonOffset)
+                make.bottom.equalTo(self.bottomLayoutGuide.snp.top).offset(-Metric.commonOffset)
             }
         }
         super.updateViewConstraints()
@@ -85,13 +94,74 @@ final class BusinessUsersNotice: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    // MARK: Actions
-    func cancelButtonDidTap() {
-        AppDelegate.instance?.BusinessUsersTabBarScreen(_id: self._id, selectIndex: 2)
+    //MARK: ACTION
+    //식당 인증 & 공지 중 공지만 사용
+    func restaurantInfo() {
+        UICommonSetLoadingService(self.activityIndicatorView, service: true)
+        GeneralUsersNetWorking.restaurantInfo(restaurant_Id: self._id) { [weak self] response in
+            guard let `self` = self else { return }
+            if response.count > 0 {
+                UICommonSetLoadingService(self.activityIndicatorView, service: false)
+                let message = response[0].message
+                if message != nil {
+                    let alertController = UIAlertController(
+                        title: self.title,
+                        message: message,
+                        preferredStyle: .alert
+                    )
+                    let alertConfirm = UIAlertAction(
+                        title: "이전 화면 돌아가기",
+                        style: .default) { _ in
+                            // 확인 후 작업
+                            _ = self.navigationController?.popViewController(animated: true)
+                    }
+                    alertController.addAction(alertConfirm)
+                    self.present(alertController, animated: true, completion: nil)
+                } else {
+                    //공지사항
+                    let notice = response[0].notice
+                    self.textView.text = notice?.replacingOccurrences(of: "\\n", with: "\n")
+                    //self.businessUsersRestaurantNotice = response[0].notice
+                }
+            }
+        }
+    }
+
+    //식당 인증 & 공지 중 공지만 사용
+    func restaurantNoticeEdit() {
+        UICommonSetLoadingService(self.activityIndicatorView, service: true)
+        BusinessUsersNetWorking.restaurantNoticeEdit(_id: self._id, notice: self.textView.text!) { [weak self] response in
+            guard let `self` = self else { return }
+            if response.count > 0 {
+                UICommonSetLoadingService(self.activityIndicatorView, service: false)
+                let message = response[0].message
+                if message != nil {
+                    let alertController = UIAlertController(
+                        title: self.title,
+                        message: message,
+                        preferredStyle: .alert
+                    )
+                    let alertPage = UIAlertAction(
+                        title: "이전 화면 돌아가기",
+                        style: .default) { _ in
+                            // 확인 후 작업
+                            _ = self.navigationController?.popViewController(animated: true)
+                    }
+                    let alertConfirm = UIAlertAction(
+                        title: "확인",
+                        style: .default) { _ in
+                            // 확인 후 작업
+                    }
+                    alertController.addAction(alertPage)
+                    alertController.addAction(alertConfirm)
+                    self.present(alertController, animated: true, completion: nil)
+                }
+            }
+        }
     }
     
-    func textFieldDidChangeText(_ textField: UITextField) {
-        textField.textColor = .black
+    func cancelButtonDidTap() {
+        _ = self.navigationController?.popViewController(animated: true)
     }
     
     func addButtonDidTap() {
@@ -99,7 +169,27 @@ final class BusinessUsersNotice: UIViewController {
             UICommonSetShakeTextView(self.textView)
             return
         }
-        //TODO ::통신 처리
-        AppDelegate.instance?.BusinessUsersTabBarScreen(_id: self._id, selectIndex: 2)
+        let alertController = UIAlertController(
+            title: self.title,
+            message: "공지 사항을 저장하시겠습니까?",
+            preferredStyle: .alert
+        )
+        let alertCancel = UIAlertAction(
+            title: "취소",
+            style: .default) { _ in
+                // 확인 후 작업
+        }
+        let alertConfirm = UIAlertAction(
+            title: "저장",
+            style: .default) { _ in
+                // 확인 후 작업
+                self.restaurantNoticeEdit()
+                
+        }
+        alertController.addAction(alertCancel)
+        alertController.addAction(alertConfirm)
+        self.present(alertController, animated: true, completion: nil)
+
+        
     }
 }

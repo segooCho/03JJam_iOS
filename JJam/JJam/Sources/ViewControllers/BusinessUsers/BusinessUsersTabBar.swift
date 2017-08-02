@@ -52,18 +52,14 @@ final class BusinessUsersTabBar: UITabBarController {
                     alertController.addAction(alertConfirm)
                     self.present(alertController, animated: true, completion: nil)
                 } else {
-                    //로컬 파일로 저장
-                    /*
-                    let dicts:[[String: Any]] = response.map {
-                        (restaurantGroup: RestaurantGroup) -> [String: Any] in
-                        return [
-                            "category": restaurantGroup.category,
-                            "text": restaurantGroup.text,
-                            ]
-                    }
-                    UserDefaults.standard.set(dicts, forKey: SuperConstants.JJamUserDefaultsKeyRestaurantGroup)
-                    UserDefaults.standard.synchronize()
-                    */
+                    
+                    //식단 등록 category
+                    categoryArray.location.removeAllObjects()
+                    categoryArray.division.removeAllObjects()
+                    categoryArray.stapleFood.removeAllObjects()
+                    categoryArray.soup.removeAllObjects()
+                    categoryArray.sideDish.removeAllObjects()
+                    categoryArray.dessert.removeAllObjects()
                     
                     for data in response {
                         switch data.category {
