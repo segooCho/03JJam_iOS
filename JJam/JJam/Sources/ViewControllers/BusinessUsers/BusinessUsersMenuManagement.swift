@@ -13,12 +13,13 @@ final class BusinessUsersMenuManagement: UIViewController {
     fileprivate let restaurant_Id: String
     fileprivate var didSetupConstraints = false
     fileprivate var segmentedIndexAndCode = 0
-    fileprivate var segmentedIndexPlaceholderText = ""
-    fileprivate var menu: [Menu] = []
+    fileprivate var groupText:String = "location"
+    fileprivate var group: [Group] = []
+    
     
     //MARK: Constants
     fileprivate struct Metric {
-        static let segmentedMid = CGFloat(20)
+        static let segmentedMid = CGFloat(5)
         static let segmentedHeight = CGFloat(45)
         
         static let textFieldMid = CGFloat(10)
@@ -29,8 +30,9 @@ final class BusinessUsersMenuManagement: UIViewController {
 
     
     //MARK: UI
+    fileprivate let activityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: .gray)
     fileprivate let segmentedControl = UISegmentedControl()
-    fileprivate let segmentedTitles: Array<String> = ["주식(밥,면)","국","반찬","후식"]
+    fileprivate let segmentedTitles: Array<String> = ["위치","구분","주식(밥,면)","국","반찬","후식"]
     fileprivate let textField = UITextField()
     fileprivate let button = UIButton()
     fileprivate let tableView = UITableView(frame: .zero, style: .plain)
@@ -44,10 +46,6 @@ final class BusinessUsersMenuManagement: UIViewController {
         self.title = "메뉴관리"
         self.tabBarItem.image = UIImage(named: "tab-stapleFood")
         self.tabBarItem.selectedImage = UIImage(named: "tab-stapleFood-selected")
-        //데이터 임시 처리
-        self.menu.append(Menu(id: "1", code: "0", food: "현미밥"))
-        self.menu.append(Menu(id: "1", code: "0", food: "보리밥"))
-        self.menu.append(Menu(id: "1", code: "0", food: "짜장면"))
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -60,7 +58,6 @@ final class BusinessUsersMenuManagement: UIViewController {
         super.viewDidLoad()
         
         self.view.backgroundColor = .white
-        
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(
             barButtonSystemItem: .edit,
             target: self,
@@ -73,27 +70,15 @@ final class BusinessUsersMenuManagement: UIViewController {
         action: #selector(addButtonDidTap)
         )
 
-        
-        switch self.segmentedIndexAndCode {
-        case 0:
-            self.segmentedIndexPlaceholderText = "주식(밥,명)"
-        case 1:
-            self.segmentedIndexPlaceholderText = "국"
-        case 2:
-            self.segmentedIndexPlaceholderText = "반찬"
-        case 3:
-            self.segmentedIndexPlaceholderText = "후식"
-        default:
-            self.segmentedIndexPlaceholderText = ""
-        }
-        
+        UICommonSetLoading(self.activityIndicatorView)
         //segmentedControl
-        UICommonSetSegmentedControl(self.segmentedControl, titles: segmentedTitles)
+        UICommonSetSegmentedControl(self.segmentedControl, titles: segmentedTitles, font: 1)
         self.segmentedControl.addTarget(self, action: #selector(changeSegmentedControl), for: .valueChanged)
         self.segmentedControl.selectedSegmentIndex = self.segmentedIndexAndCode
         
         //textField
-        UICommonSetTextFieldEnable(self.textField, placeholderText: self.segmentedIndexPlaceholderText)
+        groupBind(groupArray: groupArray.location)
+        UICommonSetTextFieldEnable(self.textField, placeholderText: self.segmentedTitles[self.segmentedIndexAndCode])
         self.textField.addTarget(self, action: #selector(textFieldDidChangeText), for: .editingChanged)
         self.textField.delegate = self
         
@@ -105,6 +90,7 @@ final class BusinessUsersMenuManagement: UIViewController {
         self.view.addSubview(self.textField)
         self.view.addSubview(self.button)
         self.view.addSubview(self.tableView)
+        self.view.addSubview(self.activityIndicatorView)
         //updateViewConstraints 자동 호출
         self.view.setNeedsUpdateConstraints()
     }
@@ -120,6 +106,9 @@ final class BusinessUsersMenuManagement: UIViewController {
     override func updateViewConstraints() {
         if !self.didSetupConstraints {
             self.didSetupConstraints = true
+            self.activityIndicatorView.snp.makeConstraints { make in
+                make.center.equalToSuperview()
+            }
             self.segmentedControl.snp.makeConstraints { make in
                 make.left.equalTo(Metric.segmentedMid)
                 make.right.equalTo(-Metric.segmentedMid)
@@ -159,24 +148,64 @@ final class BusinessUsersMenuManagement: UIViewController {
     
     //MARK: ACTION
     func changeSegmentedControl() {
+        self.textField.text = ""
         self.segmentedIndexAndCode = segmentedControl.selectedSegmentIndex
-
+        self.textField.placeholder = self.segmentedTitles[self.segmentedIndexAndCode]
+        self.group.removeAll()
         switch self.segmentedControl.selectedSegmentIndex {
         case 0:
-            self.textField.placeholder = "주식(밥,명)"
+            self.groupBind(groupArray: groupArray.location)
+            self.groupText = "location"
+            self.doneButtonDidTap()
         case 1:
-            self.textField.placeholder = "국"
+            self.groupBind(groupArray: groupArray.division)
+            self.groupText = "division"
+            self.doneButtonDidTap()
         case 2:
-            self.textField.placeholder = "반찬"
+            self.groupBind(groupArray: groupArray.stapleFood)
+            self.groupText = "stapleFood"
+            self.doneButtonDidTap()
         case 3:
-            self.textField.placeholder = "후식"
+            self.groupBind(groupArray: groupArray.soup)
+            self.groupText = "soup"
+            self.doneButtonDidTap()
+        case 4:
+            self.groupBind(groupArray: groupArray.sideDish)
+            self.groupText = "sideDish"
+            self.doneButtonDidTap()
+        case 5:
+            self.groupBind(groupArray: groupArray.dessert)
+            self.groupText = "dessert"
+            self.doneButtonDidTap()
         default:
-            self.textField.placeholder = ""
+            print("Group 없음")
+        }
+        
+        self.tableView.reloadData()
+    }
+    
+    func groupBind(groupArray: NSMutableArray) {
+        for data in groupArray {
+            self.group.append(Group (text: data as! String))
         }
     }
     
     func editButtonDidTap() {
-        guard !self.menu.isEmpty else { return }
+        guard !self.group.isEmpty else { return }
+        if self.group.count <= 1 {
+            let alertController = UIAlertController(
+                title: self.title,
+                message: "1개 이상의 " + self.segmentedTitles[self.segmentedIndexAndCode] + " 정보는 존재해야 합니다.",
+                preferredStyle: .alert
+            )
+            let alertConfirm = UIAlertAction(
+                title: "확인",
+                style: .default) { _ in
+            }
+            alertController.addAction(alertConfirm)
+            self.present(alertController, animated: true, completion: nil)
+            
+        }
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(
             barButtonSystemItem: .done,
             target: self,
@@ -193,18 +222,142 @@ final class BusinessUsersMenuManagement: UIViewController {
         )
         self.tableView.setEditing(false, animated: true)
     }
-    
+   
     func addButtonDidTap() {
-        guard let name = self.textField.text, !name.isEmpty else {
+        let text = self.textField.text!
+        if text.isEmpty {
             UICommonSetShakeTextField(self.textField)
             return
         }
         
-        //데이터 임시 처리
-        self.menu.append(Menu(id: "1", code: "0", food: "잡곡"))
-        self.tableView.reloadData()
+        if text.characters.count < 2 {
+            UICommonSetShakeTextField(self.textField)
+            return
+        }
+        
+        //중복 확인
+        for data in self.group {
+            if text == data.text {
+                let alertController = UIAlertController(
+                    title: self.title,
+                    message: text + " 이미 등록된 " + self.segmentedTitles[self.segmentedIndexAndCode] + " 정보입니다.",
+                    preferredStyle: .alert
+                )
+                let alertConfirm = UIAlertAction(
+                    title: "확인",
+                    style: .default) { _ in
+                        // 확인 후 작업
+                        self.textField.becomeFirstResponder()
+                }
+                alertController.addAction(alertConfirm)
+                self.present(alertController, animated: true, completion: nil)
+                return
+            }
+        }
+
+        
+        //구분에서 '아침','점심','저녁' 으로 시작하는 문제 지정
+        if segmentedIndexAndCode == 1 && text != "사진식단" {
+            var check:Bool = false
+            let checkText = text.substring(to: text.index(text.startIndex,  offsetBy: 2))
+            
+            if checkText == "아침" || checkText == "점심" || checkText == "저녁" {
+                check = true
+            }
+            
+            if !check {
+                let alertController = UIAlertController(
+                    title: self.title,
+                    message: "구분은 '아침','점심','저녁'으로 시작하는 문자열 또는 '사진식단' 만 입력하세요.\n예)'점심-A' 또는 '점심-간편식' 또는 '사진식단' 등",
+                    preferredStyle: .alert
+                )
+                let alertConfirm = UIAlertAction(
+                    title: "확인",
+                    style: .default) { _ in
+                        // 확인 후 작업
+                        self.textField.becomeFirstResponder()
+                }
+                alertController.addAction(alertConfirm)
+                self.present(alertController, animated: true, completion: nil)
+                return
+            }
+        }
+            
+        self.restaurantGroupAddAndDel(text:self.textField.text!, addMode: true)
     }
 
+    //식당 Group 추가 & 삭제
+    func restaurantGroupAddAndDel(text:String, addMode: Bool) {
+        UICommonSetLoadingService(self.activityIndicatorView, service: true)
+        BusinessUsersNetWorking.restaurantGroupAddAndDel(restaurant_Id: self.restaurant_Id, group: self.groupText, text: text, addMode: addMode) { [weak self] response in
+            guard let `self` = self else { return }
+            if response.count > 0 {
+                UICommonSetLoadingService(self.activityIndicatorView, service: false)
+                let message = response[0].message
+                if message != nil {
+                    let alertController = UIAlertController(
+                        title: self.title,
+                        message: message,
+                        preferredStyle: .alert
+                    )
+                    let alertConfirm = UIAlertAction(
+                        title: "확인",
+                        style: .default) { _ in
+                            if message == "저장이 완료되었습니다." {
+                                self.group.append(Group (text: text))
+                                switch self.groupText {
+                                case "location":
+                                    groupArray.location.add(text)
+                                case "division":
+                                    groupArray.division.add(text)
+                                case "stapleFood":
+                                    groupArray.stapleFood.add(text)
+                                case "soup":
+                                    groupArray.soup.add(text)
+                                case "sideDish":
+                                    groupArray.sideDish.add(text)
+                                case "dessert":
+                                    groupArray.dessert.add(text)
+                                default:
+                                    print("No Group")
+                                }
+                                self.textField.text = ""
+                                self.tableView.reloadData()
+                            } else if message == "삭제가 완료되었습니다." {
+                                self.group.removeAll()
+                                switch self.groupText {
+                                case "location":
+                                    groupArray.location.remove(text)
+                                    self.groupBind(groupArray: groupArray.location)
+                                case "division":
+                                    groupArray.division.remove(text)
+                                    self.groupBind(groupArray: groupArray.division)
+                                case "stapleFood":
+                                    groupArray.stapleFood.remove(text)
+                                    self.groupBind(groupArray: groupArray.stapleFood)
+                                case "soup":
+                                    groupArray.soup.remove(text)
+                                    self.groupBind(groupArray: groupArray.soup)
+                                case "sideDish":
+                                    groupArray.sideDish.remove(text)
+                                    self.groupBind(groupArray: groupArray.sideDish)
+                                case "dessert":
+                                    groupArray.dessert.remove(text)
+                                    self.groupBind(groupArray: groupArray.dessert)
+                                default:
+                                    print("No Group")
+                                }
+                                self.doneButtonDidTap()
+                                self.tableView.reloadData()
+                            }
+                    }
+                    alertController.addAction(alertConfirm)
+                    self.present(alertController, animated: true, completion: nil)
+                }
+            }
+        }
+    }
+    
     func textFieldDidChangeText(_ textField: UITextField) {
         textField.textColor = .black
     }
@@ -227,12 +380,12 @@ final class BusinessUsersMenuManagement: UIViewController {
 extension BusinessUsersMenuManagement: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.menu.count
+        return self.group.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "businessUsersMenuCell", for: indexPath) as! BusinessUsersMenuCell
-        cell.configure(menu: self.menu[indexPath.item])
+        cell.configure(group: self.group[indexPath.item])
         return cell
     }
 }
@@ -243,20 +396,26 @@ extension BusinessUsersMenuManagement: UITableViewDelegate {
         return SuperConstants.tableViewCellHeight
     }
     
-    //cell 선택
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        //print("\(indexPath)가 선택!")
-        var menu = self.menu[indexPath.row]
-        menu.isDone = !menu.isDone
-        self.menu[indexPath.row] = menu
-        tableView.reloadRows(at: [indexPath], with: .automatic)
-    }
-    
     //삭제
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-        self.menu.remove(at: indexPath.row)
-        tableView.deleteRows(at: [indexPath], with: .automatic)
-        //TODO :: 저장 필요
+        /*
+        if (segmentedIndexAndCode == 1 && self.group[indexPath.row].text == "사진식단") {
+            let alertController = UIAlertController(
+                title: self.title,
+                message: "'사진식단'은 삭제할수 없습니다.",
+                preferredStyle: .alert
+            )
+            let alertConfirm = UIAlertAction(
+                title: "확인",
+                style: .default) { _ in
+                    self.doneButtonDidTap()
+            }
+            alertController.addAction(alertConfirm)
+            self.present(alertController, animated: true, completion: nil)
+            return
+        }
+        */
+        self.restaurantGroupAddAndDel(text:self.group[indexPath.row].text, addMode: false)
     }
 }
 

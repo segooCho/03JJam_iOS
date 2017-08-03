@@ -73,7 +73,7 @@ final class BusinessUsersSignUp: UIViewController, UIImagePickerControllerDelega
         
         //segmentedControl
         imagePicker.delegate = self
-        UICommonSetSegmentedControl(self.segmentedControl, titles: segmentedTitles)
+        UICommonSetSegmentedControl(self.segmentedControl, titles: segmentedTitles, font: 0)
         self.segmentedControl.addTarget(self, action: #selector(changeSegmentedControl), for: .valueChanged)
         self.segmentedControl.selectedSegmentIndex = self.segmentedIndexAndCode
         
@@ -276,6 +276,7 @@ final class BusinessUsersSignUp: UIViewController, UIImagePickerControllerDelega
     
     /*********************************************  이미지 처리 ******************************************************/
     func changeSegmentedControl() {
+        //self.tableView.setContentOffset(CGPoint.zero, animated: true)
         self.segmentedIndexAndCode = segmentedControl.selectedSegmentIndex
         switch self.segmentedControl.selectedSegmentIndex {
         case 1:     //사진첩
@@ -334,8 +335,16 @@ final class BusinessUsersSignUp: UIViewController, UIImagePickerControllerDelega
 
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any])
     {
+        //스크롤을 하단으로 올린다.
+        //=> imageView가 안보이는 상태에서 cellForRow 에서 오류가 발생
+        var yOffset:CGFloat = 0;
+        yOffset = self.tableView.contentSize.height - self.tableView.bounds.size.height;
+        self.tableView.setContentOffset(CGPoint.init(x: 0, y: yOffset), animated: true)
+        
+
         //tableView[1].imageView 이미지 변경
         self.image = setImageSize(info[UIImagePickerControllerOriginalImage]as! UIImage, size: 1)
+        //TODO :: cell이 보이지 않는 상태에서는 오류 발생????
         let index = IndexPath(row: 1, section: 0)
         let cell: BusinessUsersSignUpImageCell = self.tableView.cellForRow(at: index) as! BusinessUsersSignUpImageCell
         cell.configure(image: self.image!)
@@ -375,7 +384,7 @@ extension BusinessUsersSignUp: UITableViewDataSource {
             let cell = tableView.dequeueReusableCell(withIdentifier: "businessUsersSignUpImageCell", for: indexPath) as! BusinessUsersSignUpImageCell
             
             //TableView 스크롤로 새로운 이지미지가 덮어진다.
-            if self.segmentedIndexAndCode == 0 || self.segmentedIndexAndCode == 3 {
+            if self.segmentedIndexAndCode == 0 || self.segmentedIndexAndCode == 3 || self.image == nil {
                 let noImage = UIImage(named: "NoImageFound.jpg")
                 cell.configure(image: noImage!)
             } else {

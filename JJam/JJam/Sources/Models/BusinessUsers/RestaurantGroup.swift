@@ -9,7 +9,7 @@
 import ObjectMapper
 
 struct RestaurantGroup: Mappable {
-    var category: String!
+    var group: String!
     var text: String!
     var message: String?            //리턴 메시지
     
@@ -17,18 +17,18 @@ struct RestaurantGroup: Mappable {
     }
     
     mutating func mapping(map: Map) {
-        self.category <- map["category"]
+        self.group <- map["group"]
         self.text <- map["text"]
         self.message <- map["message"]
     }
 }
 
 struct RestaurantGroupUserDefaults {
-     var category: String
+     var group: String
      var text: String
     
-     init(category: String, text: String) {
-     self.category = category
+     init(group: String, text: String) {
+     self.group = group
      self.text = text
      }
 }

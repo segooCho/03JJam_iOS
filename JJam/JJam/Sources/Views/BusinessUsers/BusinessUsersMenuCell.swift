@@ -19,17 +19,11 @@ final class BusinessUsersMenuCell: UITableViewCell {
     }
     
     //MARK: configure
-    func configure(menu: Menu) {
+    func configure(group: Group) {
         self.backgroundColor = .white
         
-        self.textLabel?.text = menu.food
-        /*
-        if businessUsersMenu.isDone {
-            self.accessoryType = .checkmark
-        } else {
-            self.accessoryType = .none
-        }
-        */
+        self.textLabel?.text = group.text
+
     }
     
     override func layoutSubviews() {

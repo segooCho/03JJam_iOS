@@ -80,7 +80,7 @@ final class MealList: UIViewController {
         )
         
         //segmentedControl
-        UICommonSetSegmentedControl(self.segmentedControl, titles: segmentedTitles)
+        UICommonSetSegmentedControl(self.segmentedControl, titles: segmentedTitles, font: 0)
         self.segmentedControl.addTarget(self, action: #selector(changeSegmentedControl), for: .valueChanged)
         self.segmentedControl.selectedSegmentIndex = self.segmentedIndexAndCode
         

@@ -21,17 +21,18 @@ final class BusinessUsersTabBar: UITabBarController {
         self.viewControllers = [
             tempViewController,
         ]
-        restaurantCategory(restaurant_Id: restaurant_Id)
+        restaurantGroup(restaurant_Id: restaurant_Id)
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    //식당 category 항목(Group) 조회
-    func restaurantCategory(restaurant_Id: String) {
+    //식당 Group 조회
+    func restaurantGroup(restaurant_Id: String) {
         //UICommonSetLoadingService(self.activityIndicatorView, service: true)
-        BusinessUsersNetWorking.restaurantGroup(restaurant_Id: restaurant_Id) { [weak self] response in
+        /*group: "all"=전체*/
+        BusinessUsersNetWorking.restaurantGroup(restaurant_Id: restaurant_Id, group: "") { [weak self] response in
             guard let `self` = self else { return }
             if response.count > 0 {
                 let message = response[0].message
@@ -53,30 +54,30 @@ final class BusinessUsersTabBar: UITabBarController {
                     self.present(alertController, animated: true, completion: nil)
                 } else {
                     
-                    //식단 등록 category
-                    categoryArray.location.removeAllObjects()
-                    categoryArray.division.removeAllObjects()
-                    categoryArray.stapleFood.removeAllObjects()
-                    categoryArray.soup.removeAllObjects()
-                    categoryArray.sideDish.removeAllObjects()
-                    categoryArray.dessert.removeAllObjects()
+                    //식단 항목 Group
+                    groupArray.location.removeAllObjects()
+                    groupArray.division.removeAllObjects()
+                    groupArray.stapleFood.removeAllObjects()
+                    groupArray.soup.removeAllObjects()
+                    groupArray.sideDish.removeAllObjects()
+                    groupArray.dessert.removeAllObjects()
                     
                     for data in response {
-                        switch data.category {
+                        switch data.group {
                         case "location":
-                            categoryArray.location.add(data.text)
+                            groupArray.location.add(data.text)
                         case "division":
-                            categoryArray.division.add(data.text)
+                            groupArray.division.add(data.text)
                         case "stapleFood":
-                            categoryArray.stapleFood.add(data.text)
+                            groupArray.stapleFood.add(data.text)
                         case "soup":
-                            categoryArray.soup.add(data.text)
+                            groupArray.soup.add(data.text)
                         case "sideDish":
-                            categoryArray.sideDish.add(data.text)
+                            groupArray.sideDish.add(data.text)
                         case "dessert":
-                            categoryArray.dessert.add(data.text)
+                            groupArray.dessert.add(data.text)
                         default:
-                            print("No Category")
+                            print("No Group")
                         }
                     }
                     

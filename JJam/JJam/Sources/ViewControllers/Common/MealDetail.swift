@@ -76,7 +76,7 @@ final class MealDetail: UIViewController, UIImagePickerControllerDelegate, UINav
         
         //이미지
         imagePicker.delegate = self
-        UICommonSetSegmentedControl(self.segmentedControl, titles: segmentedTitles)
+        UICommonSetSegmentedControl(self.segmentedControl, titles: segmentedTitles, font: 0)
         self.segmentedControl.addTarget(self, action: #selector(changeSegmentedControl), for: .valueChanged)
         self.segmentedControl.selectedSegmentIndex = self.segmentedIndexAndCode
         self.view.addSubview(self.segmentedControl)
@@ -238,7 +238,7 @@ final class MealDetail: UIViewController, UIImagePickerControllerDelegate, UINav
                 UICommonSetLoadingService(self.activityIndicatorView, service: false)
                 let message = response[0].message //무조건 리턴 메시지 발생함
                 if message != nil {
-                    if message == "식단 저장이 완료되었습니다." {
+                    if message == "식단 저장이 완료되었습니다." || message == "식단 수정이 완료되었습니다." {
                         //OK
                         let alertController = UIAlertController(
                             title: self.title,
@@ -251,13 +251,21 @@ final class MealDetail: UIViewController, UIImagePickerControllerDelegate, UINav
                                 //이전 페이지
                                 _ = self.navigationController?.popViewController(animated: true)
                         }
-                        let alertConfirm = UIAlertAction(
-                            title: "확인",
-                            style: .default) { _ in
-                                //확인 후 처리
-                        }
                         alertController.addAction(alertLoginScreen)
-                        alertController.addAction(alertConfirm)
+                        
+                        //신규 저장 후 이전 페이지로 가지 않고 바로 저장하면 오류 발생
+                        //Notification 발생으로 mealDetailTuple.writeMode=false로 변경됨
+                        /*
+                        if !mealDetailTuple.writeMode {
+                            let alertConfirm = UIAlertAction(
+                                title: "확인",
+                                style: .default) { _ in
+                                    //확인 후 처리
+                            }
+                            alertController.addAction(alertConfirm)
+                        }
+                        */
+                        
                         //에디터 모드 일때 이전 페이지 data reload 처리
                         if mealDetailTuple.editMode {
                             NotificationCenter.default.post(name: .businessUsersMealListDidAdd, object: self, userInfo: [:])
@@ -345,6 +353,10 @@ final class MealDetail: UIViewController, UIImagePickerControllerDelegate, UINav
 
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any])
     {
+        //스크롤을 최상단으로 올린다.
+        //=> imageView가 안보이는 상태에서 cellForRow 에서 오류가 발생
+        self.tableView.setContentOffset(CGPoint.zero, animated: true)
+        
         //tableView[1].imageView 이미지 변경
         self.image = setImageSize(info[UIImagePickerControllerOriginalImage]as! UIImage, size: 1)
         let index = IndexPath(row: 0, section: 0)

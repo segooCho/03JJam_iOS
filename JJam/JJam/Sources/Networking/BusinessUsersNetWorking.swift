@@ -9,10 +9,11 @@
 import Alamofire
 
 struct BusinessUsersNetWorking {
-    //GET : 식당 category 항목(Group) 조회
-    static func restaurantGroup(restaurant_Id: String, completion: @escaping (_ restaurantGroup: [RestaurantGroup]) -> Void) {
+    //GET : 식당 Group 조회
+    static func restaurantGroup(restaurant_Id: String, group: String, completion: @escaping (_ restaurantGroup: [RestaurantGroup]) -> Void) {
         let parameters: [String: Any] = [
             "restaurant_Id": restaurant_Id,
+            "group": group,
             ]
         let headers: HTTPHeaders = [
             "Accept": "application/json",
@@ -21,6 +22,47 @@ struct BusinessUsersNetWorking {
         var restaurantGroup: [RestaurantGroup] = []
         
         Alamofire.request(Url.restaurantGroup, method: .post, parameters: parameters, headers: headers)
+            .validate(statusCode: 200..<400)
+            .responseJSON {
+                response in
+                switch response.result {
+                case .success(let value) :
+                    guard let json = value as? [[String: Any]] else {break}
+                    //TODO : 오류 처리 필요
+                    let data = [RestaurantGroup](JSONArray: json)
+                    restaurantGroup.append(contentsOf: data)
+                    completion(restaurantGroup)
+                case .failure(let error) :
+                    print("요청 실패 \(error)")
+                    let data = [RestaurantGroup](JSONArray: [["message": "네트워크 통신에 문제가 발생하여 데이터 요청 작업을 실패했습니다."]])
+                    restaurantGroup.append(contentsOf: data)
+                    completion(restaurantGroup)
+                }
+        }
+        completion(restaurantGroup)
+    }
+    
+    //GET : 식당 Group 추가
+    static func restaurantGroupAddAndDel(restaurant_Id: String, group: String, text: String, addMode: Bool, completion: @escaping (_ restaurantGroup: [RestaurantGroup]) -> Void) {
+        let parameters: [String: Any] = [
+            "restaurant_Id": restaurant_Id,
+            "group": group,
+            "text": text,
+            ]
+        let headers: HTTPHeaders = [
+            "Accept": "application/json",
+            ]
+        
+        var tmpUrl = ""
+        if addMode {
+            tmpUrl = Url.restaurantGroupAdd
+        } else {
+            tmpUrl = Url.restaurantGroupDel
+        }
+        
+        var restaurantGroup: [RestaurantGroup] = []
+        
+        Alamofire.request(tmpUrl, method: .post, parameters: parameters, headers: headers)
             .validate(statusCode: 200..<400)
             .responseJSON {
                 response in

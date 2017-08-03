@@ -86,7 +86,7 @@ final class BusinessUsersMealList: UIViewController {
 
         UICommonSetLoading(self.activityIndicatorView)
         //segmentedControl
-        UICommonSetSegmentedControl(self.segmentedControl, titles: segmentedTitles)
+        UICommonSetSegmentedControl(self.segmentedControl, titles: segmentedTitles, font: 0)
         self.segmentedControl.addTarget(self, action: #selector(changeSegmentedControl), for: .valueChanged)
         self.segmentedControl.selectedSegmentIndex = self.segmentedIndexAndCode
 
@@ -297,6 +297,7 @@ final class BusinessUsersMealList: UIViewController {
     //세그먼트 메뉴 클릭
     func changeSegmentedControl() {
         self.segmentedIndexAndCode = segmentedControl.selectedSegmentIndex
+        self.doneButtonDidTap()
         mealSearch()
     }
     
@@ -305,7 +306,7 @@ final class BusinessUsersMealList: UIViewController {
         setMealDetailTuple(true,false)
         mealSearch()
     }
-    
+   
     //식단 삭제
     func tableViewMealDel(meal_Id: String, index: Int) {
         UICommonSetLoadingService(self.activityIndicatorView, service: true)

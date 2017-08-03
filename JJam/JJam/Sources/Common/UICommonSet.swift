@@ -9,10 +9,17 @@
 import UIKit
 
 //MARK: UISegmentedControl Common Set
-func UICommonSetSegmentedControl(_ uIKit: UISegmentedControl, titles: Array<String>) {
+func UICommonSetSegmentedControl(_ uIKit: UISegmentedControl, titles: Array<String>, font: Int) {
     for (index, title) in titles.enumerated() {
         uIKit.insertSegment(withTitle: title, at: index, animated: false)
     }
+    switch font {
+    case 1:
+        uIKit.setTitleTextAttributes([NSFontAttributeName: Font.font12], for: .normal)
+    default:
+        uIKit.setTitleTextAttributes([NSFontAttributeName: Font.font16], for: .normal)
+    }
+    
 }
 
 
