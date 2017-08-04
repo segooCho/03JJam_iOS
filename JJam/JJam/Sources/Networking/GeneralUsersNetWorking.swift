@@ -33,7 +33,7 @@ struct GeneralUsersNetWorking {
                         completion(restaurantSearch)
                     case .failure(let error) :
                         print("요청 실패 \(error)")
-                        let data = [RestaurantSearch](JSONArray: [["message": "네트워크 통신에 문제가 발생하여 데이터 요청 작업을 실패했습니다."]])
+                        let data = [RestaurantSearch](JSONArray: [netWorkingErrorMessage])
                         restaurantSearch.append(contentsOf: data)
                         completion(restaurantSearch)
                     }
@@ -66,7 +66,7 @@ struct GeneralUsersNetWorking {
                     completion(restaurantInfo)
                 case .failure(let error) :
                     print("요청 실패 \(error)")
-                    let data = [RestaurantInfo](JSONArray: [["message": "네트워크 통신에 문제가 발생하여 데이터 요청 작업을 실패했습니다."]])
+                    let data = [RestaurantInfo](JSONArray: [netWorkingErrorMessage])
                     restaurantInfo.append(contentsOf: data)
                     completion(restaurantInfo)
                 }
@@ -98,7 +98,7 @@ struct GeneralUsersNetWorking {
                     completion(meal)
                 case .failure(let error) :
                     print("요청 실패 \(error)")
-                    let data = [Meal](JSONArray: [["message": "네트워크 통신에 문제가 발생하여 데이터 요청 작업을 실패했습니다."]])
+                    let data = [Meal](JSONArray: [netWorkingErrorMessage])
                     meal.append(contentsOf: data)
                     completion(meal)
                 }

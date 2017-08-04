@@ -50,6 +50,10 @@ final class BusinessUsersSignUpImageCell: UITableViewCell {
     }
     
     //MARK: configure
+    func configure(editImage: String) {
+        self.photoView.setImage(with: editImage, path: 1)
+    }
+    //MARK: configure
     func configure(image: UIImage) {
         self.photoView.image = image
     }

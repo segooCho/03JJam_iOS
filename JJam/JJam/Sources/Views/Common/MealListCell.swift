@@ -33,7 +33,7 @@ final class MealListCell: UITableViewCell {
        
         //image
         //self.imageView?.image = UIImage(named: meal.foodImage)
-        self.imageView!.setImage(with: meal.foodImage)
+        self.imageView!.setImage(with: meal.foodImage, path: 0)
         
         //image 사이즈 조정
         self.imageView?.image = setImageSize((self.imageView?.image)!, size: 0)

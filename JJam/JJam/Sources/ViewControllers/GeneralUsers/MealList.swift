@@ -47,7 +47,7 @@ final class MealList: UIViewController {
         self.interestRestaurantId = interestRestaurantId
         self.interestRestaurantName = interestRestaurantName
         super.init(nibName: nil, bundle: nil)
-        setMealDetailTuple(false,false)
+        setControlTuple(editMode: false, writeMode: false)
         self.interestRestaurantCertification = "n"
         self.interestRestaurantNotice = ""
         

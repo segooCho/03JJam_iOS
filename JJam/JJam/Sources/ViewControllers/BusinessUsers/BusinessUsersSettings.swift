@@ -126,7 +126,8 @@ extension BusinessUsersSettings: UITableViewDelegate {
             let businessUsersNotice = BusinessUsersNotice(restaurant_Id: self.restaurant_Id)
             self.navigationController?.pushViewController(businessUsersNotice, animated: true)
         case .profile:
-            break
+            let businessUsersSignUp = BusinessUsersSignUp(restaurant_Id: self.restaurant_Id)
+            self.navigationController?.pushViewController(businessUsersSignUp, animated: true)
         case .logout:
             let actionSheet = UIAlertController(
                 title: "로그아웃 하시겠습니까?",

@@ -88,9 +88,9 @@ final class MealDetailTextCell: UITableViewCell {
     
     //MARK: configure
     func configure(meal: Meal) {
-        if mealDetailTuple.editMode {
+        if controlTuple.editMode {
             UICommonSetLabel(self.dateLabel, text: "일자", color: 1)
-            if mealDetailTuple.writeMode {
+            if controlTuple.writeMode {
                 UICommonSetTextFieldEnable(self.dateTextField, placeholderText: "")
             } else {
                 UICommonSetTextFieldDisable(self.dateTextField)
@@ -208,7 +208,7 @@ final class MealDetailTextCell: UITableViewCell {
         self.contentView.addSubview(self.remarksLabel)
         self.contentView.addSubview(self.remarksTextView)
         
-        if mealDetailTuple.editMode {
+        if controlTuple.editMode {
             self.dateTextField.text = meal.mealDate
             self.dateTextField.becomeFirstResponder()
         } else {

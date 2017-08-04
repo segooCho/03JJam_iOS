@@ -34,7 +34,7 @@ struct BusinessUsersNetWorking {
                     completion(restaurantGroup)
                 case .failure(let error) :
                     print("요청 실패 \(error)")
-                    let data = [RestaurantGroup](JSONArray: [["message": "네트워크 통신에 문제가 발생하여 데이터 요청 작업을 실패했습니다."]])
+                    let data = [RestaurantGroup](JSONArray: [netWorkingErrorMessage])
                     restaurantGroup.append(contentsOf: data)
                     completion(restaurantGroup)
                 }
@@ -79,7 +79,7 @@ struct BusinessUsersNetWorking {
                     completion(restaurantGroup)
                 case .failure(let error) :
                     print("요청 실패 \(error)")
-                    let data = [RestaurantGroup](JSONArray: [["message": "네트워크 통신에 문제가 발생하여 데이터 요청 작업을 실패했습니다."]])
+                    let data = [RestaurantGroup](JSONArray: [netWorkingErrorMessage])
                     restaurantGroup.append(contentsOf: data)
                     completion(restaurantGroup)
                 }
@@ -97,7 +97,7 @@ struct BusinessUsersNetWorking {
         var urlString: String
         var param: String
         var method: HTTPMethod
-        if mealDetailTuple.writeMode {
+        if controlTuple.writeMode {
             urlString = Url.mealWrite
             param = "restaurant_Id"                         //Meal 신규   (조건 : restaurant_Id)
             method = .post
@@ -147,14 +147,14 @@ struct BusinessUsersNetWorking {
                         completion(restaurantInfo)
                     case .failure(let error) :
                         print("요청 실패 \(error)")
-                        let data = [RestaurantInfo](JSONArray: [["message": "네트워크 통신에 문제가 발생하여 데이터 요청 작업을 실패했습니다."]])
+                        let data = [RestaurantInfo](JSONArray: [netWorkingErrorMessage])
                         restaurantInfo.append(contentsOf: data)
                         completion(restaurantInfo)
                     }
                 }
             case .failure(let encodingError):
                 print("요청 실패 \(encodingError)")
-                let data = [RestaurantInfo](JSONArray: [["message": "네트워크 통신에 문제가 발생하여 데이터 요청 작업을 실패했습니다.(encodingError)"]])
+                let data = [RestaurantInfo](JSONArray: [netWorkingErrorMessageEncodingError])
                 restaurantInfo.append(contentsOf: data)
                 completion(restaurantInfo)
             }
@@ -186,7 +186,7 @@ struct BusinessUsersNetWorking {
                     completion(restaurantInfo)
                 case .failure(let error) :
                     print("요청 실패 \(error)")
-                    let data = [RestaurantInfo](JSONArray: [["message": "네트워크 통신에 문제가 발생하여 데이터 요청 작업을 실패했습니다."]])
+                    let data = [RestaurantInfo](JSONArray: [netWorkingErrorMessage])
                     restaurantInfo.append(contentsOf: data)
                     completion(restaurantInfo)
                 }
@@ -219,7 +219,7 @@ struct BusinessUsersNetWorking {
                     completion(restaurantInfo)
                 case .failure(let error) :
                     print("요청 실패 \(error)")
-                    let data = [RestaurantInfo](JSONArray: [["message": "네트워크 통신에 문제가 발생하여 데이터 요청 작업을 실패했습니다."]])
+                    let data = [RestaurantInfo](JSONArray: [netWorkingErrorMessage])
                     restaurantInfo.append(contentsOf: data)
                     completion(restaurantInfo)
                 }

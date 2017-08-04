@@ -36,7 +36,7 @@ final class MealDetailImageCell: UITableViewCell {
     
     //MARK: configure
     func configure(editImage: String) {
-        self.photoView.setImage(with: editImage)
+        self.photoView.setImage(with: editImage, path: 0)
     }
     //MARK: configure
     func configure(image: UIImage) {

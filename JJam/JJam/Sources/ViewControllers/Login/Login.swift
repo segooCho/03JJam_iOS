@@ -190,7 +190,7 @@ final class Login: UIViewController {
     
     //회원 가입
     func signUpButtonDidTap() {
-        let businessUsersSignUp = BusinessUsersSignUp()
+        let businessUsersSignUp = BusinessUsersSignUp(restaurant_Id: "")
         self.navigationController?.pushViewController(businessUsersSignUp, animated: true)
     }
 }

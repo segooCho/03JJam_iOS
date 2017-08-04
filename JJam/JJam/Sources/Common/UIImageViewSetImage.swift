@@ -40,10 +40,18 @@ func setImageSize(_ image: UIImage, size: Int) -> UIImage{
 }
 
 extension UIImageView {
-    func setImage(with foodImage: String?) {
+    func setImage(with foodImage: String?, path: Int) {
         if let foodImage = foodImage {
-            let url = URL(string: Url.uploads + "/\(foodImage)")
             
+            var urlString:String = ""
+            switch path {
+            case 0:
+                urlString = Url.uploads
+            default:
+                urlString = Url.uploadsSignUp
+            }
+           
+            let url = URL(string: urlString + "/\(foodImage)")
             self.kf.setImage(with: url, placeholder: UIImage(named: "NoImageFound.jpg"))
         }else {
             self.kf.setImage(with: nil)

@@ -13,6 +13,7 @@ final class BusinessUsersSignUpTextCell: UITableViewCell {
     struct tableViewCellSignUp {
         static var signUp: [SignUp] = []
     }
+    fileprivate var newMode:Bool = true
     
     //MARK: Constants
     fileprivate struct Metric {
@@ -126,6 +127,17 @@ final class BusinessUsersSignUpTextCell: UITableViewCell {
         self.addressTextView.text = signUp.address
         self.contactNumberTextField.text = signUp.contactNumber
         self.representativeTextField.text = signUp.representative
+        
+        if self.idTextField.text != "" {
+            self.idTextField.isEnabled = false
+            self.newMode = false
+        } else {
+            self.newMode = true
+        }
+        
+        if self.addressTextView.text != "" {
+            self.addressTextView.placeholder = ""
+        }
         self.setNeedsLayout()
     }
 
@@ -145,18 +157,36 @@ final class BusinessUsersSignUpTextCell: UITableViewCell {
             self.idTextField.becomeFirstResponder()
             return "사용자 ID를 입력하세요."
         }
-        inputText = self.passwordTextField.text!
-        if inputText.isEmpty {
-            self.passwordTextField.becomeFirstResponder()
-            return "암호를 입력하세요."
-        } else if inputText.characters.count < 4 {
-            self.passwordTextField.becomeFirstResponder()
-            return "암호를 4자리 이상 입력하세요."
+        
+        //수정 모드
+        if !self.newMode {
+            inputText = self.passwordTextField.text!
+            if !inputText.isEmpty {
+                if inputText.characters.count < 4 {
+                    self.passwordTextField.becomeFirstResponder()
+                    return "암호를 4자리 이상 입력하세요."
+                }
+                if self.passwordTextField.text != self.password2TextField.text {
+                    self.password2TextField.becomeFirstResponder()
+                    return "암호가 다릅니다."
+                }
+            }
+        } else {
+        //신규 모드
+            inputText = self.passwordTextField.text!
+            if inputText.isEmpty {
+                self.passwordTextField.becomeFirstResponder()
+                return "암호를 입력하세요."
+            } else if inputText.characters.count < 4 {
+                self.passwordTextField.becomeFirstResponder()
+                return "암호를 4자리 이상 입력하세요."
+            }
+            if self.passwordTextField.text != self.password2TextField.text {
+                self.password2TextField.becomeFirstResponder()
+                return "암호가 다릅니다."
+            }
         }
-        if self.passwordTextField.text != self.password2TextField.text {
-            self.password2TextField.becomeFirstResponder()
-            return "암호가 다릅니다."
-        }
+        
         inputText = self.businessNumberTextField.text!
         if inputText.isEmpty {
             self.businessNumberTextField.becomeFirstResponder()

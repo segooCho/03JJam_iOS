@@ -10,12 +10,15 @@ import UIKit
 
 final class BusinessUsersSignUp: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     //MARK: Properties
+    fileprivate let restaurant_Id: String
     fileprivate var didSetupConstraints = false
     fileprivate var segmentedIndexAndCode: Int = 3
 
-    fileprivate var editSignUp: [SignUp] = []
-    fileprivate var newSignUp: [SignUp] = []
-    fileprivate var image:UIImage!
+    fileprivate var blankSignUp: [SignUp] = []      //공백 data : tableView.indexPath.row == 0 임시 바인딩용
+    fileprivate var newSignUp: [SignUp] = []        //입력 data : tableView.indexPath.row == 0 에서 가져옴
+    fileprivate var member: [Member] = []           //서버 data
+    fileprivate var image: UIImage!
+    fileprivate var editImage: String = ""         //서버 이미지 파일명
     //let image
     
     //MARK: Constants
@@ -35,12 +38,20 @@ final class BusinessUsersSignUp: UIViewController, UIImagePickerControllerDelega
 
     
     //MARK: init
-    init() {
+    init(restaurant_Id: String) {
+        self.restaurant_Id = restaurant_Id
         super.init(nibName: nil, bundle: nil)
-        self.title = "회원 가입"
 
-        //데이터 임시 처리
-        self.editSignUp.append(SignUp(id: "", password: "",businessNumber: "", companyName: "", address: "", contactNumber: "", representative: ""))
+        //먼저 그리기 위해
+        self.blankSignUp.append(SignUp(id: "", password: "",businessNumber: "", companyName: "", address: "", contactNumber: "", representative: ""))
+
+        //회원 수정
+        if self.restaurant_Id != "" {
+            self.title = "회원 수정"
+            restaurantMemberNetWorking()
+        } else {
+            self.title = "회원 가입"
+        }
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -53,6 +64,9 @@ final class BusinessUsersSignUp: UIViewController, UIImagePickerControllerDelega
         super.viewDidLoad()
         self.view.backgroundColor = .white
         
+        //scroll의 내부 여백 발생시 사용()
+        self.automaticallyAdjustsScrollViewInsets = false
+
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(
             barButtonSystemItem: .cancel,
             target: self,
@@ -98,15 +112,15 @@ final class BusinessUsersSignUp: UIViewController, UIImagePickerControllerDelega
             height += Metric.segmentedHeight
             //tableView
             self.tableView.snp.makeConstraints { make in
-                make.top.left.right.equalToSuperview()
-                make.bottom.equalTo(self.bottomLayoutGuide.snp.bottom).offset(-(height + Metric.commonOffset))
+                make.top.equalTo(self.topLayoutGuide.snp.bottom)
+                make.left.right.equalToSuperview()
+                make.bottom.equalTo(self.bottomLayoutGuide.snp.top).offset(-(height+Metric.commonOffset))
             }
-            
             //segmented
             self.segmentedControl.snp.makeConstraints { make in
                 make.left.equalTo(Metric.segmentedMid)
                 make.right.equalTo(-Metric.segmentedMid)
-                make.top.equalTo(self.bottomLayoutGuide.snp.bottom).offset(-(height))
+                make.top.equalTo(self.bottomLayoutGuide.snp.top).offset(-height)
                 make.height.equalTo(Metric.segmentedHeight)
             }
         }
@@ -213,7 +227,11 @@ final class BusinessUsersSignUp: UIViewController, UIImagePickerControllerDelega
                 title: "동의",
                 style: .default) { _ in
                     // 확인 후 작업
-                    self.restaurantSignUpNetWorking()
+                    if self.restaurant_Id == "" {
+                        self.restaurantSignUpNetWorking()
+                    } else {
+                        self.restaurantEditNetWorking()
+                    }
             }
             alertController.addAction(alertCancel)
             alertController.addAction(alertConfirm)
@@ -243,13 +261,96 @@ final class BusinessUsersSignUp: UIViewController, UIImagePickerControllerDelega
                                 //로그인 페이지
                                 _ = self.navigationController?.popViewController(animated: true)
                         }
+                        alertController.addAction(alertLoginScreen)
+                        self.present(alertController, animated: true, completion: nil)
+                        
+                    } else {
+                        //Error 메시지
+                        let alertController = UIAlertController(
+                            title: self.title,
+                            message: message,
+                            preferredStyle: .alert
+                        )
                         let alertConfirm = UIAlertAction(
                             title: "확인",
                             style: .default) { _ in
                                 //확인 후 처리
                         }
-                        alertController.addAction(alertLoginScreen)
                         alertController.addAction(alertConfirm)
+                        self.present(alertController, animated: true, completion: nil)
+                    }
+                }
+            }
+        }
+    }
+    
+    //회원 정보 조회
+    func restaurantMemberNetWorking() {
+        UICommonSetLoadingService(self.activityIndicatorView, service: true)
+        LoginNetWorking.restaurantMember(restaurant_Id: self.restaurant_Id) { [weak self] response in
+            guard let `self` = self else { return }
+            if response.count > 0 {
+                UICommonSetLoadingService(self.activityIndicatorView, service: false)
+                let message = response[0].message //무조건 리턴 메시지 발생함
+                if message != nil {
+                    if message == "회원 정보가 없습니다." {
+                        //OK
+                        let alertController = UIAlertController(
+                            title: self.title,
+                            message: message,
+                            preferredStyle: .alert
+                        )
+                        let alertPreScreen = UIAlertAction(
+                            title: "이전 페이지로 이동",
+                            style: .default) { _ in
+                                //로그인 페이지
+                                _ = self.navigationController?.popViewController(animated: true)
+                        }
+                        alertController.addAction(alertPreScreen)
+                        self.present(alertController, animated: true, completion: nil)
+                    }
+                } else {
+                    //print(response[0])
+                    self.blankSignUp.removeAll()
+                    self.blankSignUp.append(SignUp(id: response[0].id!,
+                                                   password: "",
+                                                   businessNumber: response[0].businessNumber!,
+                                                   companyName: response[0].companyName!,
+                                                   address: response[0].address!,
+                                                   contactNumber: response[0].contactNumber!,
+                                                   representative: response[0].representative!))
+                    
+                    self.editImage = response[0].businessLicenseImage!
+                    self.tableView.reloadData()
+                }
+            }
+        }
+    }
+    
+    //회원 수정
+    func restaurantEditNetWorking() {
+        UICommonSetLoadingService(self.activityIndicatorView, service: true)
+        LoginNetWorking.restaurantEdit(restaurant_Id: self.restaurant_Id, signUp: self.newSignUp, image: image, editImage: editImage) { [weak self] response in
+            guard let `self` = self else { return }
+            if response.count > 0 {
+                UICommonSetLoadingService(self.activityIndicatorView, service: false)
+                let message = response[0].message //무조건 리턴 메시지 발생함
+                if message != nil {
+                    if message == "회원 수정이 완료되었습니다." {
+                        //OK
+                        let alertController = UIAlertController(
+                            title: self.title,
+                            message: message,
+                            preferredStyle: .alert
+                        )
+                        let alertLoginScreen = UIAlertAction(
+                            title: "로그인 페이지로 이동",
+                            style: .default) { _ in
+                                //로그인 페이지
+                                AppDelegate.instance?.LoginScreen()
+                                //_ = self.navigationController?.popViewController(animated: true)
+                        }
+                        alertController.addAction(alertLoginScreen)
                         self.present(alertController, animated: true, completion: nil)
                         
                     } else {
@@ -272,7 +373,6 @@ final class BusinessUsersSignUp: UIViewController, UIImagePickerControllerDelega
         }
     }
 
-    
     
     /*********************************************  이미지 처리 ******************************************************/
     func changeSegmentedControl() {
@@ -326,6 +426,7 @@ final class BusinessUsersSignUp: UIViewController, UIImagePickerControllerDelega
 
     func noImageButtonDidTap() {
         image = nil
+        self.editImage = "NoImageFound.jpg"
         //지정된 row만 reload 한다.(전체 로드시 입력 값이 지워짐)
         let index = IndexPath(row: 1, section: 0)
         self.tableView.reloadRows(at: [index], with: .none)
@@ -377,7 +478,7 @@ extension BusinessUsersSignUp: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.row == 0 {
             let cell = tableView.dequeueReusableCell(withIdentifier: "businessUsersSignUpTextCell", for: indexPath) as! BusinessUsersSignUpTextCell
-            cell.configure(signUp: self.editSignUp[0])
+            cell.configure(signUp: self.blankSignUp[0])
             //cell.configure()
             return cell
         } else {
@@ -385,8 +486,12 @@ extension BusinessUsersSignUp: UITableViewDataSource {
             
             //TableView 스크롤로 새로운 이지미지가 덮어진다.
             if self.segmentedIndexAndCode == 0 || self.segmentedIndexAndCode == 3 || self.image == nil {
-                let noImage = UIImage(named: "NoImageFound.jpg")
-                cell.configure(image: noImage!)
+                if editImage != "" {
+                    cell.configure(editImage: editImage)
+                } else {
+                    let noImage = UIImage(named: "NoImageFound.jpg")
+                    cell.configure(image: noImage!)
+                }
             } else {
                 cell.configure(image: self.image!)
             }

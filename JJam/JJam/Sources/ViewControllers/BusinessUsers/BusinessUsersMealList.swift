@@ -44,7 +44,7 @@ final class BusinessUsersMealList: UIViewController {
     init(restaurant_Id: String) {
         self.restaurant_Id = restaurant_Id
         super.init(nibName: nil, bundle: nil)
-        setMealDetailTuple(true,false)
+        setControlTuple(editMode: true, writeMode: false)
         self.title = "식단"
         self.tabBarItem.image = UIImage(named: "tab-restaurant")
         self.tabBarItem.selectedImage = UIImage(named: "tab-restaurant-selected")
@@ -61,7 +61,7 @@ final class BusinessUsersMealList: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        setMealDetailTuple(true,false)
+        setControlTuple(editMode: true, writeMode: false)
     }
     
     //MARK: View Life Cycle
@@ -209,7 +209,7 @@ final class BusinessUsersMealList: UIViewController {
                                           "dessert": "",
                                           "remarks": "",            //필수
                                           "foodImage": ""]])        //필수
-        setMealDetailTuple(true,true)
+        setControlTuple(editMode: true, writeMode: true)
         let mealDetail = MealDetail(viewMeal: newMeal)
         self.navigationController?.pushViewController(mealDetail, animated: true)
     }
@@ -303,7 +303,7 @@ final class BusinessUsersMealList: UIViewController {
     
     //Notification 관심 목록 저장
     func businessUsersMealListDidAdd(_ notification: Notification ) {
-        setMealDetailTuple(true,false)
+        setControlTuple(editMode: true, writeMode: false)
         mealSearch()
     }
    
@@ -367,9 +367,9 @@ extension BusinessUsersMealList: UITableViewDelegate {
         //print("\(indexPath)가 선택!")
         //지난 식단 수정 불가
         if self.segmentedIndexAndCode == 2 {
-            setMealDetailTuple(false,false)
+            setControlTuple(editMode: false, writeMode: false)
         } else {
-            setMealDetailTuple(true,false)
+            setControlTuple(editMode: true, writeMode: false)
         }
         let meal = MealDetail(viewMeal: [self.meal[indexPath.row]])
         self.navigationController?.pushViewController(meal, animated: true)

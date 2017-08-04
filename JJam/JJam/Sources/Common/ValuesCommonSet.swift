@@ -23,17 +23,16 @@ struct Url {
     static let mealSearch = BaseUrl + "mealSearch"
     //로그인
     static let restaurantLogin = BaseUrl + "restaurantLogin"
+    //회원 정보 조회
+    static let restaurantMember = BaseUrl + "restaurantMember"
     //식당 항목(Group) 조회
     static let restaurantGroup = BaseUrl + "restaurantGroup"
-    //식당 항목(Group) 추가
-    static let restaurantGroupAdd = BaseUrl + "restaurantGroupAdd"
-    //식당 항목(Group) 삭제
-    static let restaurantGroupDel = BaseUrl + "restaurantGroupDel"
+
     
-    
-    
+    /* ============== 이미지 ============== */
     //이미지 경로
     static let uploads = BaseUrl + "uploads"
+    static let uploadsSignUp = BaseUrl + "uploadsSignUp"
     
     
     /* ============== 등록 & 수정 ============== */
@@ -47,16 +46,23 @@ struct Url {
     static let mealDel = BaseUrl + "mealDel"
     //식당 공지사항 수정
     static let restaurantNoticeEdit = BaseUrl + "restaurantNoticeEdit"
+    //식당 항목(Group) 추가
+    static let restaurantGroupAdd = BaseUrl + "restaurantGroupAdd"
+    //식당 항목(Group) 삭제
+    static let restaurantGroupDel = BaseUrl + "restaurantGroupDel"
+    //회원 수정
+    static let restaurantEdit = BaseUrl + "restaurantEdit"
+
 }
 
 //식단 항목(Group)
 struct groupArray {
-    static var location: NSMutableArray = []
-    static var division: NSMutableArray = []
-    static var stapleFood: NSMutableArray = []
-    static var soup: NSMutableArray = []
-    static var sideDish: NSMutableArray = []
-    static var dessert: NSMutableArray = []
+    static var location: NSMutableArray = []        //위치
+    static var division: NSMutableArray = []        //구분
+    static var stapleFood: NSMutableArray = []      //주식(밥,면)
+    static var soup: NSMutableArray = []            //국
+    static var sideDish: NSMutableArray = []        //반찬
+    static var dessert: NSMutableArray = []         //후식
 }
 
 
@@ -72,7 +78,7 @@ struct SuperConstants {
     
     //image 사이즈 조정
     static let tableViewImageSize = CGFloat(57)
-    static let imageSize = CGFloat(300)         //600 x 600 사이즈로 변환
+    static let imageSize = CGFloat(300)                 //600 x 600 사이즈로 변환
     
     static let JJamUserDefaultsKeyInterestRestaurantList = "JJamUserDefaultsKeyInterestRestaurantList"
 }
@@ -85,15 +91,19 @@ struct Font {
 
 //netWorkingErrorMessage
 let netWorkingErrorMessage:[String:String] = ["message": "네트워크 통신에 문제가 발생하여 데이터 요청 작업을 실패했습니다."]
+let netWorkingErrorMessageEncodingError:[String:String] = ["message": "네트워크 통신에 문제가 발생하여 데이터 요청 작업을 실패했습니다.(encodingError)"]
 
 
-//mealDetail 뷰 기능 설정(보기, 수정, 등록)
-var mealDetailTuple = (editMode: false, writeMode: false)
-                    //editMode: false,  writeMode: false    => 일반 사용자 식단 보기
-                    //editMode: true,   writeMode: false    => 업체 사용자 식단 수정
-                    //editMode: true,   writeMode: true     => 업체 사용자 신규 식단
-
-func setMealDetailTuple(_ editMode: Bool, _ writeMode: Bool) {
-    mealDetailTuple.editMode = editMode
-    mealDetailTuple.writeMode = writeMode
+//controlTuple 뷰 기능 설정(보기, 수정, 등록)
+var controlTuple = (editMode: false, writeMode: false)
+/**
+editMode: false, writeMode: false    => 일반 사용자 식단 보기
+editMode: true,  writeMode: false    => 업체 사용자 식단 수정
+editMode: true,  writeMode: true     => 업체 사용자 신규 식단
+editMode: false, writeMode: false    => 회원 가입
+ 
+**/
+func setControlTuple(editMode: Bool, writeMode: Bool) {
+    controlTuple.editMode = editMode
+    controlTuple.writeMode = writeMode
 }

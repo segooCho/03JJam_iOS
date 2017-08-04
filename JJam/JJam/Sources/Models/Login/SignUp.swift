@@ -12,8 +12,8 @@ struct SignUp {
     var businessNumber: String
     var companyName: String
     var address: String
-    var contactNumber : String
-    var representative : String
+    var contactNumber: String
+    var representative: String
     
     init(id: String, password: String, businessNumber: String,
          companyName: String, address: String, contactNumber: String, representative: String) {

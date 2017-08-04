@@ -64,7 +64,7 @@ final class MealDetail: UIViewController, UIImagePickerControllerDelegate, UINav
         )
 
         //수정(지난 식단은 제외) 또는 신규
-        if mealDetailTuple.editMode {
+        if controlTuple.editMode {
             self.navigationItem.rightBarButtonItem = UIBarButtonItem(
                 barButtonSystemItem: .save,
                 target: self,
@@ -101,7 +101,7 @@ final class MealDetail: UIViewController, UIImagePickerControllerDelegate, UINav
             self.activityIndicatorView.snp.makeConstraints { make in
                 make.center.equalToSuperview()
             }
-            if mealDetailTuple.editMode {
+            if controlTuple.editMode {
                 //segmented
                 self.segmentedControl.snp.makeConstraints { make in
                     make.left.equalTo(Metric.segmentedMid)
@@ -152,7 +152,7 @@ final class MealDetail: UIViewController, UIImagePickerControllerDelegate, UINav
         if message.isEmpty {
             //신규 저장
             var writeMode:String = ""
-            if mealDetailTuple.writeMode {
+            if controlTuple.writeMode {
                 writeMode = "새로운 식단을 저장하시겠습니까?"
             } else {
                 writeMode = "변경된 식단을 저장하시겠습니까?"
@@ -221,7 +221,7 @@ final class MealDetail: UIViewController, UIImagePickerControllerDelegate, UINav
     
     func mealSaveNetWorking() {
         let Oid: String
-        if mealDetailTuple.writeMode {
+        if controlTuple.writeMode {
             Oid = self.viewMeal[0].restaurant_Id
         } else {
             Oid = self.viewMeal[0].meal_Id
@@ -267,7 +267,7 @@ final class MealDetail: UIViewController, UIImagePickerControllerDelegate, UINav
                         */
                         
                         //에디터 모드 일때 이전 페이지 data reload 처리
-                        if mealDetailTuple.editMode {
+                        if controlTuple.editMode {
                             NotificationCenter.default.post(name: .businessUsersMealListDidAdd, object: self, userInfo: [:])
                         }
                         UICommonSetLoadingService(self.activityIndicatorView, service: false)
@@ -394,7 +394,7 @@ extension MealDetail: UITableViewDataSource {
             let cell = tableView.dequeueReusableCell(withIdentifier: "mealDetailImageCell", for: indexPath) as! MealDetailImageCell
             
             
-            if !mealDetailTuple.editMode {
+            if !controlTuple.editMode {
                 cell.configure(editImage: self.viewMeal[0].foodImage!)
             } else if image != nil {
                 cell.configure(image: self.image!)
