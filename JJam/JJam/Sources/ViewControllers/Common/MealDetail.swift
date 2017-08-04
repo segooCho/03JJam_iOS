@@ -228,7 +228,7 @@ final class MealDetail: UIViewController, UIImagePickerControllerDelegate, UINav
         }
         
         UICommonSetLoadingService(self.activityIndicatorView, service: true)
-        BusinessUsersNetWorking.restaurantMeal(Oid: Oid,
+        BusinessUsersNetWorking.restaurantMealEditAndWrite(Oid: Oid,
                                                businessUsersMeal: self.editBusinessUsersMeal,
                                                image: image,
                                                editImage: self.editImage) { [weak self] response in

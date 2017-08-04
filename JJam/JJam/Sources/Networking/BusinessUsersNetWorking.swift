@@ -54,15 +54,19 @@ struct BusinessUsersNetWorking {
             ]
         
         var tmpUrl = ""
+        var method:HTTPMethod
+        
         if addMode {
             tmpUrl = Url.restaurantGroupAdd
+            method = .post
         } else {
             tmpUrl = Url.restaurantGroupDel
+            method = .delete
         }
         
         var restaurantGroup: [RestaurantGroup] = []
         
-        Alamofire.request(tmpUrl, method: .post, parameters: parameters, headers: headers)
+        Alamofire.request(tmpUrl, method: method, parameters: parameters, headers: headers)
             .validate(statusCode: 200..<400)
             .responseJSON {
                 response in
@@ -83,8 +87,8 @@ struct BusinessUsersNetWorking {
         completion(restaurantGroup)
     }
     
-    //POST : 식단 Edit & New
-    static func restaurantMeal(Oid: String,
+    //PUT & POST : 식단 Edit & New
+    static func restaurantMealEditAndWrite(Oid: String,
                                businessUsersMeal: [BusinessUsersMeal],
                                image: UIImage?,
                                editImage: String!,
@@ -92,12 +96,15 @@ struct BusinessUsersNetWorking {
         //Edit & New 구분
         var urlString: String
         var param: String
+        var method: HTTPMethod
         if mealDetailTuple.writeMode {
             urlString = Url.mealWrite
             param = "restaurant_Id"                         //Meal 신규   (조건 : restaurant_Id)
+            method = .post
         } else {
             urlString = Url.mealEdit
             param = "meal_Id"                               //Meal 수정   (조건 : meal_Id)
+            method = .put
         }
         
         let parameters: [String: Any] = [
@@ -127,7 +134,7 @@ struct BusinessUsersNetWorking {
             for (key, value) in parameters {
                 multipartFormData.append((value as AnyObject).data(using: String.Encoding.utf8.rawValue)!, withName: key)
             }
-        }, to: urlString, method:.post, encodingCompletion: { (result) in
+        }, to: urlString, method: method, encodingCompletion: { (result) in
             switch result {
             case .success(let upload, _, _):
                 upload.responseJSON { response in
@@ -166,7 +173,7 @@ struct BusinessUsersNetWorking {
         
         var restaurantInfo: [RestaurantInfo] = []
         
-        Alamofire.request(Url.mealDel, method: .post, parameters: parameters, headers: headers)
+        Alamofire.request(Url.mealDel, method: .delete, parameters: parameters, headers: headers)
             .validate(statusCode: 200..<400)
             .responseJSON {
                 response in
@@ -199,7 +206,7 @@ struct BusinessUsersNetWorking {
         
         var restaurantInfo: [RestaurantInfo] = []
         
-        Alamofire.request(Url.restaurantNoticeEdit, method: .post, parameters: parameters, headers: headers)
+        Alamofire.request(Url.restaurantNoticeEdit, method: .put, parameters: parameters, headers: headers)
             .validate(statusCode: 200..<400)
             .responseJSON {
                 response in
