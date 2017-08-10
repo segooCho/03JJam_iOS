@@ -12,11 +12,12 @@ final class MealDetail: UIViewController, UIImagePickerControllerDelegate, UINav
     //MARK: Properties
     fileprivate var didSetupConstraints = false
     fileprivate var viewMeal: [Meal] = []
-    fileprivate var editBusinessUsersMeal: [BusinessUsersMeal] = []
+    fileprivate var saveBusinessUsersMeal: [BusinessUsersMeal] = []
     fileprivate var image: UIImage!
     fileprivate var editImage: String = ""
     fileprivate var segmentedIndexAndCode: Int = 3
-
+    fileprivate let uniqueId = UIDevice.current.identifierForVendor!.uuidString //UUID
+    
     //MARK: Constants
     fileprivate struct Metric {
         static let segmentedMid = CGFloat(20)
@@ -25,7 +26,16 @@ final class MealDetail: UIViewController, UIImagePickerControllerDelegate, UINav
         static let editSegmentedMid = CGFloat(0)
         static let editSegmentedHeight = CGFloat(0)
 
+        static let likeButtonTop = CGFloat(10)
+        static let likeButtonLeft = CGFloat(10)
+        static let likeButtonSize = CGFloat(20)
+        
+        static let messageLabelTop = CGFloat(10)
+        static let messageLabelLeft = CGFloat(10)
+        static let messageLabelRight = CGFloat(10)
+        
         static let commonOffset = CGFloat(7)
+        static let commonOffset4 = CGFloat(4)
     }
 
     //MARK: UI
@@ -34,6 +44,9 @@ final class MealDetail: UIViewController, UIImagePickerControllerDelegate, UINav
     fileprivate var imagePicker: UIImagePickerController = UIImagePickerController()
     fileprivate let segmentedTitles: Array<String> = ["사진 지우기","사진첩","카메라"]
     fileprivate let tableView = UITableView(frame: .zero, style: .plain)
+    //종아요
+    fileprivate let likeButton = UIButton()
+    fileprivate let mesaageLabel = UILabel()
 
     //MARK: init
     init(viewMeal: [Meal]) {
@@ -87,6 +100,13 @@ final class MealDetail: UIViewController, UIImagePickerControllerDelegate, UINav
         self.tableView.dataSource = self
         self.tableView.delegate = self
         self.view.addSubview(self.tableView)
+        
+        self.likeButton.setBackgroundImage(UIImage(named: "icon-like"), for: .normal)
+        self.likeButton.setBackgroundImage(UIImage(named: "icon-like-selected"), for: .selected)
+        self.likeButton.addTarget(self, action: #selector(likeButtonDidTap), for: .touchUpInside)
+        self.view.addSubview(self.likeButton)
+        self.view.addSubview(self.mesaageLabel)
+        
         self.view.addSubview(self.activityIndicatorView)
         //updateViewConstraints 자동 호출
         self.view.setNeedsUpdateConstraints()
@@ -109,21 +129,64 @@ final class MealDetail: UIViewController, UIImagePickerControllerDelegate, UINav
                     make.top.equalTo(self.topLayoutGuide.snp.bottom).offset(Metric.commonOffset)
                     make.height.equalTo(Metric.segmentedHeight)
                 }
-                //tableView
-                self.tableView.snp.makeConstraints { make in
-                    make.top.equalTo(self.segmentedControl.snp.bottom).offset(Metric.commonOffset)
-                    make.left.right.bottom.equalToSuperview()
-                    make.bottom.equalTo(self.bottomLayoutGuide.snp.top)
+                
+                if controlTuple.writeMode {
+                    //tableView
+                    self.tableView.snp.makeConstraints { make in
+                        make.top.equalTo(self.segmentedControl.snp.bottom).offset(Metric.commonOffset)
+                        make.left.right.bottom.equalToSuperview()
+                        make.bottom.equalTo(self.bottomLayoutGuide.snp.top).offset(-Metric.commonOffset4)
+                    }
+                } else {
+                    //tableView
+                    self.tableView.snp.makeConstraints { make in
+                        make.top.equalTo(self.segmentedControl.snp.bottom).offset(Metric.commonOffset)
+                        make.left.right.bottom.equalToSuperview()
+                        make.bottom.equalTo(self.likeButton.snp.top).offset(-Metric.commonOffset4)
+                    }
+                    //like 버튼
+                    self.likeButton.snp.makeConstraints { make in
+                        make.left.equalTo(Metric.likeButtonLeft)
+                        make.width.equalTo(Metric.likeButtonSize)
+                        make.bottom.equalTo(self.bottomLayoutGuide.snp.top).offset(-Metric.commonOffset4)
+                        make.height.equalTo(Metric.likeButtonSize)
+                    }
+                    //메시지
+                    self.mesaageLabel.snp.makeConstraints { make in
+                        make.left.equalTo(Metric.likeButtonSize + (Metric.commonOffset*2))
+                        make.width.equalTo(self.view.snp.width).offset(Metric.likeButtonSize + Metric.commonOffset)
+                        make.bottom.equalTo(self.bottomLayoutGuide.snp.top).offset(-Metric.commonOffset4)
+                        make.height.equalTo(Metric.likeButtonSize)
+                    }
                 }
+
             } else {
                 //tableView
                 self.tableView.snp.makeConstraints { make in
                     make.top.equalTo(self.topLayoutGuide.snp.bottom)
                     make.left.right.bottom.equalToSuperview()
-                    make.bottom.equalTo(self.bottomLayoutGuide.snp.top)
+                    make.bottom.equalTo(self.likeButton.snp.top).offset(-Metric.commonOffset4)
+                }
+                //like 버튼
+                self.likeButton.snp.makeConstraints { make in
+                    make.left.equalTo(Metric.likeButtonLeft)
+                    make.width.equalTo(Metric.likeButtonSize)
+                    make.bottom.equalTo(self.bottomLayoutGuide.snp.top).offset(-Metric.commonOffset4)
+                    make.height.equalTo(Metric.likeButtonSize)
+                }
+                //메시지
+                self.mesaageLabel.snp.makeConstraints { make in
+                    make.left.equalTo(Metric.likeButtonSize + (Metric.commonOffset*2))
+                    make.width.equalTo(self.view.snp.width).offset(Metric.likeButtonSize + Metric.commonOffset)
+                    make.bottom.equalTo(self.bottomLayoutGuide.snp.top).offset(-Metric.commonOffset4)
+                    make.height.equalTo(Metric.likeButtonSize)
                 }
             }
-
+        }
+        
+        //좋아요 가져오기
+        if !controlTuple.writeMode {
+            mealLikeCountNetWorking()
         }
         super.updateViewConstraints()
     }
@@ -196,9 +259,9 @@ final class MealDetail: UIViewController, UIImagePickerControllerDelegate, UINav
     }
     
     func mealSave() {
-        self.editBusinessUsersMeal.removeAll()
-        self.editBusinessUsersMeal = MealDetailTextCell.tableViewCellMeal.businessUsersMeal
-        if editBusinessUsersMeal.count < 0 {
+        self.saveBusinessUsersMeal.removeAll()
+        self.saveBusinessUsersMeal = MealDetailTextCell.tableViewCellMeal.businessUsersMeal
+        if saveBusinessUsersMeal.count < 0 {
             let alertController = UIAlertController(
                 title: self.title,
                 message: "식단 등록 처리 중 오류가 발생했습니다.",
@@ -213,8 +276,8 @@ final class MealDetail: UIViewController, UIImagePickerControllerDelegate, UINav
             self.present(alertController, animated: true, completion: nil)
             return
         } else {
-            print(self.viewMeal[0].meal_Id)
-            print(self.viewMeal[0].restaurant_Id)
+            //print(self.viewMeal[0].meal_Id)
+            //print(self.viewMeal[0].restaurant_Id)
             mealSaveNetWorking()
         }
     }
@@ -228,51 +291,111 @@ final class MealDetail: UIViewController, UIImagePickerControllerDelegate, UINav
         }
         
         UICommonSetLoadingService(self.activityIndicatorView, service: true)
-        BusinessUsersNetWorking.restaurantMealEditAndWrite(Oid: Oid,
-                                               businessUsersMeal: self.editBusinessUsersMeal,
-                                               image: image,
-                                               editImage: self.editImage) { [weak self] response in
-            guard let `self` = self else { return }
-            if response.count > 0 {
-                //Notification 포함 작동 중
-                UICommonSetLoadingService(self.activityIndicatorView, service: false)
-                let message = response[0].message //무조건 리턴 메시지 발생함
-                if message != nil {
-                    if message == "식단 저장이 완료되었습니다." || message == "식단 수정이 완료되었습니다." {
-                        //OK
-                        let alertController = UIAlertController(
-                            title: self.title,
-                            message: message,
-                            preferredStyle: .alert
-                        )
-                        let alertLoginScreen = UIAlertAction(
-                            title: "이전 페이지 이동",
-                            style: .default) { _ in
-                                //이전 페이지
-                                _ = self.navigationController?.popViewController(animated: true)
-                        }
-                        alertController.addAction(alertLoginScreen)
-                        
-                        //신규 저장 후 이전 페이지로 가지 않고 바로 저장하면 오류 발생
-                        //Notification 발생으로 mealDetailTuple.writeMode=false로 변경됨
-                        /*
-                        if !mealDetailTuple.writeMode {
+        BusinessUsersNetWorking.restaurantMealEditAndWrite(
+            Oid: Oid,
+            businessUsersMeal: self.saveBusinessUsersMeal,
+            image: image,
+            editImage: self.editImage) { [weak self] response in
+                guard let `self` = self else { return }
+                if response.count > 0 {
+                    //Notification 포함 작동 중
+                    UICommonSetLoadingService(self.activityIndicatorView, service: false)
+                    let message = response[0].message //무조건 리턴 메시지 발생함
+                    if message != nil {
+                        if message == "식단 저장이 완료되었습니다." || message == "식단 수정이 완료되었습니다." {
+                            //OK
+                            let alertController = UIAlertController(
+                                title: self.title,
+                                message: message,
+                                preferredStyle: .alert
+                            )
+                            let alertLoginScreen = UIAlertAction(
+                                title: "이전 페이지 이동",
+                                style: .default) { _ in
+                                    //이전 페이지
+                                    _ = self.navigationController?.popViewController(animated: true)
+                            }
+                            alertController.addAction(alertLoginScreen)
+                            
+                            //신규 저장 후 이전 페이지로 가지 않고 바로 저장하면 오류 발생
+                            //Notification 발생으로 mealDetailTuple.writeMode=false로 변경됨
+                            /*
+                             if !mealDetailTuple.writeMode {
+                             let alertConfirm = UIAlertAction(
+                             title: "확인",
+                             style: .default) { _ in
+                             //확인 후 처리
+                             }
+                             alertController.addAction(alertConfirm)
+                             }
+                             */
+                            
+                            //에디터 모드 일때 이전 페이지 data reload 처리
+                            if controlTuple.editMode {
+                                NotificationCenter.default.post(name: .businessUsersMealListDidAdd, object: self, userInfo: [:])
+                            }
+                            UICommonSetLoadingService(self.activityIndicatorView, service: false)
+                            self.present(alertController, animated: true, completion: nil)
+                            
+                        } else {
+                            //Error 메시지
+                            let alertController = UIAlertController(
+                                title: self.title,
+                                message: message,
+                                preferredStyle: .alert
+                            )
                             let alertConfirm = UIAlertAction(
                                 title: "확인",
                                 style: .default) { _ in
                                     //확인 후 처리
                             }
                             alertController.addAction(alertConfirm)
+                            self.present(alertController, animated: true, completion: nil)
                         }
-                        */
-                        
-                        //에디터 모드 일때 이전 페이지 data reload 처리
-                        if controlTuple.editMode {
-                            NotificationCenter.default.post(name: .businessUsersMealListDidAdd, object: self, userInfo: [:])
-                        }
-                        UICommonSetLoadingService(self.activityIndicatorView, service: false)
-                        self.present(alertController, animated: true, completion: nil)
-                        
+                    }
+                }
+        }
+    }
+    
+    /*********************************************  맛있어요 처리 ******************************************************/
+    func mealLikeCountNetWorking() {
+        UICommonSetLoadingService(self.activityIndicatorView, service: true)
+        CommonNetWorking.mealLikeCount(
+            meal_Id: self.viewMeal[0].meal_Id,
+            uniqueId: self.uniqueId
+            ) { [weak self] response in
+                guard let `self` = self else { return }
+                UICommonSetLoadingService(self.activityIndicatorView, service: false)
+                if response.count > 0 {
+                    //Notification 포함 작동 중
+                    let check = response[0].check //무조건 리턴 발생함
+                    let cnt = response[0].cnt //무조건 리턴 발생함
+                    
+                    //check
+                    if check == "y" {
+                        self.likeButton.isSelected = true
+                    } else {
+                        self.likeButton.isSelected = false
+                    }
+                    //like
+                    self.mesaageLabel.text = self.likeCountLabelText(likeCount: cnt!)
+                }
+        }
+    }
+
+    func mealLikeNetWorking() {
+        UICommonSetLoadingService(self.activityIndicatorView, service: true)
+        CommonNetWorking.mealLike(
+            meal_Id: self.viewMeal[0].meal_Id,
+            uniqueId: uniqueId
+        ) { [weak self] response in
+            guard let `self` = self else { return }
+            if response.count > 0 {
+                UICommonSetLoadingService(self.activityIndicatorView, service: false)
+                let message = response[0].message //무조건 리턴 메시지 발생함
+                if message != nil {
+                    if message == "맛있어요 설정되었습니다." || message == "맛있어요 해제되었습니다." {
+                        self.mealLikeCountNetWorking()
                     } else {
                         //Error 메시지
                         let alertController = UIAlertController(
@@ -290,6 +413,20 @@ final class MealDetail: UIViewController, UIImagePickerControllerDelegate, UINav
                     }
                 }
             }
+        }
+    }
+    
+    func likeButtonDidTap() {
+        mealLikeNetWorking()
+    }
+    
+    func likeCountLabelText(likeCount: Int) -> String {
+        if likeCount == 0 {
+            return "가장 먼저 맛있어요를 눌러보세요."
+        } else {
+            let numberFormatter = NumberFormatter()
+            numberFormatter.numberStyle = .decimal
+            return "\(numberFormatter.string(from: NSNumber(value:likeCount))!)명이 맛있어요 했습니다."
         }
     }
     
@@ -392,7 +529,6 @@ extension MealDetail: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.row == 0 {
             let cell = tableView.dequeueReusableCell(withIdentifier: "mealDetailImageCell", for: indexPath) as! MealDetailImageCell
-            
             
             if !controlTuple.editMode {
                 cell.configure(editImage: self.viewMeal[0].foodImage!)

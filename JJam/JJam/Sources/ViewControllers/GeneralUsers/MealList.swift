@@ -156,7 +156,7 @@ final class MealList: UIViewController {
     //식당 인증 & 공지사항
     func restaurantInfo() {
         UICommonSetLoadingService(self.activityIndicatorView, service: true)
-        GeneralUsersNetWorking.restaurantInfo(restaurant_Id: self.interestRestaurantId) { [weak self] response in
+        CommonNetWorking.restaurantInfo(restaurant_Id: self.interestRestaurantId) { [weak self] response in
             guard let `self` = self else { return }
             if response.count > 0 {
                 UICommonSetLoadingService(self.activityIndicatorView, service: false)
@@ -202,7 +202,7 @@ final class MealList: UIViewController {
     //식단 조회
     func mealSearch() {
         UICommonSetLoadingService(self.activityIndicatorView, service: true)
-        GeneralUsersNetWorking.mealSearch(restaurant_Id: self.interestRestaurantId, segmentedIndexAndCode: self.segmentedIndexAndCode) { [weak self] response in
+        CommonNetWorking.mealSearch(restaurant_Id: self.interestRestaurantId, segmentedIndexAndCode: self.segmentedIndexAndCode) { [weak self] response in
             guard let `self` = self else { return }
             if response.count > 0 {
                 let message = response[0].message

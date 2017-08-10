@@ -46,7 +46,14 @@ struct Meal: Mappable {
         self.remarks <- map["remarks"]
         self.foodImage <- map["foodImage"]
         self.message <- map["message"]
+        
+        /* server : lookup sample
+        let json = map.JSON["likeDocs"] as? [[String: Any]]
+        if json != nil {
+            self.likeDocs = json?[0]["uniqueId"] as! String
+        } else {
+            self.likeDocs = ""
+        }
+        */
     }
 }
-
-

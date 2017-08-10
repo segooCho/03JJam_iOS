@@ -43,6 +43,7 @@
 		846417321F2199BF0029BC78 /* UITextViewPlaceholder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 846417311F2199BF0029BC78 /* UITextViewPlaceholder.swift */; };
 		846417351F2243270029BC78 /* GeneralUsersNetWorking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 846417341F2243270029BC78 /* GeneralUsersNetWorking.swift */; };
 		846843C11F32BB6A00B57E8C /* Group.swift in Sources */ = {isa = PBXBuildFile; fileRef = 846843C01F32BB6A00B57E8C /* Group.swift */; };
+		846E86671F3C6C1000037D0C /* CommonNetWorking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 846E86661F3C6C1000037D0C /* CommonNetWorking.swift */; };
 		8483ECF21F34665200EC35C8 /* Member.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8483ECF11F34665200EC35C8 /* Member.swift */; };
 		849D93851F283682004776E7 /* UIImageViewSetImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849D93841F283682004776E7 /* UIImageViewSetImage.swift */; };
 		849D93A21F28624B004776E7 /* NoImageFound.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 849D93A11F28624B004776E7 /* NoImageFound.jpg */; };
@@ -106,6 +107,7 @@
 		846417311F2199BF0029BC78 /* UITextViewPlaceholder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UITextViewPlaceholder.swift; sourceTree = "<group>"; };
 		846417341F2243270029BC78 /* GeneralUsersNetWorking.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GeneralUsersNetWorking.swift; sourceTree = "<group>"; };
 		846843C01F32BB6A00B57E8C /* Group.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Group.swift; sourceTree = "<group>"; };
+		846E86661F3C6C1000037D0C /* CommonNetWorking.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommonNetWorking.swift; sourceTree = "<group>"; };
 		8483ECF11F34665200EC35C8 /* Member.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Member.swift; sourceTree = "<group>"; };
 		849D93841F283682004776E7 /* UIImageViewSetImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIImageViewSetImage.swift; sourceTree = "<group>"; };
 		849D93A11F28624B004776E7 /* NoImageFound.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = NoImageFound.jpg; sourceTree = "<group>"; };
@@ -350,6 +352,7 @@
 			children = (
 				849D93A91F28C1BE004776E7 /* BusinessUsersNetWorking.swift */,
 				846417341F2243270029BC78 /* GeneralUsersNetWorking.swift */,
+				846E86661F3C6C1000037D0C /* CommonNetWorking.swift */,
 				84ED90741F2DEFEE0087F37A /* LoginNetWorking.swift */,
 			);
 			path = Networking;
@@ -584,6 +587,7 @@
 				843069481F1E51AA008B7DEF /* UICommonSet.swift in Sources */,
 				845C07CD1F2081DA008A6F9F /* BusinessUsersNotice.swift in Sources */,
 				8430694A1F1E51AA008B7DEF /* InterestRestaurant.swift in Sources */,
+				846E86671F3C6C1000037D0C /* CommonNetWorking.swift in Sources */,
 				8430694F1F1E51AA008B7DEF /* InterestRestaurantList.swift in Sources */,
 				845C07C91F206CE3008A6F9F /* BusinessUsersMenuManagement.swift in Sources */,
 				843069611F1E57A4008B7DEF /* BusinessUsersSettings.swift in Sources */,

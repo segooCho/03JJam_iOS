@@ -11,8 +11,10 @@ import ObjectMapper
 struct RestaurantInfo: Mappable {
     var restaurant_Id: String?      //Oid
     var id: String?                 //사용자 ID
-    var certification: String?      //인증 구분 (y,n)
+    var certification: String?      //인증 구분 (y:승인,n:미승인)
     var notice: String?             //공지사항
+    var check: String?              //식당 맛있어요 Check 구분(y,n)
+    var cnt: Int?                   //맛있어요 카운트
     var message: String?            //리턴 메시지
     
     init?(map: Map) {
@@ -23,6 +25,8 @@ struct RestaurantInfo: Mappable {
         self.id <- map["id"]
         self.certification <- map["certification"]
         self.notice <- map["notice"]
+        self.check <- map["check"]
+        self.cnt <- map["cnt"]
         self.message <- map["message"]
     }
 }

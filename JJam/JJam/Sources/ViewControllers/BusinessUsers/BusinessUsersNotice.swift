@@ -98,7 +98,7 @@ final class BusinessUsersNotice: UIViewController {
     //식당 인증 & 공지 중 공지만 사용
     func restaurantInfo() {
         UICommonSetLoadingService(self.activityIndicatorView, service: true)
-        GeneralUsersNetWorking.restaurantInfo(restaurant_Id: self.restaurant_Id) { [weak self] response in
+        CommonNetWorking.restaurantInfo(restaurant_Id: self.restaurant_Id) { [weak self] response in
             guard let `self` = self else { return }
             if response.count > 0 {
                 UICommonSetLoadingService(self.activityIndicatorView, service: false)

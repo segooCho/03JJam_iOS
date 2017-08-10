@@ -21,6 +21,11 @@ struct Url {
     static let restaurantInfo = BaseUrl + "restaurantInfo"
     //식단(오늘,계획,지난,사진)
     static let mealSearch = BaseUrl + "mealSearch"
+    //식단 맛있어요 카운터
+    static let mealLikeCount = BaseUrl + "mealLikeCount"
+    //식단 맛있어요 설정/해제
+    static let mealLike = BaseUrl + "mealLike"
+    
     //로그인
     static let restaurantLogin = BaseUrl + "restaurantLogin"
     //회원 정보 조회
@@ -28,6 +33,7 @@ struct Url {
     //식당 항목(Group) 조회
     static let restaurantGroup = BaseUrl + "restaurantGroup"
 
+    
     
     /* ============== 이미지 ============== */
     //이미지 경로

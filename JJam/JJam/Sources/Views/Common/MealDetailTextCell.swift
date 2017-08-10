@@ -111,7 +111,6 @@ final class MealDetailTextCell: UITableViewCell {
             // add datepicker to textField
             self.dateTextField.inputView = self.datePicker
             
-            
             UICommonSetLabel(self.locationLabel, text: "위치", color: 1)
             UICommonSetTextFieldEnable(self.locationTextField, placeholderText: "")
             self.locationDownPicker = DownPicker(textField: self.locationTextField, withData:groupArray.location as! [Any])
@@ -208,6 +207,7 @@ final class MealDetailTextCell: UITableViewCell {
         self.contentView.addSubview(self.remarksLabel)
         self.contentView.addSubview(self.remarksTextView)
         
+        //일자
         if controlTuple.editMode {
             self.dateTextField.text = meal.mealDate
             self.dateTextField.becomeFirstResponder()
@@ -295,18 +295,17 @@ final class MealDetailTextCell: UITableViewCell {
     override func layoutSubviews() {
         super.layoutSubviews()
         //self.dateTextField.frame = self.contentView.bounds //채우기
-        
         //일자
         self.dateLabel.snp.makeConstraints { make in
             make.left.equalTo(Metric.labelLeft)
             make.right.equalTo(Metric.labelRight)
-            make.top.equalTo(self.contentView).offset(Metric.commonOffset)
+            make.top.equalTo(self.contentView.snp.top).offset(Metric.commonOffset)
             make.height.equalTo(Metric.commonHeight)
         }
         self.dateTextField.snp.makeConstraints { make in
             make.left.equalTo(Metric.textFieldLeft)
             make.right.equalTo(Metric.textFieldRight)
-            make.top.equalTo(self.contentView).offset(Metric.commonOffset)
+            make.top.equalTo(self.contentView.snp.top).offset(Metric.commonOffset)
             make.height.equalTo(Metric.commonHeight)
         }
         
