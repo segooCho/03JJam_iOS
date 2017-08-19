@@ -32,6 +32,11 @@ final class RestaurantListSearch: UIViewController {
     fileprivate let button = UIButton()
     fileprivate let tableView = UITableView(frame: .zero, style: .plain)
     
+    //NotificationCenter에 등록된 옵저버의 타겟 객체가 소멸
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
+
     //MARK: init
     init() {
         super.init(nibName: nil, bundle: nil)

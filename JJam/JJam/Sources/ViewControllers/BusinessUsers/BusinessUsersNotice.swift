@@ -24,6 +24,11 @@ final class BusinessUsersNotice: UIViewController {
     fileprivate let activityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: .gray)
     fileprivate let textView = UITextView()
     
+    //NotificationCenter에 등록된 옵저버의 타겟 객체가 소멸
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
+    
     //MARK: init
     init(restaurant_Id: String) {
         self.restaurant_Id = restaurant_Id
@@ -86,9 +91,30 @@ final class BusinessUsersNotice: UIViewController {
                 make.bottom.equalTo(self.bottomLayoutGuide.snp.top).offset(-Metric.commonOffset)
             }
         }
+        
+        //키보드에 숨겨지는 입력처리
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(keyboardWillChangeFrame),
+            name: .UIKeyboardWillChangeFrame,
+            object: nil
+        )
+        
         super.updateViewConstraints()
     }
-
+    
+    // MARK: Notification
+    func keyboardWillChangeFrame(notification: Notification) {
+        guard let keyboardFrame = notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? CGRect,
+            let duration = notification.userInfo?[UIKeyboardAnimationDurationUserInfoKey] as? TimeInterval
+            else { return }
+        let keyboardVisibleHeight = UIScreen.main.bounds.height - keyboardFrame.origin.y
+        UIView.animate(withDuration: duration) {
+            self.textView.contentInset.bottom = keyboardVisibleHeight
+            self.textView.scrollIndicatorInsets.bottom = keyboardVisibleHeight
+        }
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -120,7 +146,8 @@ final class BusinessUsersNotice: UIViewController {
                 } else {
                     //공지사항
                     let notice = response[0].notice
-                    self.textView.text = notice?.replacingOccurrences(of: "\\n", with: "\n")
+                    //self.textView.text = notice?.replacingOccurrences(of: "\\n", with: "\n")
+                    self.textView.text = notice
                     //self.businessUsersRestaurantNotice = response[0].notice
                 }
             }

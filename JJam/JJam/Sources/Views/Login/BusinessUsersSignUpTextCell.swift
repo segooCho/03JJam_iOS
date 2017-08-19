@@ -84,6 +84,7 @@ final class BusinessUsersSignUpTextCell: UITableViewCell {
         UICommonSetLabel(self.addressLabel, text: "주소", color: 1)
         UICommonSetTextViewEnable(self.addressTextView, placeholderText: self.addressLabel.text!)
         
+        
         UICommonSetLabel(self.contactNumberLabel, text: "연락처", color: 1)
         UICommonSetTextFieldEnable(self.contactNumberTextField, placeholderText: self.contactNumberLabel.text!)
         self.contactNumberTextField.delegate = self
@@ -360,5 +361,3 @@ extension BusinessUsersSignUpTextCell: UITextFieldDelegate {
         return true
     }
 }
-
-

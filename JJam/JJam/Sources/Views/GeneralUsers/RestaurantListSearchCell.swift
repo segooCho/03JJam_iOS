@@ -36,7 +36,7 @@ final class RestaurantListSearchCell: UITableViewCell {
             self.textLabel?.textColor = .red
         }
         self.detailTextLabel?.text = certification + "\n"
-                                    + "주소 : " + restaurantSearch.address + "\n"
+                                    + "주소 : " + restaurantSearch.address.replacingOccurrences(of: "\n", with: " ") + "\n"
                                     + "연락처 : " + restaurantSearch.contactNumber + "\n"
                                     + "대표 : " + restaurantSearch.representative
         

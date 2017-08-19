@@ -48,6 +48,11 @@ final class MealDetail: UIViewController, UIImagePickerControllerDelegate, UINav
     fileprivate let likeButton = UIButton()
     fileprivate let mesaageLabel = UILabel()
 
+    //NotificationCenter에 등록된 옵저버의 타겟 객체가 소멸
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
+
     //MARK: init
     init(viewMeal: [Meal]) {
         self.viewMeal = viewMeal
@@ -188,7 +193,34 @@ final class MealDetail: UIViewController, UIImagePickerControllerDelegate, UINav
         if !controlTuple.writeMode {
             mealLikeCountNetWorking()
         }
+        
+        //키보드에 숨겨지는 입력처리
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(keyboardWillChangeFrame),
+            name: .UIKeyboardWillChangeFrame,
+            object: nil
+        )
+
         super.updateViewConstraints()
+    }
+    
+    // MARK: Notification
+    func keyboardWillChangeFrame(notification: Notification) {
+        guard let keyboardFrame = notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? CGRect,
+            let duration = notification.userInfo?[UIKeyboardAnimationDurationUserInfoKey] as? TimeInterval
+            else { return }
+        let keyboardVisibleHeight = UIScreen.main.bounds.height - keyboardFrame.origin.y
+        UIView.animate(withDuration: duration) {
+            self.tableView.contentInset.bottom = keyboardVisibleHeight
+            self.tableView.scrollIndicatorInsets.bottom = keyboardVisibleHeight
+            
+            // 키보드가 보여지는 경우 메시지 셀로 스크롤
+            if keyboardVisibleHeight > 0 {
+                let indexPath = IndexPath(row: 1, section: 0) //메시지 셀
+                self.tableView.scrollToRow(at: indexPath, at: .none, animated: false)
+            }
+        }
     }
     
     override func didReceiveMemoryWarning() {
@@ -368,8 +400,8 @@ final class MealDetail: UIViewController, UIImagePickerControllerDelegate, UINav
                 UICommonSetLoadingService(self.activityIndicatorView, service: false)
                 if response.count > 0 {
                     //Notification 포함 작동 중
-                    let check = response[0].check //무조건 리턴 발생함
-                    let cnt = response[0].cnt //무조건 리턴 발생함
+                    let check = response[0].check   //무조건 리턴 발생함
+                    let cnt = response[0].cnt       //무조건 리턴 발생함
                     
                     //check
                     if check == "y" {
@@ -392,7 +424,7 @@ final class MealDetail: UIViewController, UIImagePickerControllerDelegate, UINav
             guard let `self` = self else { return }
             if response.count > 0 {
                 UICommonSetLoadingService(self.activityIndicatorView, service: false)
-                let message = response[0].message //무조건 리턴 메시지 발생함
+                let message = response[0].message   //무조건 리턴 메시지 발생함
                 if message != nil {
                     if message == "맛있어요 설정되었습니다." || message == "맛있어요 해제되었습니다." {
                         self.mealLikeCountNetWorking()

@@ -190,7 +190,8 @@ final class MealList: UIViewController {
                     //공지사항
                     self.interestRestaurantNotice = response[0].notice
                     //공지사항 : \\n 처리
-                    let data = self.interestRestaurantNotice.replacingOccurrences(of: "\\n", with: "\n")
+                    //let data = self.interestRestaurantNotice.replacingOccurrences(of: "\\n", with: "\n")
+                    let data = self.interestRestaurantNotice
                     self.textView.text = data
                     //식단 조회
                     self.mealSearch()

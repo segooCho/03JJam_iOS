@@ -35,7 +35,7 @@ final class BusinessUsersSignUp: UIViewController, UIImagePickerControllerDelega
     fileprivate var imagePicker: UIImagePickerController = UIImagePickerController()
     fileprivate let segmentedControl = UISegmentedControl()
     fileprivate let segmentedTitles: Array<String> = ["사진 지우기","사진첩","카메라"]
-
+    
     
     //MARK: init
     init(restaurant_Id: String) {
@@ -124,8 +124,10 @@ final class BusinessUsersSignUp: UIViewController, UIImagePickerControllerDelega
                 make.height.equalTo(Metric.segmentedHeight)
             }
         }
+        
         super.updateViewConstraints()
     }
+    
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -511,6 +513,7 @@ extension BusinessUsersSignUp: UITableViewDelegate {
     }
 }
 
+/*
 extension BusinessUsersSignUp: UITextFieldDelegate {
     //TextField 리턴키 처리
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -519,3 +522,11 @@ extension BusinessUsersSignUp: UITextFieldDelegate {
     }
 }
 
+extension BusinessUsersSignUp: UITextViewDelegate {
+    //UITextView 리턴키 처리
+    func textViewShouldReturn(_ textView: UITextView) -> Bool {
+        self.view.endEditing(true)
+        return true
+    }
+}
+*/

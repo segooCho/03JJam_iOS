@@ -224,7 +224,8 @@ final class MealDetailTextCell: UITableViewCell {
         self.sideDish3TextField.text = meal.sideDish3
         self.sideDish4TextField.text = meal.sideDish4
         self.dessertTextField.text = meal.dessert
-        self.remarksTextView.text = meal.remarks.replacingOccurrences(of: "\\n", with: "\n")
+        //self.remarksTextView.text = meal.remarks.replacingOccurrences(of: "\\n", with: "\n")
+        self.remarksTextView.text = meal.remarks
         self.setNeedsLayout()
     }
     
