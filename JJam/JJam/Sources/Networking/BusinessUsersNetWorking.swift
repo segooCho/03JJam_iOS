@@ -162,7 +162,7 @@ struct BusinessUsersNetWorking {
         completion(restaurantInfo)
     }
     
-    //식당 인증 & 공지사항
+    //식단삭제
     static func mealDel(meal_Id: String, completion: @escaping (_ restaurantInfo: [RestaurantInfo]) -> Void) {
         let parameters: [String: Any] = [
             "meal_Id": meal_Id,
