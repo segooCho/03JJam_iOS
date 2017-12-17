@@ -104,7 +104,7 @@ struct BusinessUsersNetWorking {
         } else {
             urlString = Url.mealEdit
             param = "meal_Id"                               //Meal 수정   (조건 : meal_Id)
-            method = .put
+            method = .post
         }
         
         let parameters: [String: Any] = [
