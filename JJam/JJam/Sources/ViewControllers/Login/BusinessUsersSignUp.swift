@@ -338,7 +338,7 @@ final class BusinessUsersSignUp: UIViewController, UIImagePickerControllerDelega
                 UICommonSetLoadingService(self.activityIndicatorView, service: false)
                 let message = response[0].message //무조건 리턴 메시지 발생함
                 if message != nil {
-                    if message == "회원 수정이 완료되었습니다." {
+                    if message == "회원 수정이 완료되었습니다.\n로그인 페이지로 이동합니다." {
                         //OK
                         let alertController = UIAlertController(
                             title: self.title,

@@ -159,7 +159,7 @@ struct LoginNetWorking {
             for (key, value) in parameters {
                 multipartFormData.append((value as AnyObject).data(using: String.Encoding.utf8.rawValue)!, withName: key)
             }
-        }, to: Url.restaurantEdit, method:.put, encodingCompletion: { (result) in
+        }, to: Url.restaurantEdit, method:.post, encodingCompletion: { (result) in
             switch result {
             case .success(let upload, _, _):
                 upload.responseJSON { response in
