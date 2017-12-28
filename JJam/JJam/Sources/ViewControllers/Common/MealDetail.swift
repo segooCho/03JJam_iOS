@@ -28,7 +28,7 @@ final class MealDetail: UIViewController, UIImagePickerControllerDelegate, UINav
 
         static let likeButtonTop = CGFloat(10)
         static let likeButtonLeft = CGFloat(10)
-        static let likeButtonSize = CGFloat(20)
+        static let likeButtonSize = CGFloat(30)
         
         static let messageLabelTop = CGFloat(10)
         static let messageLabelLeft = CGFloat(10)
