@@ -20,7 +20,7 @@ struct GeneralUsersNetWorking {
         
         var restaurantSearch: [RestaurantSearch] = []
         
-        Alamofire.request(Url.restaurantSearch, method: .post, parameters: parameters, headers: headers)
+        Alamofire.request(FixedBaseUrl.restaurantSearch, method: .post, parameters: parameters, headers: headers)
             .validate(statusCode: 200..<400)
             .responseJSON {
                     response in

@@ -15,7 +15,8 @@ final class BusinessUsersMealList: UIViewController {
     fileprivate var segmentedIndexAndCode = 0
     fileprivate var meal: [Meal] = []
     fileprivate var restaurantCertification:String!
-
+    var managerNotice:String!
+   
     //MARK: Constants
     fileprivate struct Metric {
         static let segmentedMid = CGFloat(20)
@@ -24,6 +25,9 @@ final class BusinessUsersMealList: UIViewController {
         static let labelMid = CGFloat(10)
         static let labelHeight = CGFloat(20)
         
+        static let textViewMid = CGFloat(10)
+        static let textViewHeight = CGFloat(100)
+
         static let commonOffset = CGFloat(7)
         static let commonHeight = CGFloat(40)
     }
@@ -33,6 +37,7 @@ final class BusinessUsersMealList: UIViewController {
     fileprivate let segmentedControl = UISegmentedControl()
     fileprivate let segmentedTitles: Array<String> = ["오늘 식단","계획 식단","지난 식단","사진 식단"]
     fileprivate let label = UILabel()
+    fileprivate let textView = UITextView()
     fileprivate let tableView = UITableView(frame: .zero, style: .plain)
     
     //NotificationCenter에 등록된 옵저버의 타겟 객체가 소멸
@@ -51,7 +56,10 @@ final class BusinessUsersMealList: UIViewController {
         
         self.restaurantCertification = "n"
 
-        //식당 인증 & 공지 사항
+        //운영자 공지사항 조회
+        managerNoticeSearch()
+        
+        //식당 인증 & 공지 사항(공지 사용안함)
         restaurantInfo()
     }
     
@@ -101,6 +109,11 @@ final class BusinessUsersMealList: UIViewController {
         }
         self.view.addSubview(self.label)
         
+        //공지사항 : viewDidLoad 시점에 값을 받지 못함
+        self.textView.text = self.managerNotice
+        UICommonSetTextViewDisable(self.textView)
+
+        
         //식단
         self.tableView.register(MealListCell.self, forCellReuseIdentifier: "mealListCell")
         self.tableView.dataSource = self
@@ -108,6 +121,7 @@ final class BusinessUsersMealList: UIViewController {
         
         self.view.addSubview(self.segmentedControl)
         self.view.addSubview(self.label)
+        self.view.addSubview(self.textView)
         self.view.addSubview(self.tableView)
         //activityIndicatorView는 경우에 따라 안보이는 경우가 있어서 항상 가장 늦게 addSubview 한다.
         self.view.addSubview(self.activityIndicatorView)
@@ -142,8 +156,14 @@ final class BusinessUsersMealList: UIViewController {
                 make.top.equalTo(self.segmentedControl.snp.bottom).offset(Metric.commonOffset)
                 make.height.equalTo(Metric.labelHeight)
             }
-            self.tableView.snp.makeConstraints { make in
+            self.textView.snp.makeConstraints { make in
+                make.left.equalTo(Metric.textViewMid)
+                make.right.equalTo(-Metric.textViewMid)
                 make.top.equalTo(self.label.snp.bottom).offset(Metric.commonOffset)
+                make.height.equalTo(Metric.textViewHeight)
+            }
+            self.tableView.snp.makeConstraints { make in
+                make.top.equalTo(self.textView.snp.bottom).offset(Metric.commonOffset)
                 make.left.right.equalToSuperview()
                 make.bottom.equalTo(self.bottomLayoutGuide.snp.top)
             }
@@ -215,7 +235,37 @@ final class BusinessUsersMealList: UIViewController {
     }
 
     //MARK: ACTION
-    //식당 인증 & 공지 중 인증만 사용
+    //운영자 공지사항 조회
+    func managerNoticeSearch() {
+        UICommonSetLoadingService(self.activityIndicatorView, service: true)
+        CommonNetWorking.managerNoticeSearch(division: "1") { [weak self] response in
+            guard let `self` = self else { return }
+            if response.count > 0 {
+                UICommonSetLoadingService(self.activityIndicatorView, service: false)
+                //운영자 공지사항
+                let message = response[0].message
+                if message != nil {
+                    let alertController = UIAlertController(
+                        title: self.title,
+                        message: message,
+                        preferredStyle: .alert
+                    )
+                    let alertConfirm = UIAlertAction(
+                        title: "확인",
+                        style: .default) { _ in
+                            // 확인 후 작업
+                            return
+                    }
+                    alertController.addAction(alertConfirm)
+                    self.present(alertController, animated: true, completion: nil)
+                } else {
+                    self.textView.text = response[0].text
+                }
+            }
+        }
+    }
+    
+    //식당 인증 & 공지 : 중 인증만 사용
     func restaurantInfo() {
         UICommonSetLoadingService(self.activityIndicatorView, service: true)
         CommonNetWorking.restaurantInfo(restaurant_Id: self.restaurant_Id) { [weak self] response in

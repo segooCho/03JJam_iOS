@@ -8,6 +8,8 @@
 
 import UIKit
 
+let JJamUserDefaultsKeyInterestRestaurantList = "JJamUserDefaultsKeyInterestRestaurantList"
+
 extension Notification.Name{
     //식당 찾기에서 관심 식당으로 이동 시
     static var interestRestaurantDidAdd: Notification.Name {return .init("interestRestaurant")}

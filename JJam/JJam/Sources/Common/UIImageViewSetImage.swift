@@ -46,9 +46,9 @@ extension UIImageView {
             var urlString:String = ""
             switch path {
             case 0:
-                urlString = Url.uploads
+                urlString = FixedBaseUrl.uploads
             default:
-                urlString = Url.uploadsSignUp
+                urlString = FixedBaseUrl.uploadsSignUp
             }
            
             let url = URL(string: urlString + "/\(foodImage)")

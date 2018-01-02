@@ -77,7 +77,7 @@ final class BusinessUsersMenuManagement: UIViewController {
         self.segmentedControl.selectedSegmentIndex = self.segmentedIndexAndCode
         
         //textField
-        groupBind(groupArray: groupArray.location)
+        groupBind(groupArray: BusinessGroupArray.location)
         UICommonSetTextFieldEnable(self.textField, placeholderText: self.segmentedTitles[self.segmentedIndexAndCode])
         self.textField.addTarget(self, action: #selector(textFieldDidChangeText), for: .editingChanged)
         self.textField.delegate = self
@@ -154,27 +154,27 @@ final class BusinessUsersMenuManagement: UIViewController {
         self.group.removeAll()
         switch self.segmentedControl.selectedSegmentIndex {
         case 0:
-            self.groupBind(groupArray: groupArray.location)
+            self.groupBind(groupArray: BusinessGroupArray.location)
             self.groupText = "location"
             self.doneButtonDidTap()
         case 1:
-            self.groupBind(groupArray: groupArray.division)
+            self.groupBind(groupArray: BusinessGroupArray.division)
             self.groupText = "division"
             self.doneButtonDidTap()
         case 2:
-            self.groupBind(groupArray: groupArray.stapleFood)
+            self.groupBind(groupArray: BusinessGroupArray.stapleFood)
             self.groupText = "stapleFood"
             self.doneButtonDidTap()
         case 3:
-            self.groupBind(groupArray: groupArray.soup)
+            self.groupBind(groupArray: BusinessGroupArray.soup)
             self.groupText = "soup"
             self.doneButtonDidTap()
         case 4:
-            self.groupBind(groupArray: groupArray.sideDish)
+            self.groupBind(groupArray: BusinessGroupArray.sideDish)
             self.groupText = "sideDish"
             self.doneButtonDidTap()
         case 5:
-            self.groupBind(groupArray: groupArray.dessert)
+            self.groupBind(groupArray: BusinessGroupArray.dessert)
             self.groupText = "dessert"
             self.doneButtonDidTap()
         default:
@@ -307,17 +307,17 @@ final class BusinessUsersMenuManagement: UIViewController {
                                 self.group.append(Group (text: text))
                                 switch self.groupText {
                                 case "location":
-                                    groupArray.location.add(text)
+                                    BusinessGroupArray.location.add(text)
                                 case "division":
-                                    groupArray.division.add(text)
+                                    BusinessGroupArray.division.add(text)
                                 case "stapleFood":
-                                    groupArray.stapleFood.add(text)
+                                    BusinessGroupArray.stapleFood.add(text)
                                 case "soup":
-                                    groupArray.soup.add(text)
+                                    BusinessGroupArray.soup.add(text)
                                 case "sideDish":
-                                    groupArray.sideDish.add(text)
+                                    BusinessGroupArray.sideDish.add(text)
                                 case "dessert":
-                                    groupArray.dessert.add(text)
+                                    BusinessGroupArray.dessert.add(text)
                                 default:
                                     print("No Group")
                                 }
@@ -327,23 +327,23 @@ final class BusinessUsersMenuManagement: UIViewController {
                                 self.group.removeAll()
                                 switch self.groupText {
                                 case "location":
-                                    groupArray.location.remove(text)
-                                    self.groupBind(groupArray: groupArray.location)
+                                    BusinessGroupArray.location.remove(text)
+                                    self.groupBind(groupArray: BusinessGroupArray.location)
                                 case "division":
-                                    groupArray.division.remove(text)
-                                    self.groupBind(groupArray: groupArray.division)
+                                    BusinessGroupArray.division.remove(text)
+                                    self.groupBind(groupArray: BusinessGroupArray.division)
                                 case "stapleFood":
-                                    groupArray.stapleFood.remove(text)
-                                    self.groupBind(groupArray: groupArray.stapleFood)
+                                    BusinessGroupArray.stapleFood.remove(text)
+                                    self.groupBind(groupArray: BusinessGroupArray.stapleFood)
                                 case "soup":
-                                    groupArray.soup.remove(text)
-                                    self.groupBind(groupArray: groupArray.soup)
+                                    BusinessGroupArray.soup.remove(text)
+                                    self.groupBind(groupArray: BusinessGroupArray.soup)
                                 case "sideDish":
-                                    groupArray.sideDish.remove(text)
-                                    self.groupBind(groupArray: groupArray.sideDish)
+                                    BusinessGroupArray.sideDish.remove(text)
+                                    self.groupBind(groupArray: BusinessGroupArray.sideDish)
                                 case "dessert":
-                                    groupArray.dessert.remove(text)
-                                    self.groupBind(groupArray: groupArray.dessert)
+                                    BusinessGroupArray.dessert.remove(text)
+                                    self.groupBind(groupArray: BusinessGroupArray.dessert)
                                 default:
                                     print("No Group")
                                 }

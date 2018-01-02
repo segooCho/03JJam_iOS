@@ -113,39 +113,39 @@ final class MealDetailTextCell: UITableViewCell {
             
             UICommonSetLabel(self.locationLabel, text: "위치", color: 1)
             UICommonSetTextFieldEnable(self.locationTextField, placeholderText: "")
-            self.locationDownPicker = DownPicker(textField: self.locationTextField, withData:groupArray.location as! [Any])
+            self.locationDownPicker = DownPicker(textField: self.locationTextField, withData:BusinessGroupArray.location as! [Any])
             
             UICommonSetLabel(self.divisionLabel, text: "구분", color: 1)
             UICommonSetTextFieldEnable(self.divisionTextField, placeholderText: "")
-            self.divisionDownPicker = DownPicker(textField: self.divisionTextField, withData:groupArray.division as! [Any])
+            self.divisionDownPicker = DownPicker(textField: self.divisionTextField, withData:BusinessGroupArray.division as! [Any])
             
             UICommonSetLabel(self.stapleFoodLabel, text: "주식(밥,면)", color: 0)
             UICommonSetTextFieldEnable(self.stapleFoodTextField, placeholderText: "")
-            self.stapleFoodDownPicker = DownPicker(textField: self.stapleFoodTextField, withData:groupArray.stapleFood as! [Any])
+            self.stapleFoodDownPicker = DownPicker(textField: self.stapleFoodTextField, withData:BusinessGroupArray.stapleFood as! [Any])
             
             UICommonSetLabel(self.soupLabel, text: "국", color: 0)
             UICommonSetTextFieldEnable(self.soupTextField, placeholderText: "")
-            self.soupDownPicker = DownPicker(textField: self.soupTextField, withData:groupArray.soup as! [Any])
+            self.soupDownPicker = DownPicker(textField: self.soupTextField, withData:BusinessGroupArray.soup as! [Any])
             
             UICommonSetLabel(self.sideDish1Label, text: "반찬1", color: 0)
             UICommonSetTextFieldEnable(self.sideDish1TextField, placeholderText: "")
-            self.sideDish1DownPicker = DownPicker(textField: self.sideDish1TextField, withData:groupArray.sideDish as! [Any])
+            self.sideDish1DownPicker = DownPicker(textField: self.sideDish1TextField, withData:BusinessGroupArray.sideDish as! [Any])
             
             UICommonSetLabel(self.sideDish2Label, text: "반찬2", color: 0)
             UICommonSetTextFieldEnable(self.sideDish2TextField, placeholderText: "")
-            self.sideDish2DownPicker = DownPicker(textField: self.sideDish2TextField, withData:groupArray.sideDish as! [Any])
+            self.sideDish2DownPicker = DownPicker(textField: self.sideDish2TextField, withData:BusinessGroupArray.sideDish as! [Any])
             
             UICommonSetLabel(self.sideDish3Label, text: "반찬3", color: 0)
             UICommonSetTextFieldEnable(self.sideDish3TextField, placeholderText: "")
-            self.sideDish3DownPicker = DownPicker(textField: self.sideDish3TextField, withData:groupArray.sideDish as! [Any])
+            self.sideDish3DownPicker = DownPicker(textField: self.sideDish3TextField, withData:BusinessGroupArray.sideDish as! [Any])
             
             UICommonSetLabel(self.sideDish4Label, text: "반찬4", color: 0)
             UICommonSetTextFieldEnable(self.sideDish4TextField, placeholderText: "")
-            self.sideDish4DownPicker = DownPicker(textField: self.sideDish4TextField, withData:groupArray.sideDish as! [Any])
+            self.sideDish4DownPicker = DownPicker(textField: self.sideDish4TextField, withData:BusinessGroupArray.sideDish as! [Any])
             
             UICommonSetLabel(self.dessertLabel, text: "후식", color: 0)
             UICommonSetTextFieldEnable(self.dessertTextField, placeholderText: "")
-            self.dessertDownPicker = DownPicker(textField: self.dessertTextField, withData:groupArray.dessert as! [Any])
+            self.dessertDownPicker = DownPicker(textField: self.dessertTextField, withData:BusinessGroupArray.dessert as! [Any])
             
             UICommonSetLabel(self.remarksLabel, text: "비고", color: 0)
             UICommonSetTextViewEnable(self.remarksTextView, placeholderText: "")

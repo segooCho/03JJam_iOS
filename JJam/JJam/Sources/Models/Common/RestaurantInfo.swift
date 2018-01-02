@@ -15,6 +15,7 @@ struct RestaurantInfo: Mappable {
     var notice: String?             //공지사항
     var check: String?              //식당 맛있어요 Check 구분(y,n)
     var cnt: Int?                   //맛있어요 카운트
+    var text: String?               //운영자 공지사항
     var message: String?            //리턴 메시지
     
     init?(map: Map) {
@@ -27,6 +28,7 @@ struct RestaurantInfo: Mappable {
         self.notice <- map["notice"]
         self.check <- map["check"]
         self.cnt <- map["cnt"]
+        self.text <- map["text"]
         self.message <- map["message"]
     }
 }

@@ -23,7 +23,7 @@ struct LoginNetWorking {
         
         var restaurantInfo: [RestaurantInfo] = []
         
-        Alamofire.request(Url.restaurantLogin, method: .post, parameters: parameters, headers: headers)
+        Alamofire.request(FixedBaseUrl.restaurantLogin, method: .post, parameters: parameters, headers: headers)
             .validate(statusCode: 200..<400)
             .responseJSON {
                 response in
@@ -55,7 +55,7 @@ struct LoginNetWorking {
         
         var member: [Member] = []
         
-        Alamofire.request(Url.restaurantMember, method: .post, parameters: parameters, headers: headers)
+        Alamofire.request(FixedBaseUrl.restaurantMember, method: .post, parameters: parameters, headers: headers)
             .validate(statusCode: 200..<400)
             .responseJSON {
                 response in
@@ -101,7 +101,7 @@ struct LoginNetWorking {
             for (key, value) in parameters {
                 multipartFormData.append((value as AnyObject).data(using: String.Encoding.utf8.rawValue)!, withName: key)
             }
-        }, to: Url.restaurantSignUp, method:.post, encodingCompletion: { (result) in
+        }, to: FixedBaseUrl.restaurantSignUp, method:.post, encodingCompletion: { (result) in
             switch result {
             case .success(let upload, _, _):
                 upload.responseJSON { response in
@@ -159,7 +159,7 @@ struct LoginNetWorking {
             for (key, value) in parameters {
                 multipartFormData.append((value as AnyObject).data(using: String.Encoding.utf8.rawValue)!, withName: key)
             }
-        }, to: Url.restaurantEdit, method:.post, encodingCompletion: { (result) in
+        }, to: FixedBaseUrl.restaurantEdit, method:.post, encodingCompletion: { (result) in
             switch result {
             case .success(let upload, _, _):
                 upload.responseJSON { response in

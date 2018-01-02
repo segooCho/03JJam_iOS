@@ -55,27 +55,27 @@ final class BusinessUsersTabBar: UITabBarController {
                 } else {
                     
                     //식단 항목 Group
-                    groupArray.location.removeAllObjects()
-                    groupArray.division.removeAllObjects()
-                    groupArray.stapleFood.removeAllObjects()
-                    groupArray.soup.removeAllObjects()
-                    groupArray.sideDish.removeAllObjects()
-                    groupArray.dessert.removeAllObjects()
+                    BusinessGroupArray.location.removeAllObjects()
+                    BusinessGroupArray.division.removeAllObjects()
+                    BusinessGroupArray.stapleFood.removeAllObjects()
+                    BusinessGroupArray.soup.removeAllObjects()
+                    BusinessGroupArray.sideDish.removeAllObjects()
+                    BusinessGroupArray.dessert.removeAllObjects()
                     
                     for data in response {
                         switch data.group {
                         case "location":
-                            groupArray.location.add(data.text)
+                            BusinessGroupArray.location.add(data.text)
                         case "division":
-                            groupArray.division.add(data.text)
+                            BusinessGroupArray.division.add(data.text)
                         case "stapleFood":
-                            groupArray.stapleFood.add(data.text)
+                            BusinessGroupArray.stapleFood.add(data.text)
                         case "soup":
-                            groupArray.soup.add(data.text)
+                            BusinessGroupArray.soup.add(data.text)
                         case "sideDish":
-                            groupArray.sideDish.add(data.text)
+                            BusinessGroupArray.sideDish.add(data.text)
                         case "dessert":
-                            groupArray.dessert.add(data.text)
+                            BusinessGroupArray.dessert.add(data.text)
                         default:
                             print("No Group")
                         }

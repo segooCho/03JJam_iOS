@@ -21,7 +21,7 @@ struct CommonNetWorking {
         
         var restaurantInfo: [RestaurantInfo] = []
         
-        Alamofire.request(Url.restaurantInfo, method: .post, parameters: parameters, headers: headers)
+        Alamofire.request(FixedBaseUrl.restaurantInfo, method: .post, parameters: parameters, headers: headers)
             .validate(statusCode: 200..<400)
             .responseJSON {
                 response in
@@ -53,7 +53,7 @@ struct CommonNetWorking {
             ]
         
         var meal: [Meal] = []
-        Alamofire.request(Url.mealSearch, method: .post, parameters: parameters, headers: headers)
+        Alamofire.request(FixedBaseUrl.mealSearch, method: .post, parameters: parameters, headers: headers)
             .validate(statusCode: 200..<400)
             .responseJSON {
                 response in
@@ -85,7 +85,7 @@ struct CommonNetWorking {
             ]
         
         var restaurantInfo: [RestaurantInfo] = []
-        Alamofire.request(Url.mealLikeCount, method: .post, parameters: parameters, headers: headers)
+        Alamofire.request(FixedBaseUrl.mealLikeCount, method: .post, parameters: parameters, headers: headers)
             .validate(statusCode: 200..<400)
             .responseJSON {
                 response in
@@ -117,7 +117,7 @@ struct CommonNetWorking {
             ]
         
         var restaurantInfo: [RestaurantInfo] = []
-        Alamofire.request(Url.mealLike, method: .put, parameters: parameters, headers: headers)
+        Alamofire.request(FixedBaseUrl.mealLike, method: .put, parameters: parameters, headers: headers)
             .validate(statusCode: 200..<400)
             .responseJSON {
                 response in
@@ -137,5 +137,38 @@ struct CommonNetWorking {
         }
         completion(restaurantInfo)
     }
+    
+    //운영자 공지사항 조회
+    static func managerNoticeSearch(division: String, completion: @escaping (_ restaurantInfo: [RestaurantInfo]) -> Void) {
+        let parameters: [String: Any] = [
+            "division": division
+        ]
+        let headers: HTTPHeaders = [
+            "Accept": "application/json",
+            ]
+        
+        var restaurantInfo: [RestaurantInfo] = []
+        
+        Alamofire.request(FixedBaseUrl.managerNoticeSearch, method: .post, parameters: parameters, headers: headers)
+            .validate(statusCode: 200..<400)
+            .responseJSON {
+                response in
+                switch response.result {
+                case .success(let value) :
+                    guard let json = value as? [[String: Any]] else {break}
+                    //TODO : 오류 처리 필요
+                    let data = [RestaurantInfo](JSONArray: json)
+                    restaurantInfo.append(contentsOf: data)
+                    completion(restaurantInfo)
+                case .failure(let error) :
+                    print("요청 실패 \(error)")
+                    let data = [RestaurantInfo](JSONArray: [netWorkingErrorMessage])
+                    restaurantInfo.append(contentsOf: data)
+                    completion(restaurantInfo)
+                }
+        }
+        completion(restaurantInfo)
+    }
+    
 }
 

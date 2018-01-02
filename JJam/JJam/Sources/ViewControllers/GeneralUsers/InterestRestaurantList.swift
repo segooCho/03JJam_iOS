@@ -13,7 +13,7 @@ final class InterestRestaurantList: UIViewController {
     //MARK: Properties
     fileprivate var didSetupConstraints = false
     fileprivate var interestRestaurant: [InterestRestaurant] = []
-    fileprivate let fixedNotice = "www.JJam.com 에서 가맹점 검색 및 가맹점 요청이 가능합니다."
+    fileprivate let fixedNotice = "서버에 정보 요청에 문제가 발생했습니다. 어플을 업데이트 해주세요."
     
     //MARK: Constants
     fileprivate struct Metric {
@@ -41,8 +41,11 @@ final class InterestRestaurantList: UIViewController {
         self.tabBarItem.image = UIImage(named: "tab-restaurant")
         self.tabBarItem.selectedImage = UIImage(named: "tab-restaurant-selected")
         
+        //운영자 공지사항 조회
+        managerNoticeSearch();
+        
         //로컬 저장 정보 불러오기
-        if let dicts = UserDefaults.standard.array(forKey: SuperConstants.JJamUserDefaultsKeyInterestRestaurantList) as? [[String: Any]] {
+        if let dicts = UserDefaults.standard.array(forKey: JJamUserDefaultsKeyInterestRestaurantList) as? [[String: Any]] {
             self.interestRestaurant = dicts.flatMap { (disc: [String: Any]) -> InterestRestaurant? in
                 if let restaurant_Id = disc["restaurant_Id"] as? String, let companyName = disc["companyName"] as? String {
                     return InterestRestaurant(restaurant_Id: restaurant_Id, companyName: companyName)
@@ -95,6 +98,9 @@ final class InterestRestaurantList: UIViewController {
         self.view.addSubview(self.activityIndicatorView)
         //updateViewConstraints 자동 호출
         self.view.setNeedsUpdateConstraints()
+        
+        //초기 실행시 저장 목록 확인
+        UserDefaultsSet()
     }
     
     //XIB로 view 를 생성하지 않고 view을 로드할때 사용된다
@@ -158,6 +164,36 @@ final class InterestRestaurantList: UIViewController {
         self.navigationController?.pushViewController(restaurantListSearch, animated: true)
     }
     
+    //운영자 공지사항 조회
+    func managerNoticeSearch() {
+        UICommonSetLoadingService(self.activityIndicatorView, service: true)
+        CommonNetWorking.managerNoticeSearch(division: "0") { [weak self] response in
+            guard let `self` = self else { return }
+            if response.count > 0 {
+                UICommonSetLoadingService(self.activityIndicatorView, service: false)
+                //운영자 공지사항
+                let message = response[0].message
+                if message != nil {
+                    let alertController = UIAlertController(
+                        title: self.title,
+                        message: message,
+                        preferredStyle: .alert
+                    )
+                    let alertConfirm = UIAlertAction(
+                        title: "확인",
+                        style: .default) { _ in
+                            // 확인 후 작업
+                            return
+                    }
+                    alertController.addAction(alertConfirm)
+                    self.present(alertController, animated: true, completion: nil)
+                } else {
+                    self.textView.text = response[0].text
+                }
+            }
+        }
+    }
+    
     //Notification 관심 목록 저장
     func interestRestaurantDidAdd(_ notification: Notification ) {
         guard let interestRestaurant = notification.userInfo?["interestRestaurant"] as? [InterestRestaurant] else { return }
@@ -192,9 +228,35 @@ final class InterestRestaurantList: UIViewController {
                 "companyName": interestRestaurant.companyName,
                 ]
         }
-        UserDefaults.standard.set(dicts, forKey: SuperConstants.JJamUserDefaultsKeyInterestRestaurantList)
+        UserDefaults.standard.set(dicts, forKey: JJamUserDefaultsKeyInterestRestaurantList)
         //로컬 파일로 저장
         UserDefaults.standard.synchronize()
+        
+        if (dicts.count == 0) {
+            //버튼 변경
+            self.doneButtonDidTap();
+            let alertController = UIAlertController(
+                title: self.title,
+                message: "즐겨찾기 식당 목록이 없습니다.\n즐겨찾기 식당을 검색하시겠습니까?",
+                preferredStyle: .alert
+            )
+            let alertCancel = UIAlertAction(
+                title: "취소",
+                style: .default) { _ in
+                    // 확인 후 작업
+                    return
+            }
+            let alertConfirm = UIAlertAction(
+                title: "확인",
+                style: .default) { _ in
+                    // 확인 후 작업
+                    self.addButtonDidTap();
+                    return
+            }
+            alertController.addAction(alertCancel)
+            alertController.addAction(alertConfirm)
+            self.present(alertController, animated: true, completion: nil)
+        }
     }
 }
 
