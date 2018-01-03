@@ -11,6 +11,7 @@ import UIKit
 final class GeneralUsersTabBar: UITabBarController {
     //ViewControllers
     fileprivate let interestRestaurantList = InterestRestaurantList()
+    fileprivate let board = Board(title :"식당 요청, 문의 게시판", restaurant_Id :"")
     fileprivate let generalUsersSettings = GeneralUsersSettings()
     
     init(selectIndex: Int) {
@@ -18,6 +19,7 @@ final class GeneralUsersTabBar: UITabBarController {
         //self.delegate = self
         self.viewControllers = [
             UINavigationController(rootViewController: self.interestRestaurantList),
+            UINavigationController(rootViewController: self.board),
             UINavigationController(rootViewController: self.generalUsersSettings),
         ]
         self.selectedIndex = selectIndex;

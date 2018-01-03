@@ -169,6 +169,69 @@ struct CommonNetWorking {
         }
         completion(restaurantInfo)
     }
+ 
+    //문의 또는 식당요청 게시판 조회
+    static func boardSearch(restaurant_Id: String, uniqueId: String, completion: @escaping (_ boardInfo: [BoardInfo]) -> Void) {
+        let parameters: [String: Any] = [
+            "restaurant_Id": restaurant_Id,
+            "uniqueId": uniqueId,
+            ]
+        let headers: HTTPHeaders = [
+            "Accept": "application/json",
+            ]
+        
+        var boardInfo: [BoardInfo] = []
+        Alamofire.request(FixedBaseUrl.boardSearch, method: .post, parameters: parameters, headers: headers)
+            .validate(statusCode: 200..<400)
+            .responseJSON {
+                response in
+                switch response.result {
+                case .success(let value) :
+                    guard let json = value as? [[String: Any]] else {break}
+                    //TODO : 오류 처리 필요
+                    let data = [BoardInfo](JSONArray: json)
+                    boardInfo.append(contentsOf: data)
+                    completion(boardInfo)
+                case .failure(let error) :
+                    print("요청 실패 \(error)")
+                    let data = [BoardInfo](JSONArray: [netWorkingErrorMessage])
+                    boardInfo.append(contentsOf: data)
+                    completion(boardInfo)
+                }
+        }
+        completion(boardInfo)
+    }
     
+    //문의 또는 식당요청 게시판 삭제
+    static func boardDel(board_Id: String, completion: @escaping (_ boardInfo: [BoardInfo]) -> Void) {
+        let parameters: [String: Any] = [
+            "Board_Id": board_Id,
+            ]
+        let headers: HTTPHeaders = [
+            "Accept": "application/json",
+            ]
+        
+        var boardInfo: [BoardInfo] = []
+        
+        Alamofire.request(FixedBaseUrl.boardDel, method: .delete, parameters: parameters, headers: headers)
+            .validate(statusCode: 200..<400)
+            .responseJSON {
+                response in
+                switch response.result {
+                case .success(let value) :
+                    guard let json = value as? [[String: Any]] else {break}
+                    //TODO : 오류 처리 필요
+                    let data = [BoardInfo](JSONArray: json)
+                    boardInfo.append(contentsOf: data)
+                    completion(boardInfo)
+                case .failure(let error) :
+                    print("요청 실패 \(error)")
+                    let data = [BoardInfo](JSONArray: [netWorkingErrorMessage])
+                    boardInfo.append(contentsOf: data)
+                    completion(boardInfo)
+                }
+        }
+        completion(boardInfo)
+    }
 }
 

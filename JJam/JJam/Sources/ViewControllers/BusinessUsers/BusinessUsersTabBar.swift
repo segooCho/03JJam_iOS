@@ -85,13 +85,19 @@ final class BusinessUsersTabBar: UITabBarController {
                     UICommonSetLoadingService(self.activityIndicatorView, service: false)
 
                     //ViewControllers 생성 작업을 restaurant_Id 값을 필수 작업이어서 내부에서 진행 한다.
-                    let businessUsersMealList = BusinessUsersMealList(restaurant_Id: restaurant_Id)                                             //업체 ID
-                    let businessUsersMenuManagement = BusinessUsersMenuManagement(restaurant_Id: restaurant_Id)                                 //메뉴 관리
-                    let businessUsersSettings = BusinessUsersSettings(restaurant_Id: restaurant_Id)                                             //설정
+                    //업체 ID
+                    let businessUsersMealList = BusinessUsersMealList(restaurant_Id: restaurant_Id)
+                    //메뉴 관리
+                    let businessUsersMenuManagement = BusinessUsersMenuManagement(restaurant_Id: restaurant_Id)
+                    //식당 요청, 문의 게시판
+                    let board = Board(title :"문의 게시판", restaurant_Id: restaurant_Id)
+                    //설정
+                    let businessUsersSettings = BusinessUsersSettings(restaurant_Id: restaurant_Id)
                     
                     self.viewControllers = [
                         UINavigationController(rootViewController: businessUsersMealList),
                         UINavigationController(rootViewController: businessUsersMenuManagement),
+                        UINavigationController(rootViewController: board),
                         UINavigationController(rootViewController: businessUsersSettings),
                     ]
                 }

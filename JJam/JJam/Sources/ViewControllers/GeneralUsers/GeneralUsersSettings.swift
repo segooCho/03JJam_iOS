@@ -148,7 +148,6 @@ extension GeneralUsersSettings: UITableViewDelegate {
             let url = URL(string: "https://icons8.com")!
             let viewController = SFSafariViewController(url: url)
             self.present(viewController, animated: true, completion: nil)
-            
         case .login:
             let actionSheet = UIAlertController(
                 title: "로그인 하시겠습니까?",

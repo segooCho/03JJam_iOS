@@ -55,12 +55,6 @@ final class BusinessUsersMealList: UIViewController {
         self.tabBarItem.selectedImage = UIImage(named: "tab-restaurant-selected")
         
         self.restaurantCertification = "n"
-
-        //운영자 공지사항 조회
-        managerNoticeSearch()
-        
-        //식당 인증 & 공지 사항(공지 사용안함)
-        restaurantInfo()
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -93,6 +87,13 @@ final class BusinessUsersMealList: UIViewController {
         )
 
         UICommonSetLoading(self.activityIndicatorView)
+        
+        //운영자 공지사항 조회
+        managerNoticeSearch()
+        
+        //식당 인증 & 공지 사항(공지 사용안함)
+        restaurantInfo()
+        
         //segmentedControl
         UICommonSetSegmentedControl(self.segmentedControl, titles: segmentedTitles, font: 0)
         self.segmentedControl.addTarget(self, action: #selector(changeSegmentedControl), for: .valueChanged)
@@ -431,7 +432,7 @@ extension BusinessUsersMealList: UITableViewDelegate {
         let message = self.meal[indexPath.row].mealDate + " (" + self.meal[indexPath.row].mealDateLabel + ") " +
             self.meal[indexPath.row].division + "\n" +
             "위치 : " + self.meal[indexPath.row].location + "\n" +
-            "식단을 삭제하시겠습니까?"
+            "식단을 삭제 하시겠습니까?"
         
         let alertController = UIAlertController(
             title: self.title,

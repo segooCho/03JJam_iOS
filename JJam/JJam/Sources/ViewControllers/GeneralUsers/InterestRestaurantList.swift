@@ -40,9 +40,6 @@ final class InterestRestaurantList: UIViewController {
         self.tabBarItem.image = UIImage(named: "tab-restaurant")
         self.tabBarItem.selectedImage = UIImage(named: "tab-restaurant-selected")
         
-        //운영자 공지사항 조회
-        managerNoticeSearch();
-        
         //로컬 저장 정보 불러오기
         if let dicts = UserDefaults.standard.array(forKey: JJamUserDefaultsKeyInterestRestaurantList) as? [[String: Any]] {
             self.interestRestaurant = dicts.flatMap { (disc: [String: Any]) -> InterestRestaurant? in
@@ -87,6 +84,9 @@ final class InterestRestaurantList: UIViewController {
         self.textView.text = fixedNotice
         UICommonSetTextViewDisable(self.textView)
 
+        //운영자 공지사항 조회
+        //managerNoticeSearch();
+
         //관심 식당
         self.tableView.register(InterestRestaurantListCell.self, forCellReuseIdentifier: "interestRestaurantListCell")
         self.tableView.dataSource = self
@@ -101,6 +101,14 @@ final class InterestRestaurantList: UIViewController {
         //초기 실행시 저장 목록 확인
         UserDefaultsSet()
     }
+    
+    //MARK: View Life Cycle (화면이 다시 보이면)
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        //운영자 공지사항 조회
+        managerNoticeSearch();
+    }
+
     
     //XIB로 view 를 생성하지 않고 view을 로드할때 사용된다
     override func loadView() {

@@ -26,14 +26,15 @@ struct FixedBaseUrl {
     static let mealLikeCount = BaseUrl + "mealLikeCount"
     //식단 맛있어요 설정/해제
     static let mealLike = BaseUrl + "mealLike"
-    
     //로그인
     static let restaurantLogin = BaseUrl + "restaurantLogin"
     //회원 정보 조회
     static let restaurantMember = BaseUrl + "restaurantMember"
     //식당 항목(Group) 조회
     static let restaurantGroup = BaseUrl + "restaurantGroup"
-    
+    //식당 요청, 문의 게시판
+    static let boardSearch = BaseUrl + "boardSearch"
+
     
     
     /* ============== 이미지 ============== */
@@ -59,5 +60,11 @@ struct FixedBaseUrl {
     static let restaurantGroupDel = BaseUrl + "restaurantGroupDel"
     //회원 수정
     static let restaurantEdit = BaseUrl + "restaurantEdit"
-    
+    //식당 요청, 문의 게시판 등록
+    static let boardWrite = BaseUrl + "boardWrite"
+    //식당 요청, 문의 게시판 수정
+    static let boardEdit = BaseUrl + "boardEdit"
+    //식당 요청, 문의 게시판 삭제
+    static let boardDel = BaseUrl + "boardDel"
+
 }
