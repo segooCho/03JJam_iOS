@@ -19,15 +19,15 @@ final class BusinessUsersMealList: UIViewController {
    
     //MARK: Constants
     fileprivate struct Metric {
+        static let textViewMid = CGFloat(10)
+        static let textViewHeight = CGFloat(70)
+
         static let segmentedMid = CGFloat(20)
         static let segmentedHeight = CGFloat(45)
         
         static let labelMid = CGFloat(10)
         static let labelHeight = CGFloat(20)
         
-        static let textViewMid = CGFloat(10)
-        static let textViewHeight = CGFloat(100)
-
         static let commonOffset = CGFloat(7)
         static let commonHeight = CGFloat(40)
     }
@@ -109,10 +109,9 @@ final class BusinessUsersMealList: UIViewController {
         }
         self.view.addSubview(self.label)
         
-        //공지사항 : viewDidLoad 시점에 값을 받지 못함
-        self.textView.text = self.managerNotice
+        //공지사항
+        self.textView.text = fixedNotice
         UICommonSetTextViewDisable(self.textView)
-
         
         //식단
         self.tableView.register(MealListCell.self, forCellReuseIdentifier: "mealListCell")
@@ -144,10 +143,16 @@ final class BusinessUsersMealList: UIViewController {
             self.activityIndicatorView.snp.makeConstraints { make in
                 make.center.equalToSuperview()
             }
+            self.textView.snp.makeConstraints { make in
+                make.left.equalTo(Metric.textViewMid)
+                make.right.equalTo(-Metric.textViewMid)
+                make.top.equalTo(self.topLayoutGuide.snp.bottom).offset(Metric.commonOffset)
+                make.height.equalTo(Metric.textViewHeight)
+            }
             self.segmentedControl.snp.makeConstraints { make in
                 make.left.equalTo(Metric.segmentedMid)
                 make.right.equalTo(-Metric.segmentedMid)
-                make.top.equalTo(self.topLayoutGuide.snp.bottom).offset(Metric.commonOffset)
+                make.top.equalTo(self.textView.snp.bottom).offset(Metric.commonOffset)
                 make.height.equalTo(Metric.segmentedHeight)
             }
             self.label.snp.makeConstraints { make in
@@ -156,14 +161,8 @@ final class BusinessUsersMealList: UIViewController {
                 make.top.equalTo(self.segmentedControl.snp.bottom).offset(Metric.commonOffset)
                 make.height.equalTo(Metric.labelHeight)
             }
-            self.textView.snp.makeConstraints { make in
-                make.left.equalTo(Metric.textViewMid)
-                make.right.equalTo(-Metric.textViewMid)
-                make.top.equalTo(self.label.snp.bottom).offset(Metric.commonOffset)
-                make.height.equalTo(Metric.textViewHeight)
-            }
             self.tableView.snp.makeConstraints { make in
-                make.top.equalTo(self.textView.snp.bottom).offset(Metric.commonOffset)
+                make.top.equalTo(self.label.snp.bottom).offset(Metric.commonOffset)
                 make.left.right.equalToSuperview()
                 make.bottom.equalTo(self.bottomLayoutGuide.snp.top)
             }

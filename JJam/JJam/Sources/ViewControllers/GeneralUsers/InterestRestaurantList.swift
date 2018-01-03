@@ -13,7 +13,6 @@ final class InterestRestaurantList: UIViewController {
     //MARK: Properties
     fileprivate var didSetupConstraints = false
     fileprivate var interestRestaurant: [InterestRestaurant] = []
-    fileprivate let fixedNotice = "서버에 정보 요청에 문제가 발생했습니다. 어플을 업데이트 해주세요."
     
     //MARK: Constants
     fileprivate struct Metric {
@@ -85,7 +84,7 @@ final class InterestRestaurantList: UIViewController {
         UICommonSetLoading(self.activityIndicatorView)
         
         //공지사항
-        self.textView.text = self.fixedNotice
+        self.textView.text = fixedNotice
         UICommonSetTextViewDisable(self.textView)
 
         //관심 식당
