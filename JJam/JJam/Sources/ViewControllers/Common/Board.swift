@@ -42,7 +42,9 @@ final class Board: UIViewController {
         
         if restaurant_Id == "" {
             self.uniqueId = UIDevice.current.identifierForVendor!.uuidString
+            self.restaurant_Id = ""
         } else {
+            self.uniqueId = ""
             self.restaurant_Id = restaurant_Id
         }
     }
@@ -238,13 +240,8 @@ extension Board: UITableViewDelegate {
     //선택
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         //print("\(indexPath)가 선택!")
-        
-        //let boardDetail = BoardDetail(boardInfo : self.boardInfo[indexPath.row])
-        //self.navigationController?.pushViewController(mealList, animated: true)
-        
         let boardDetail = BoardDetail(boardInfo: [self.boardInfo[indexPath.row]])
         self.navigationController?.pushViewController(boardDetail, animated: true)
-
     }
     
     //삭제
@@ -274,6 +271,7 @@ extension Board: UITableViewDelegate {
         self.present(alertController, animated: true, completion: nil)
     }
     
+    /*
     //위치 이동
     func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
         var boardInfo = self.boardInfo
@@ -281,6 +279,7 @@ extension Board: UITableViewDelegate {
         boardInfo.insert(removeBoardInfo, at: destinationIndexPath.row)
         self.boardInfo = boardInfo
     }
+    */
     
     //cell height
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

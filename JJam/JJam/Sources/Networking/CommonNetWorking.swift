@@ -233,5 +233,53 @@ struct CommonNetWorking {
         }
         completion(boardInfo)
     }
+    
+    //문의 또는 식당요청 게시판 등록 & 수정
+    static func boardEditAndWrite(boardCellInfo: [BoardCellInfo], completion: @escaping (_ boardInfo: [BoardInfo]) -> Void) {
+        let parameters: [String: Any] = [
+            "Board_Id": boardCellInfo[0].board_Id,
+            "restaurant_Id": boardCellInfo[0].restaurant_Id,
+            "uniqueId": boardCellInfo[0].uniqueId,
+            "division": boardCellInfo[0].division,
+            "title": boardCellInfo[0].title,
+            "contents": boardCellInfo[0].contents,
+            "answer": boardCellInfo[0].answer,
+        ]
+        let headers: HTTPHeaders = [
+            "Accept": "application/json",
+            ]
+        
+        var urlString: String
+        var method: HTTPMethod
+        if boardCellInfo[0].board_Id == "" {
+            urlString = FixedBaseUrl.boardWrite
+            method = .post
+        } else {
+            urlString = FixedBaseUrl.boardEdit
+            method = .put
+        }
+        
+        var boardInfo: [BoardInfo] = []
+        
+        Alamofire.request(urlString, method: method, parameters: parameters, headers: headers)
+            .validate(statusCode: 200..<400)
+            .responseJSON {
+                response in
+                switch response.result {
+                case .success(let value) :
+                    guard let json = value as? [[String: Any]] else {break}
+                    //TODO : 오류 처리 필요
+                    let data = [BoardInfo](JSONArray: json)
+                    boardInfo.append(contentsOf: data)
+                    completion(boardInfo)
+                case .failure(let error) :
+                    print("요청 실패 \(error)")
+                    let data = [BoardInfo](JSONArray: [netWorkingErrorMessage])
+                    boardInfo.append(contentsOf: data)
+                    completion(boardInfo)
+                }
+        }
+        completion(boardInfo)
+    }
 }
 

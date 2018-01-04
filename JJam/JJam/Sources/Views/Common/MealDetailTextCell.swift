@@ -14,7 +14,6 @@ final class MealDetailTextCell: UITableViewCell {
     struct tableViewCellMeal {
         static var businessUsersMeal: [BusinessUsersMeal] = []
     }
-    fileprivate var restaurantGroupUserDefaults: [RestaurantGroupUserDefaults] = []
     
     //MARK: Constants
     fileprivate struct Metric {
