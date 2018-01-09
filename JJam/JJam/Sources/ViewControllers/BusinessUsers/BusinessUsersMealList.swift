@@ -220,13 +220,18 @@ final class BusinessUsersMealList: UIViewController {
                                           "mealDate": "",
                                           "location": "",
                                           "division": "",
-                                          "stapleFood": "",
-                                          "soup": "",
+                                          "stapleFood1": "",
+                                          "soup1": "",
                                           "sideDish1": "",
                                           "sideDish2": "",
                                           "sideDish3": "",
                                           "sideDish4": "",
-                                          "dessert": "",
+                                          "sideDish5": "",
+                                          "sideDish6": "",
+                                          "sideDish7": "",
+                                          "dessert1": "",
+                                          "dessert2": "",
+                                          "dessert3": "",
                                           "remarks": "",            //필수
                                           "foodImage": ""]])        //필수
         setControlTuple(editMode: true, writeMode: true)

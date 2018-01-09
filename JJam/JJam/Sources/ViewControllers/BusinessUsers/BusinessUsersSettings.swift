@@ -31,8 +31,6 @@ final class BusinessUsersSettings: UIViewController {
     fileprivate var sections: [Section] = [
         Section(items: [
             .notice,
-            ]),
-        Section(items: [
             .profile,
             ]),
         Section(items: [
@@ -143,7 +141,11 @@ extension BusinessUsersSettings: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return "섹션 " +  "\(section+1)"
+        if (section == 0) {
+            return "설정"
+        } else {
+            return "로그아웃"
+        }
     }
     
 }

@@ -41,14 +41,14 @@ final class MealDetailTextCell: UITableViewCell {
     fileprivate let divisionLabel = UILabel()
     fileprivate let divisionTextField = UITextField()
     fileprivate var divisionDownPicker: DownPicker!
-    //주식
-    fileprivate let stapleFoodLabel = UILabel()
-    fileprivate let stapleFoodTextField = UITextField()
-    fileprivate var stapleFoodDownPicker: DownPicker!
-    //국
-    fileprivate let soupLabel = UILabel()
-    fileprivate let soupTextField = UITextField()
-    fileprivate var soupDownPicker: DownPicker!
+    //주식1
+    fileprivate let stapleFood1Label = UILabel()
+    fileprivate let stapleFood1TextField = UITextField()
+    fileprivate var stapleFood1DownPicker: DownPicker!
+    //국2
+    fileprivate let soup1Label = UILabel()
+    fileprivate let soup1TextField = UITextField()
+    fileprivate var soup1DownPicker: DownPicker!
     //반찬1
     fileprivate let sideDish1Label = UILabel()
     fileprivate let sideDish1TextField = UITextField()
@@ -65,10 +65,30 @@ final class MealDetailTextCell: UITableViewCell {
     fileprivate let sideDish4Label = UILabel()
     fileprivate let sideDish4TextField = UITextField()
     fileprivate var sideDish4DownPicker: DownPicker!
-    //후식
-    fileprivate let dessertLabel = UILabel()
-    fileprivate let dessertTextField = UITextField()
-    fileprivate var dessertDownPicker: DownPicker!
+    //반찬5
+    fileprivate let sideDish5Label = UILabel()
+    fileprivate let sideDish5TextField = UITextField()
+    fileprivate var sideDish5DownPicker: DownPicker!
+    //반찬6
+    fileprivate let sideDish6Label = UILabel()
+    fileprivate let sideDish6TextField = UITextField()
+    fileprivate var sideDish6DownPicker: DownPicker!
+    //반찬7
+    fileprivate let sideDish7Label = UILabel()
+    fileprivate let sideDish7TextField = UITextField()
+    fileprivate var sideDish7DownPicker: DownPicker!
+    //후식1
+    fileprivate let dessert1Label = UILabel()
+    fileprivate let dessert1TextField = UITextField()
+    fileprivate var dessert1DownPicker: DownPicker!
+    //후식2
+    fileprivate let dessert2Label = UILabel()
+    fileprivate let dessert2TextField = UITextField()
+    fileprivate var dessert2DownPicker: DownPicker!
+    //후식3
+    fileprivate let dessert3Label = UILabel()
+    fileprivate let dessert3TextField = UITextField()
+    fileprivate var dessert3DownPicker: DownPicker!
     //비고
     fileprivate let remarksLabel = UILabel()
     fileprivate let remarksTextView = UITextView()
@@ -96,56 +116,92 @@ final class MealDetailTextCell: UITableViewCell {
             }
 
             //datePicker
-            //UICommonSetDatePicker(self.datePicker, view: self.contentView, textField: )
             self.datePicker.datePickerMode = .date
+            self.datePicker.locale = NSLocale(localeIdentifier: "ko_KR") as Locale
+
             let toolbar = UIToolbar();
             toolbar.sizeToFit()
             //done button & cancel button
-            let doneButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.done, target: self, action: "donedatePicker")
+            let doneButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.done, target: self, action: #selector(MealDetailTextCell.donedatePicker))
             let spaceButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: nil, action: nil)
-            let cancelButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.cancel, target: self, action: "cancelDatePicker")
+            let cancelButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.cancel, target: self, action: #selector(MealDetailTextCell.cancelDatePicker))
             toolbar.setItems([cancelButton,spaceButton,doneButton], animated: false)
             // add toolbar to textField
             self.dateTextField.inputAccessoryView = toolbar
             // add datepicker to textField
             self.dateTextField.inputView = self.datePicker
+
             
             UICommonSetLabel(self.locationLabel, text: "위치", color: 1)
             UICommonSetTextFieldEnable(self.locationTextField, placeholderText: "")
             self.locationDownPicker = DownPicker(textField: self.locationTextField, withData:BusinessGroupArray.location as! [Any])
-            
+            self.locationDownPicker.setPlaceholder("선택하세요.")
+
             UICommonSetLabel(self.divisionLabel, text: "구분", color: 1)
             UICommonSetTextFieldEnable(self.divisionTextField, placeholderText: "")
             self.divisionDownPicker = DownPicker(textField: self.divisionTextField, withData:BusinessGroupArray.division as! [Any])
-            
-            UICommonSetLabel(self.stapleFoodLabel, text: "주식(밥,면)", color: 0)
-            UICommonSetTextFieldEnable(self.stapleFoodTextField, placeholderText: "")
-            self.stapleFoodDownPicker = DownPicker(textField: self.stapleFoodTextField, withData:BusinessGroupArray.stapleFood as! [Any])
-            
-            UICommonSetLabel(self.soupLabel, text: "국", color: 0)
-            UICommonSetTextFieldEnable(self.soupTextField, placeholderText: "")
-            self.soupDownPicker = DownPicker(textField: self.soupTextField, withData:BusinessGroupArray.soup as! [Any])
-            
-            UICommonSetLabel(self.sideDish1Label, text: "반찬1", color: 0)
+            self.divisionDownPicker.setPlaceholder("선택하세요.")
+
+            UICommonSetLabel(self.stapleFood1Label, text: "주식(밥,면)", color: 0)
+            UICommonSetTextFieldEnable(self.stapleFood1TextField, placeholderText: "")
+            self.stapleFood1DownPicker = DownPicker(textField: self.stapleFood1TextField, withData:BusinessGroupArray.stapleFood as! [Any])
+            self.stapleFood1DownPicker.setPlaceholder("선택하세요.")
+
+            UICommonSetLabel(self.soup1Label, text: "국", color: 0)
+            UICommonSetTextFieldEnable(self.soup1TextField, placeholderText: "")
+            self.soup1DownPicker = DownPicker(textField: self.soup1TextField, withData:BusinessGroupArray.soup as! [Any])
+            self.soup1DownPicker.setPlaceholder("선택하세요.")
+
+            UICommonSetLabel(self.sideDish1Label, text: "반찬", color: 0)
             UICommonSetTextFieldEnable(self.sideDish1TextField, placeholderText: "")
             self.sideDish1DownPicker = DownPicker(textField: self.sideDish1TextField, withData:BusinessGroupArray.sideDish as! [Any])
-            
-            UICommonSetLabel(self.sideDish2Label, text: "반찬2", color: 0)
+            self.sideDish1DownPicker.setPlaceholder("선택하세요.")
+
+            UICommonSetLabel(self.sideDish2Label, text: "반찬", color: 0)
             UICommonSetTextFieldEnable(self.sideDish2TextField, placeholderText: "")
             self.sideDish2DownPicker = DownPicker(textField: self.sideDish2TextField, withData:BusinessGroupArray.sideDish as! [Any])
-            
-            UICommonSetLabel(self.sideDish3Label, text: "반찬3", color: 0)
+            self.sideDish2DownPicker.setPlaceholder("선택하세요.")
+
+            UICommonSetLabel(self.sideDish3Label, text: "반찬", color: 0)
             UICommonSetTextFieldEnable(self.sideDish3TextField, placeholderText: "")
             self.sideDish3DownPicker = DownPicker(textField: self.sideDish3TextField, withData:BusinessGroupArray.sideDish as! [Any])
-            
-            UICommonSetLabel(self.sideDish4Label, text: "반찬4", color: 0)
+            self.sideDish3DownPicker.setPlaceholder("선택하세요.")
+
+            UICommonSetLabel(self.sideDish4Label, text: "반찬", color: 0)
             UICommonSetTextFieldEnable(self.sideDish4TextField, placeholderText: "")
             self.sideDish4DownPicker = DownPicker(textField: self.sideDish4TextField, withData:BusinessGroupArray.sideDish as! [Any])
-            
-            UICommonSetLabel(self.dessertLabel, text: "후식", color: 0)
-            UICommonSetTextFieldEnable(self.dessertTextField, placeholderText: "")
-            self.dessertDownPicker = DownPicker(textField: self.dessertTextField, withData:BusinessGroupArray.dessert as! [Any])
-            
+            self.sideDish4DownPicker.setPlaceholder("선택하세요.")
+
+            UICommonSetLabel(self.sideDish5Label, text: "반찬", color: 0)
+            UICommonSetTextFieldEnable(self.sideDish5TextField, placeholderText: "")
+            self.sideDish5DownPicker = DownPicker(textField: self.sideDish5TextField, withData:BusinessGroupArray.sideDish as! [Any])
+            self.sideDish5DownPicker.setPlaceholder("선택하세요.")
+
+            UICommonSetLabel(self.sideDish6Label, text: "반찬", color: 0)
+            UICommonSetTextFieldEnable(self.sideDish6TextField, placeholderText: "")
+            self.sideDish6DownPicker = DownPicker(textField: self.sideDish6TextField, withData:BusinessGroupArray.sideDish as! [Any])
+            self.sideDish6DownPicker.setPlaceholder("선택하세요.")
+
+            UICommonSetLabel(self.sideDish7Label, text: "반찬", color: 0)
+            UICommonSetTextFieldEnable(self.sideDish7TextField, placeholderText: "")
+            self.sideDish7DownPicker = DownPicker(textField: self.sideDish7TextField, withData:BusinessGroupArray.sideDish as! [Any])
+            self.sideDish7DownPicker.setPlaceholder("선택하세요.")
+
+            UICommonSetLabel(self.dessert1Label, text: "후식", color: 0)
+            UICommonSetTextFieldEnable(self.dessert1TextField, placeholderText: "")
+            self.dessert1DownPicker = DownPicker(textField: self.dessert1TextField, withData:BusinessGroupArray.dessert as! [Any])
+            self.dessert1DownPicker.setPlaceholder("선택하세요.")
+
+            UICommonSetLabel(self.dessert2Label, text: "후식", color: 0)
+            UICommonSetTextFieldEnable(self.dessert2TextField, placeholderText: "")
+            self.dessert2DownPicker = DownPicker(textField: self.dessert2TextField, withData:BusinessGroupArray.dessert as! [Any])
+            self.dessert2DownPicker.setPlaceholder("선택하세요.")
+
+            UICommonSetLabel(self.dessert3Label, text: "후식", color: 0)
+            UICommonSetTextFieldEnable(self.dessert3TextField, placeholderText: "")
+            self.dessert3DownPicker = DownPicker(textField: self.dessert3TextField, withData:BusinessGroupArray.dessert as! [Any])
+            self.dessert3DownPicker.setPlaceholder("선택하세요.")
+
             UICommonSetLabel(self.remarksLabel, text: "비고", color: 0)
             UICommonSetTextViewEnable(self.remarksTextView, placeholderText: "")
         } else {
@@ -158,27 +214,42 @@ final class MealDetailTextCell: UITableViewCell {
             UICommonSetLabel(self.divisionLabel, text: "구분", color: 0)
             UICommonSetTextFieldDisable(self.divisionTextField)
             
-            UICommonSetLabel(self.stapleFoodLabel, text: "주식(밥,면)", color: 0)
-            UICommonSetTextFieldDisable(self.stapleFoodTextField)
+            UICommonSetLabel(self.stapleFood1Label, text: "주식(밥,면)", color: 0)
+            UICommonSetTextFieldDisable(self.stapleFood1TextField)
             
-            UICommonSetLabel(self.soupLabel, text: "국", color: 0)
-            UICommonSetTextFieldDisable(self.soupTextField)
+            UICommonSetLabel(self.soup1Label, text: "국", color: 0)
+            UICommonSetTextFieldDisable(self.soup1TextField)
             
-            UICommonSetLabel(self.sideDish1Label, text: "반찬1", color: 0)
+            UICommonSetLabel(self.sideDish1Label, text: "반찬", color: 0)
             UICommonSetTextFieldDisable(self.sideDish1TextField)
             
-            UICommonSetLabel(self.sideDish2Label, text: "반찬2", color: 0)
+            UICommonSetLabel(self.sideDish2Label, text: "반찬", color: 0)
             UICommonSetTextFieldDisable(self.sideDish2TextField)
             
-            UICommonSetLabel(self.sideDish3Label, text: "반찬3", color: 0)
+            UICommonSetLabel(self.sideDish3Label, text: "반찬", color: 0)
             UICommonSetTextFieldDisable(self.sideDish3TextField)
             
-            UICommonSetLabel(self.sideDish4Label, text: "반찬4", color: 0)
+            UICommonSetLabel(self.sideDish4Label, text: "반찬", color: 0)
             UICommonSetTextFieldDisable(self.sideDish4TextField)
+
+            UICommonSetLabel(self.sideDish5Label, text: "반찬", color: 0)
+            UICommonSetTextFieldDisable(self.sideDish5TextField)
+
+            UICommonSetLabel(self.sideDish6Label, text: "반찬", color: 0)
+            UICommonSetTextFieldDisable(self.sideDish6TextField)
+
+            UICommonSetLabel(self.sideDish7Label, text: "반찬", color: 0)
+            UICommonSetTextFieldDisable(self.sideDish7TextField)
+
+            UICommonSetLabel(self.dessert1Label, text: "후식", color: 0)
+            UICommonSetTextFieldDisable(self.dessert1TextField)
+
+            UICommonSetLabel(self.dessert2Label, text: "후식", color: 0)
+            UICommonSetTextFieldDisable(self.dessert2TextField)
             
-            UICommonSetLabel(self.dessertLabel, text: "후식", color: 0)
-            UICommonSetTextFieldDisable(self.dessertTextField)
-            
+            UICommonSetLabel(self.dessert3Label, text: "후식", color: 0)
+            UICommonSetTextFieldDisable(self.dessert3TextField)
+
             UICommonSetLabel(self.remarksLabel, text: "비고", color: 0)
             UICommonSetTextViewDisable(self.remarksTextView)
         }
@@ -189,10 +260,10 @@ final class MealDetailTextCell: UITableViewCell {
         self.contentView.addSubview(self.locationTextField)
         self.contentView.addSubview(self.divisionLabel)
         self.contentView.addSubview(self.divisionTextField)
-        self.contentView.addSubview(self.stapleFoodLabel)
-        self.contentView.addSubview(self.stapleFoodTextField)
-        self.contentView.addSubview(self.soupLabel)
-        self.contentView.addSubview(self.soupTextField)
+        self.contentView.addSubview(self.stapleFood1Label)
+        self.contentView.addSubview(self.stapleFood1TextField)
+        self.contentView.addSubview(self.soup1Label)
+        self.contentView.addSubview(self.soup1TextField)
         self.contentView.addSubview(self.sideDish1Label)
         self.contentView.addSubview(self.sideDish1TextField)
         self.contentView.addSubview(self.sideDish2Label)
@@ -201,8 +272,18 @@ final class MealDetailTextCell: UITableViewCell {
         self.contentView.addSubview(self.sideDish3TextField)
         self.contentView.addSubview(self.sideDish4Label)
         self.contentView.addSubview(self.sideDish4TextField)
-        self.contentView.addSubview(self.dessertLabel)
-        self.contentView.addSubview(self.dessertTextField)
+        self.contentView.addSubview(self.sideDish5Label)
+        self.contentView.addSubview(self.sideDish5TextField)
+        self.contentView.addSubview(self.sideDish6Label)
+        self.contentView.addSubview(self.sideDish6TextField)
+        self.contentView.addSubview(self.sideDish7Label)
+        self.contentView.addSubview(self.sideDish7TextField)
+        self.contentView.addSubview(self.dessert1Label)
+        self.contentView.addSubview(self.dessert1TextField)
+        self.contentView.addSubview(self.dessert2Label)
+        self.contentView.addSubview(self.dessert2TextField)
+        self.contentView.addSubview(self.dessert3Label)
+        self.contentView.addSubview(self.dessert3TextField)
         self.contentView.addSubview(self.remarksLabel)
         self.contentView.addSubview(self.remarksTextView)
         
@@ -216,13 +297,19 @@ final class MealDetailTextCell: UITableViewCell {
         
         self.locationTextField.text = meal.location
         self.divisionTextField.text = meal.division
-        self.stapleFoodTextField.text = meal.stapleFood
-        self.soupTextField.text = meal.soup
+        self.stapleFood1TextField.text = meal.stapleFood1
+        self.soup1TextField.text = meal.soup1
         self.sideDish1TextField.text = meal.sideDish1
         self.sideDish2TextField.text = meal.sideDish2
         self.sideDish3TextField.text = meal.sideDish3
         self.sideDish4TextField.text = meal.sideDish4
-        self.dessertTextField.text = meal.dessert
+        self.sideDish5TextField.text = meal.sideDish5
+        self.sideDish6TextField.text = meal.sideDish6
+        self.sideDish7TextField.text = meal.sideDish7
+        self.dessert1TextField.text = meal.dessert1
+        self.dessert2TextField.text = meal.dessert2
+        self.dessert3TextField.text = meal.dessert3
+        
         //self.remarksTextView.text = meal.remarks.replacingOccurrences(of: "\\n", with: "\n")
         self.remarksTextView.text = meal.remarks
         self.setNeedsLayout()
@@ -235,13 +322,18 @@ final class MealDetailTextCell: UITableViewCell {
             BusinessUsersMeal(mealDate: "",
                               location: "",
                               division: "",
-                              stapleFood: "",
-                              soup: "",
+                              stapleFood1: "",
+                              soup1: "",
                               sideDish1: "",
                               sideDish2: "",
                               sideDish3: "",
                               sideDish4: "",
-                              dessert: "",
+                              sideDish5: "",
+                              sideDish6: "",
+                              sideDish7: "",
+                              dessert1: "",
+                              dessert2: "",
+                              dessert3: "",
                               remarks: ""))
 
         var inputText = ""
@@ -266,13 +358,18 @@ final class MealDetailTextCell: UITableViewCell {
             BusinessUsersMeal(mealDate: self.dateTextField.text!,
                               location: self.locationTextField.text!,
                               division: self.divisionTextField.text!,
-                              stapleFood: self.stapleFoodTextField.text!,
-                              soup: self.soupTextField.text!,
+                              stapleFood1: self.stapleFood1TextField.text!,
+                              soup1: self.soup1TextField.text!,
                               sideDish1: self.sideDish1TextField.text!,
                               sideDish2: self.sideDish2TextField.text!,
                               sideDish3: self.sideDish3TextField.text!,
                               sideDish4: self.sideDish4TextField.text!,
-                              dessert: self.dessertTextField.text!,
+                              sideDish5: self.sideDish5TextField.text!,
+                              sideDish6: self.sideDish6TextField.text!,
+                              sideDish7: self.sideDish7TextField.text!,
+                              dessert1: self.dessert1TextField.text!,
+                              dessert2: self.dessert2TextField.text!,
+                              dessert3: self.dessert3TextField.text!,
                               remarks: self.remarksTextView.text!))
         return ""
     }
@@ -282,10 +379,10 @@ final class MealDetailTextCell: UITableViewCell {
     class func height() -> CGFloat {
         var height: CGFloat = 0
 
-        //TextField 10개
+        //TextField 15개
         //TextView  1개
-        height += Metric.commonOffset * 11
-        height += Metric.commonHeight * 10
+        height += Metric.commonOffset * 16
+        height += Metric.commonHeight * 15
         height += Metric.commonHeightTextView
         height += Metric.commonOffset   //하단 여백 처리
         return height
@@ -337,31 +434,31 @@ final class MealDetailTextCell: UITableViewCell {
             make.height.equalTo(Metric.commonHeight)
         }
         
-        //주식(밥,면)
-        self.stapleFoodLabel.snp.makeConstraints { make in
+        //주식(밥,면)1
+        self.stapleFood1Label.snp.makeConstraints { make in
             make.left.equalTo(Metric.labelLeft)
             make.right.equalTo(Metric.labelRight)
             make.top.equalTo(self.divisionLabel.snp.bottom).offset(Metric.commonOffset)
             make.height.equalTo(Metric.commonHeight)
         }
-        self.stapleFoodTextField.snp.makeConstraints { make in
+        self.stapleFood1TextField.snp.makeConstraints { make in
             make.left.equalTo(Metric.textFieldLeft)
             make.right.equalTo(Metric.textFieldRight)
             make.top.equalTo(self.divisionLabel.snp.bottom).offset(Metric.commonOffset)
             make.height.equalTo(Metric.commonHeight)
         }
         
-        //국
-        self.soupLabel.snp.makeConstraints { make in
+        //국1
+        self.soup1Label.snp.makeConstraints { make in
             make.left.equalTo(Metric.labelLeft)
             make.right.equalTo(Metric.labelRight)
-            make.top.equalTo(self.stapleFoodLabel.snp.bottom).offset(Metric.commonOffset)
+            make.top.equalTo(self.stapleFood1Label.snp.bottom).offset(Metric.commonOffset)
             make.height.equalTo(Metric.commonHeight)
         }
-        self.soupTextField.snp.makeConstraints { make in
+        self.soup1TextField.snp.makeConstraints { make in
             make.left.equalTo(Metric.textFieldLeft)
             make.right.equalTo(Metric.textFieldRight)
-            make.top.equalTo(self.stapleFoodLabel.snp.bottom).offset(Metric.commonOffset)
+            make.top.equalTo(self.stapleFood1Label.snp.bottom).offset(Metric.commonOffset)
             make.height.equalTo(Metric.commonHeight)
         }
 
@@ -369,13 +466,13 @@ final class MealDetailTextCell: UITableViewCell {
         self.sideDish1Label.snp.makeConstraints { make in
             make.left.equalTo(Metric.labelLeft)
             make.right.equalTo(Metric.labelRight)
-            make.top.equalTo(self.soupLabel.snp.bottom).offset(Metric.commonOffset)
+            make.top.equalTo(self.soup1Label.snp.bottom).offset(Metric.commonOffset)
             make.height.equalTo(Metric.commonHeight)
         }
         self.sideDish1TextField.snp.makeConstraints { make in
             make.left.equalTo(Metric.textFieldLeft)
             make.right.equalTo(Metric.textFieldRight)
-            make.top.equalTo(self.soupLabel.snp.bottom).offset(Metric.commonOffset)
+            make.top.equalTo(self.soup1Label.snp.bottom).offset(Metric.commonOffset)
             make.height.equalTo(Metric.commonHeight)
         }
         
@@ -421,31 +518,101 @@ final class MealDetailTextCell: UITableViewCell {
             make.height.equalTo(Metric.commonHeight)
         }
 
-        //후식
-        self.dessertLabel.snp.makeConstraints { make in
+        //반찬5
+        self.sideDish5Label.snp.makeConstraints { make in
             make.left.equalTo(Metric.labelLeft)
             make.right.equalTo(Metric.labelRight)
             make.top.equalTo(self.sideDish4Label.snp.bottom).offset(Metric.commonOffset)
             make.height.equalTo(Metric.commonHeight)
         }
-        self.dessertTextField.snp.makeConstraints { make in
+        self.sideDish5TextField.snp.makeConstraints { make in
             make.left.equalTo(Metric.textFieldLeft)
             make.right.equalTo(Metric.textFieldRight)
             make.top.equalTo(self.sideDish4Label.snp.bottom).offset(Metric.commonOffset)
             make.height.equalTo(Metric.commonHeight)
         }
+
+        //반찬6
+        self.sideDish6Label.snp.makeConstraints { make in
+            make.left.equalTo(Metric.labelLeft)
+            make.right.equalTo(Metric.labelRight)
+            make.top.equalTo(self.sideDish5Label.snp.bottom).offset(Metric.commonOffset)
+            make.height.equalTo(Metric.commonHeight)
+        }
+        self.sideDish6TextField.snp.makeConstraints { make in
+            make.left.equalTo(Metric.textFieldLeft)
+            make.right.equalTo(Metric.textFieldRight)
+            make.top.equalTo(self.sideDish5Label.snp.bottom).offset(Metric.commonOffset)
+            make.height.equalTo(Metric.commonHeight)
+        }
+
+        //반찬7
+        self.sideDish7Label.snp.makeConstraints { make in
+            make.left.equalTo(Metric.labelLeft)
+            make.right.equalTo(Metric.labelRight)
+            make.top.equalTo(self.sideDish6Label.snp.bottom).offset(Metric.commonOffset)
+            make.height.equalTo(Metric.commonHeight)
+        }
+        self.sideDish7TextField.snp.makeConstraints { make in
+            make.left.equalTo(Metric.textFieldLeft)
+            make.right.equalTo(Metric.textFieldRight)
+            make.top.equalTo(self.sideDish6Label.snp.bottom).offset(Metric.commonOffset)
+            make.height.equalTo(Metric.commonHeight)
+        }
         
+        //후식1
+        self.dessert1Label.snp.makeConstraints { make in
+            make.left.equalTo(Metric.labelLeft)
+            make.right.equalTo(Metric.labelRight)
+            make.top.equalTo(self.sideDish7Label.snp.bottom).offset(Metric.commonOffset)
+            make.height.equalTo(Metric.commonHeight)
+        }
+        self.dessert1TextField.snp.makeConstraints { make in
+            make.left.equalTo(Metric.textFieldLeft)
+            make.right.equalTo(Metric.textFieldRight)
+            make.top.equalTo(self.sideDish7Label.snp.bottom).offset(Metric.commonOffset)
+            make.height.equalTo(Metric.commonHeight)
+        }
+
+        //후식2
+        self.dessert2Label.snp.makeConstraints { make in
+            make.left.equalTo(Metric.labelLeft)
+            make.right.equalTo(Metric.labelRight)
+            make.top.equalTo(self.dessert1Label.snp.bottom).offset(Metric.commonOffset)
+            make.height.equalTo(Metric.commonHeight)
+        }
+        self.dessert2TextField.snp.makeConstraints { make in
+            make.left.equalTo(Metric.textFieldLeft)
+            make.right.equalTo(Metric.textFieldRight)
+            make.top.equalTo(self.dessert1Label.snp.bottom).offset(Metric.commonOffset)
+            make.height.equalTo(Metric.commonHeight)
+        }
+
+        //후식3
+        self.dessert3Label.snp.makeConstraints { make in
+            make.left.equalTo(Metric.labelLeft)
+            make.right.equalTo(Metric.labelRight)
+            make.top.equalTo(self.dessert2Label.snp.bottom).offset(Metric.commonOffset)
+            make.height.equalTo(Metric.commonHeight)
+        }
+        self.dessert3TextField.snp.makeConstraints { make in
+            make.left.equalTo(Metric.textFieldLeft)
+            make.right.equalTo(Metric.textFieldRight)
+            make.top.equalTo(self.dessert2Label.snp.bottom).offset(Metric.commonOffset)
+            make.height.equalTo(Metric.commonHeight)
+        }
+
         //비고
         self.remarksLabel.snp.makeConstraints { make in
             make.left.equalTo(Metric.labelLeft)
             make.right.equalTo(Metric.labelRight)
-            make.top.equalTo(self.dessertLabel.snp.bottom).offset(Metric.commonOffset)
+            make.top.equalTo(self.dessert3Label.snp.bottom).offset(Metric.commonOffset)
             make.height.equalTo(Metric.commonHeight)
         }
         self.remarksTextView.snp.makeConstraints { make in
             make.left.equalTo(Metric.textFieldLeft)
             make.right.equalTo(Metric.textFieldRight)
-            make.top.equalTo(self.dessertLabel.snp.bottom).offset(Metric.commonOffset)
+            make.top.equalTo(self.dessert3Label.snp.bottom).offset(Metric.commonOffset)
             make.height.equalTo(Metric.commonHeightTextView)
         }
     }

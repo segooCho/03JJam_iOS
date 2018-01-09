@@ -14,6 +14,8 @@ struct LoginNetWorking {
         // pod SwiftyHash
         let sha256Hex: String = password.digest.sha256
         let parameters: [String: Any] = [
+            "osVer": osVer,
+            "appVer": appVer,
             "id": id,
             "password": sha256Hex,
             ]
@@ -47,6 +49,8 @@ struct LoginNetWorking {
     //회원 정보
     static func restaurantMember(restaurant_Id: String, completion: @escaping (_ member: [Member]) -> Void) {
         let parameters: [String: Any] = [
+            "osVer": osVer,
+            "appVer": appVer,
             "restaurant_Id": restaurant_Id,
             ]
         let headers: HTTPHeaders = [
@@ -82,6 +86,8 @@ struct LoginNetWorking {
         // pod SwiftyHash
         let sha256Hex: String = signUp[0].password.digest.sha256        
         let parameters: [String: Any] = [
+            "osVer": osVer,
+            "appVer": appVer,
             "id": signUp[0].id,
             "password": sha256Hex,
             "businessNumber": signUp[0].businessNumber,
@@ -139,6 +145,8 @@ struct LoginNetWorking {
         }
         
         let parameters: [String: Any] = [
+            "osVer": osVer,
+            "appVer": appVer,
             "restaurant_Id": restaurant_Id,
             "password": sha256Hex,
             "businessNumber": signUp[0].businessNumber,

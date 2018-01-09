@@ -12,6 +12,8 @@ struct FixedBaseUrl {
     static let BaseUrl = "http://192.168.2.32:3000/"        //local WIFI
     //static let BaseUrl = "http://106.245.251.59:3000/"    //조은 Server
     //static let BaseUrl = "http://106.245.251.60:3000/"    //local WIFI
+    //static let BaseUrl = "http://13.125.115.164:3000/"        //AWS 2018
+
     
     /* ============== 조회 ============== */
     //운영자 공지사항 조회

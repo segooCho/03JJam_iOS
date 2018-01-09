@@ -25,8 +25,12 @@ final class BoardCell: UITableViewCell {
         self.textLabel?.text = "(" + boardInfo.division + ") " + boardInfo.title
         if boardInfo.answer == "" {
             self.detailTextLabel?.text = "답변 : 준비중"
+            self.textLabel?.textColor = .black
+            self.detailTextLabel?.textColor = .black
         } else {
             self.detailTextLabel?.text = "답변 : 완료"
+            self.textLabel?.textColor = .blue
+            self.detailTextLabel?.textColor = .blue
         }
         self.accessoryType = .disclosureIndicator
     }

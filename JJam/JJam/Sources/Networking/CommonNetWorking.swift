@@ -13,6 +13,8 @@ struct CommonNetWorking {
     //식당 인증 & 공지사항
     static func restaurantInfo(restaurant_Id: String, completion: @escaping (_ restaurantInfo: [RestaurantInfo]) -> Void) {
         let parameters: [String: Any] = [
+            "osVer": osVer,
+            "appVer": appVer,
             "restaurant_Id": restaurant_Id,
             ]
         let headers: HTTPHeaders = [
@@ -45,6 +47,8 @@ struct CommonNetWorking {
     //식단 조회
     static func mealSearch(restaurant_Id: String, segmentedIndexAndCode: Int, completion: @escaping (_ meal: [Meal]) -> Void) {
         let parameters: [String: Any] = [
+            "osVer": osVer,
+            "appVer": appVer,
             "restaurant_Id": restaurant_Id,
             "segmentedId": segmentedIndexAndCode,
             ]
@@ -77,6 +81,8 @@ struct CommonNetWorking {
     //식단 맛있어요 카운터
     static func mealLikeCount(meal_Id: String, uniqueId: String, completion: @escaping (_ restaurantInfo: [RestaurantInfo]) -> Void) {
         let parameters: [String: Any] = [
+            "osVer": osVer,
+            "appVer": appVer,
             "meal_Id": meal_Id,
             "uniqueId": uniqueId,
             ]
@@ -107,10 +113,13 @@ struct CommonNetWorking {
     }
     
     //식단 맛있어요 카운터
-    static func mealLike(meal_Id: String, uniqueId: String, completion: @escaping (_ restaurantInfo: [RestaurantInfo]) -> Void) {
+    static func mealLike(restaurant_Id: String, meal_Id: String, uniqueId: String, completion: @escaping (_ restaurantInfo: [RestaurantInfo]) -> Void) {
         let parameters: [String: Any] = [
+            "osVer": osVer,
+            "appVer": appVer,
+            "restaurant_Id": restaurant_Id,
             "meal_Id": meal_Id,
-            "uniqueId": uniqueId
+            "uniqueId": uniqueId,
             ]
         let headers: HTTPHeaders = [
             "Accept": "application/json",
@@ -141,7 +150,9 @@ struct CommonNetWorking {
     //운영자 공지사항 조회
     static func managerNoticeSearch(division: String, completion: @escaping (_ restaurantInfo: [RestaurantInfo]) -> Void) {
         let parameters: [String: Any] = [
-            "division": division
+            "osVer": osVer,
+            "appVer": appVer,
+            "division": division,
         ]
         let headers: HTTPHeaders = [
             "Accept": "application/json",
@@ -173,6 +184,8 @@ struct CommonNetWorking {
     //문의 또는 식당요청 게시판 조회
     static func boardSearch(restaurant_Id: String, uniqueId: String, completion: @escaping (_ boardInfo: [BoardInfo]) -> Void) {
         let parameters: [String: Any] = [
+            "osVer": osVer,
+            "appVer": appVer,
             "restaurant_Id": restaurant_Id,
             "uniqueId": uniqueId,
             ]
@@ -205,6 +218,8 @@ struct CommonNetWorking {
     //문의 또는 식당요청 게시판 삭제
     static func boardDel(board_Id: String, completion: @escaping (_ boardInfo: [BoardInfo]) -> Void) {
         let parameters: [String: Any] = [
+            "osVer": osVer,
+            "appVer": appVer,
             "Board_Id": board_Id,
             ]
         let headers: HTTPHeaders = [
@@ -237,6 +252,8 @@ struct CommonNetWorking {
     //문의 또는 식당요청 게시판 등록 & 수정
     static func boardEditAndWrite(boardCellInfo: [BoardCellInfo], completion: @escaping (_ boardInfo: [BoardInfo]) -> Void) {
         let parameters: [String: Any] = [
+            "osVer": osVer,
+            "appVer": appVer,
             "Board_Id": boardCellInfo[0].board_Id,
             "restaurant_Id": boardCellInfo[0].restaurant_Id,
             "uniqueId": boardCellInfo[0].uniqueId,

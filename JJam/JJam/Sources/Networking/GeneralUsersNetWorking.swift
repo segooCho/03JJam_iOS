@@ -12,6 +12,8 @@ struct GeneralUsersNetWorking {
     //식당 찾기
     static func restaurantSearch(searchText: String, completion: @escaping (_ restaurantSearch: [RestaurantSearch]) -> Void) {
         let parameters: [String: Any] = [
+            "osVer": osVer,
+            "appVer": appVer,
             "searchText": searchText,
             ]
         let headers: HTTPHeaders = [

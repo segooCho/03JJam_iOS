@@ -58,14 +58,24 @@ final class MealListCell: UITableViewCell {
             self.detailTextLabel!.numberOfLines = 3
             
             //메뉴 문자열 처리
-            var detailText = "메뉴 : " + meal.stapleFood
-            detailText = detailText + "," + meal.soup
+            var detailText = "메뉴 : " + meal.stapleFood1
+            detailText = detailText + "," + meal.soup1
             detailText = detailText + "," + meal.sideDish1
             detailText = detailText + "," + meal.sideDish2
             detailText = detailText + "," + meal.sideDish3
             detailText = detailText + "," + meal.sideDish4
-            detailText = detailText + "," + meal.dessert + "@"
-            detailText = detailText.replacingOccurrences(of: ",,", with: "")
+            detailText = detailText + "," + meal.sideDish5
+            detailText = detailText + "," + meal.sideDish6
+            detailText = detailText + "," + meal.sideDish7
+            detailText = detailText + "," + meal.dessert1
+            detailText = detailText + "," + meal.dessert2
+            detailText = detailText + "," + meal.dessert3 + "@"
+            detailText = detailText.replacingOccurrences(of: ",,", with: ",")
+            detailText = detailText.replacingOccurrences(of: ",,", with: ",")
+            detailText = detailText.replacingOccurrences(of: ",,", with: ",")
+            detailText = detailText.replacingOccurrences(of: ",,", with: ",")
+            detailText = detailText.replacingOccurrences(of: ",,", with: ",")
+            detailText = detailText.replacingOccurrences(of: ",,", with: ",")
             detailText = detailText.replacingOccurrences(of: ",@", with: "")
             detailText = detailText.replacingOccurrences(of: "@", with: "")
             

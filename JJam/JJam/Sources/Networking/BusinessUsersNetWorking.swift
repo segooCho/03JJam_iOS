@@ -12,6 +12,8 @@ struct BusinessUsersNetWorking {
     //GET : 식당 Group 조회
     static func restaurantGroup(restaurant_Id: String, group: String, completion: @escaping (_ restaurantGroup: [RestaurantGroup]) -> Void) {
         let parameters: [String: Any] = [
+            "osVer": osVer,
+            "appVer": appVer,
             "restaurant_Id": restaurant_Id,
             "group": group,
             ]
@@ -45,6 +47,8 @@ struct BusinessUsersNetWorking {
     //GET : 식당 Group 추가
     static func restaurantGroupAddAndDel(restaurant_Id: String, group: String, text: String, addMode: Bool, completion: @escaping (_ restaurantGroup: [RestaurantGroup]) -> Void) {
         let parameters: [String: Any] = [
+            "osVer": osVer,
+            "appVer": appVer,
             "restaurant_Id": restaurant_Id,
             "group": group,
             "text": text,
@@ -108,17 +112,24 @@ struct BusinessUsersNetWorking {
         }
         
         let parameters: [String: Any] = [
+            "osVer": osVer,
+            "appVer": appVer,
             param: Oid,
             "mealDate": businessUsersMeal[0].mealDate,
             "location": businessUsersMeal[0].location,
             "division": businessUsersMeal[0].division,
-            "stapleFood": businessUsersMeal[0].stapleFood,
-            "soup": businessUsersMeal[0].soup,
+            "stapleFood1": businessUsersMeal[0].stapleFood1,
+            "soup1": businessUsersMeal[0].soup1,
             "sideDish1": businessUsersMeal[0].sideDish1,
             "sideDish2": businessUsersMeal[0].sideDish2,
             "sideDish3": businessUsersMeal[0].sideDish3,
             "sideDish4": businessUsersMeal[0].sideDish4,
-            "dessert": businessUsersMeal[0].dessert,
+            "sideDish5": businessUsersMeal[0].sideDish5,
+            "sideDish6": businessUsersMeal[0].sideDish6,
+            "sideDish7": businessUsersMeal[0].sideDish7,
+            "dessert1": businessUsersMeal[0].dessert1,
+            "dessert2": businessUsersMeal[0].dessert2,
+            "dessert3": businessUsersMeal[0].dessert3,
             "remarks": businessUsersMeal[0].remarks,
             "editImage": editImage,                         //"NoImageFound.jpg" 가 설정되면 기존 이미지 파일 삭제(변경시에만 사용)
             ]
@@ -166,6 +177,8 @@ struct BusinessUsersNetWorking {
     static func mealDel(meal_Id: String, completion: @escaping (_ restaurantInfo: [RestaurantInfo]) -> Void) {
         let parameters: [String: Any] = [
             "meal_Id": meal_Id,
+            "osVer": osVer,
+            "appVer": appVer,
             ]
         let headers: HTTPHeaders = [
             "Accept": "application/json",
@@ -197,6 +210,8 @@ struct BusinessUsersNetWorking {
     //식당 공지사항 수정
     static func restaurantNoticeEdit(restaurant_Id: String, notice: String, completion: @escaping (_ restaurantInfo: [RestaurantInfo]) -> Void) {
         let parameters: [String: Any] = [
+            "osVer": osVer,
+            "appVer": appVer,
             "restaurant_Id": restaurant_Id,
             "notice": notice,
             ]

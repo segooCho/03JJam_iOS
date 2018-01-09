@@ -418,6 +418,7 @@ final class MealDetail: UIViewController, UIImagePickerControllerDelegate, UINav
     func mealLikeNetWorking() {
         UICommonSetLoadingService(self.activityIndicatorView, service: true)
         CommonNetWorking.mealLike(
+            restaurant_Id: self.viewMeal[0].restaurant_Id,
             meal_Id: self.viewMeal[0].meal_Id,
             uniqueId: uniqueId
         ) { [weak self] response in

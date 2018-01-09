@@ -18,8 +18,6 @@ final class GeneralUsersSettings: UIViewController {
     }
     
     fileprivate enum SectionItem {
-        case about
-        case push
         case version
         case icons
         case login
@@ -32,8 +30,6 @@ final class GeneralUsersSettings: UIViewController {
     
     fileprivate var sections: [Section] = [
         Section(items: [
-            .about,
-            .push,
             .version,
             .icons
             ]),
@@ -85,14 +81,10 @@ final class GeneralUsersSettings: UIViewController {
     
     fileprivate func cellData(for sectionItem: SectionItem) -> CellData {
         switch sectionItem {
-        case .about:
-            return CellData(text: "JJam에 관하여", detailText: nil)
-        case .push:
-            return CellData(text: "푸시", detailText: nil)
         case .version:
-            let versionKey = "CFBundleShortVersionString"
-            let version = Bundle.main.object(forInfoDictionaryKey: versionKey) as? String
-            return CellData(text: "현재 버전", detailText: version)
+            //let versionKey = "CFBundleShortVersionString"
+            //let version = Bundle.main.object(forInfoDictionaryKey: versionKey) as? String
+            return CellData(text: "현재 버전", detailText: appVer)
         case .icons:
             return CellData(text: "아이콘 출처", detailText: "icons8.com")
         case .login:
@@ -138,10 +130,6 @@ extension GeneralUsersSettings: UITableViewDelegate {
         tableView.deselectRow(at: indexPath, animated: true) //버튼이 원 상태로(누림 후 원래 상태로)
         let sectionItem = self.sections[indexPath.section].items[indexPath.row]
         switch sectionItem {
-        case .about:
-            break
-        case .push:
-            break
         case .version:
             break
         case .icons:
@@ -163,6 +151,10 @@ extension GeneralUsersSettings: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return "섹션 " +  "\(section+1)"
+        if (section == 0) {
+            return "정보"
+        } else {
+            return "로그인"
+        }
     }
 }

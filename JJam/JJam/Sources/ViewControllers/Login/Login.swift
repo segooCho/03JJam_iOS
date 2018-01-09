@@ -117,7 +117,7 @@ final class Login: UIViewController {
     // MARK: Actions
     // cancel
     func cancelButtonDidTap() {
-        AppDelegate.instance?.GeneralUsersTabBarScreen(selectIndex: 1)
+        AppDelegate.instance?.GeneralUsersTabBarScreen(selectIndex: 0)
     }
     
     func textFieldDidChangeText(_ textField: UITextField) {

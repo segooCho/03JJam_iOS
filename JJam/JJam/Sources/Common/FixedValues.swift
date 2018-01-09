@@ -8,6 +8,9 @@
 
 import UIKit
 
+let osVer = "iOS"
+let appVer = "1.001"
+
 //MARK: SuperConstants
 struct SuperConstants {
     //tableView 높이 지정
@@ -31,9 +34,9 @@ struct Font {
 }
 
 //netWorkingErrorMessage
-let netWorkingErrorMessage:[String:String] = ["message": "네트워크 통신에 문제가 발생하여 데이터 요청 작업을 실패했습니다."]
-let netWorkingErrorMessageEncodingError:[String:String] = ["message": "네트워크 통신에 문제가 발생하여 데이터 요청 작업을 실패했습니다.(encodingError)"]
-let fixedNotice = "서버에 정보 요청에 문제가 발생했습니다. 어플을 업데이트 해주세요."
+let netWorkingErrorMessage:[String:String] = ["message": "네트워크 통신에 문제가 발생하여 데이터 요청 작업을 실패했습니다.\n프로그램 업데이트 또는 Wi-Fi 연결 상태를 확인하세요."]
+let netWorkingErrorMessageEncodingError:[String:String] = ["message": "네트워크 통신에 문제가 발생하여 데이터 요청 작업을 실패했습니다.\n프로그램 업데이트 또는 Wi-Fi 연결 상태를 확인하세요.(encodingError)"]
+let fixedNotice = "네트워크 통신에 문제가 발생하여 데이터 요청 작업을 실패했습니다.\n프로그램 업데이트 또는 Wi-Fi 연결 상태를 확인하세요."
 
 
 //controlTuple 뷰 기능 설정(보기, 수정, 등록)
