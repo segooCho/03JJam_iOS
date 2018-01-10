@@ -10,6 +10,7 @@ import UIKit
 
 let osVer = "iOS"
 let appVer = "1.001"
+let appName = "막내야 오늘 뭐야?"
 
 //MARK: SuperConstants
 struct SuperConstants {

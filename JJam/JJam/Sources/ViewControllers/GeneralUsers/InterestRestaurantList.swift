@@ -36,7 +36,7 @@ final class InterestRestaurantList: UIViewController {
     //MARK: init
     init() {
         super.init(nibName: nil, bundle: nil)
-        self.title = "오늘의 짬"
+        self.title = appName
         self.tabBarItem.image = UIImage(named: "tab-restaurant")
         self.tabBarItem.selectedImage = UIImage(named: "tab-restaurant-selected")
         
