@@ -6,5 +6,6 @@ target 'JJam' do
   pod ‘Kingfisher’, '~> 3.5’
   pod 'SwiftyHash', '~> 0.7'
   pod 'DownPicker'
+  pod 'Google-Mobile-Ads-SDK'
 end
 use_frameworks!

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import GoogleMobileAds
 
 final class MealDetail: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     //MARK: Properties
@@ -18,6 +19,9 @@ final class MealDetail: UIViewController, UIImagePickerControllerDelegate, UINav
     fileprivate var segmentedIndexAndCode: Int = 3
     fileprivate let uniqueId = UIDevice.current.identifierForVendor!.uuidString //UUID
     
+    //전면 광고
+    fileprivate var gADInterstitial = GADInterstitial()
+
     //MARK: Constants
     fileprivate struct Metric {
         static let segmentedMid = CGFloat(20)
@@ -67,7 +71,17 @@ final class MealDetail: UIViewController, UIImagePickerControllerDelegate, UINav
     //MARK: View Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        // 전면 광고 => 일반 사용자
+        // **사업자의 지난 식단 까지 영향 추후 적용 시 변경 필요
+        if !controlTuple.editMode {
+            self.gADInterstitial = GADInterstitial(adUnitID: AdMobConstants.adMobAdUnitIDInterstitial)
+            self.gADInterstitial.delegate = self
+            let request = GADRequest()
+            request.testDevices = [kGADSimulatorID, AdMobConstants.adMobTestDevices];
+            self.gADInterstitial.load(request)
+        }
+        
         self.view.backgroundColor = .white
         self.title = "상세 식단"
         
@@ -589,5 +603,45 @@ extension MealDetail: UITableViewDelegate {
         } else {
             return MealDetailTextCell.height()
         }
+    }
+}
+
+extension MealDetail: GADInterstitialDelegate {
+
+    /// Tells the delegate an ad request succeeded.
+    func interstitialDidReceiveAd(_ ad: GADInterstitial) {
+        print("interstitialDidReceiveAd")
+        
+        if self.gADInterstitial.isReady {
+            self.gADInterstitial.present(fromRootViewController: self)
+        } else {
+            print("Ad wasn't ready")
+        }
+    }
+
+    /// Tells the delegate an ad request failed.
+    func interstitial(_ ad: GADInterstitial, didFailToReceiveAdWithError error: GADRequestError) {
+        print("interstitial:didFailToReceiveAdWithError: \(error.localizedDescription)")
+    }
+
+    /// Tells the delegate that an interstitial will be presented.
+    func interstitialWillPresentScreen(_ ad: GADInterstitial) {
+        print("interstitialWillPresentScreen")
+    }
+
+    /// Tells the delegate the interstitial is to be animated off the screen.
+    func interstitialWillDismissScreen(_ ad: GADInterstitial) {
+        print("interstitialWillDismissScreen")
+    }
+
+    /// Tells the delegate the interstitial had been animated off the screen.
+    func interstitialDidDismissScreen(_ ad: GADInterstitial) {
+        print("interstitialDidDismissScreen")
+    }
+
+    /// Tells the delegate that a user click will open another app
+    /// (such as the App Store), backgrounding the current app.
+    func interstitialWillLeaveApplication(_ ad: GADInterstitial) {
+        print("interstitialWillLeaveApplication")
     }
 }

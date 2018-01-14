@@ -10,7 +10,20 @@ import UIKit
 
 let osVer = "iOS"
 let appVer = "1.001"
-let appName = "막내야 오늘 뭐야?"
+let appName = "오늘 뭐야?"
+
+//광고
+struct AdMobConstants {
+    static let adMobAppID = "ca-app-pub-3540025768832359~3723180294"
+    static let adMobAdUnitID = "ca-app-pub-3540025768832359/5428187786"
+    static let adMobAdUnitIDInterstitial = "ca-app-pub-3540025768832359/3229770989"
+    
+    static let adMobBannerWidth = CGFloat(320)
+    static let adMobBannerHeight = CGFloat(50)
+    //새 연결시 변경 됨
+    static let adMobTestDevices = "0b8eea52cbdf3a3fa3e4e12c9bedf68e안행"
+}
+
 
 //MARK: SuperConstants
 struct SuperConstants {
@@ -43,7 +56,7 @@ let fixedNotice = "네트워크 통신에 문제가 발생하여 데이터 요�
 //controlTuple 뷰 기능 설정(보기, 수정, 등록)
 var controlTuple = (editMode: false, writeMode: false)
 /**
-editMode: false, writeMode: false    => 일반 사용자 식단 보기
+editMode: false, writeMode: false    => 일반 사용자 식단 보기 , 업체 사용자 지난 식단 보기
 editMode: true,  writeMode: false    => 업체 사용자 식단 수정
 editMode: true,  writeMode: true     => 업체 사용자 신규 식단
 editMode: false, writeMode: false    => 회원 가입

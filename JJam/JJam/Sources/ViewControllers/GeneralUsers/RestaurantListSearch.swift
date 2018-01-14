@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import GoogleMobileAds
 
 final class RestaurantListSearch: UIViewController {
     //MARK: Properties
@@ -31,7 +32,10 @@ final class RestaurantListSearch: UIViewController {
     fileprivate let textField = UITextField()
     fileprivate let button = UIButton()
     fileprivate let tableView = UITableView(frame: .zero, style: .plain)
-    
+    //광고
+    fileprivate var gADBannerView = GADBannerView()
+    fileprivate var request = GADRequest()
+
     //NotificationCenter에 등록된 옵저버의 타겟 객체가 소멸
     deinit {
         NotificationCenter.default.removeObserver(self)
@@ -82,10 +86,24 @@ final class RestaurantListSearch: UIViewController {
         self.tableView.dataSource = self
         self.tableView.delegate = self
 
+        //광고
+        self.gADBannerView = GADBannerView(adSize: kGADAdSizeBanner) //320x50
+        //self.gADBannerView = GADBannerView(adSize: kGADAdSizeSmartBannerPortrait)
+        self.gADBannerView.translatesAutoresizingMaskIntoConstraints = false
+        self.gADBannerView.backgroundColor = .red
+        self.gADBannerView.adUnitID = AdMobConstants.adMobAdUnitID
+        self.gADBannerView.delegate = self
+        self.gADBannerView.rootViewController = self
+        
+        //개발 장비 또는 Simulator에서 부정 클릭 방지용
+        request.testDevices = [kGADSimulatorID, AdMobConstants.adMobTestDevices];
+        self.gADBannerView.load(request)
+        
         //self.activityIndicatorView.hidesWhenStopped = true
         self.view.addSubview(self.textField)
         self.view.addSubview(self.button)
         self.view.addSubview(self.tableView)
+        self.view.addSubview(self.gADBannerView)
         self.view.addSubview(self.activityIndicatorView)
 
         //updateViewConstraints 자동 호출
@@ -121,7 +139,16 @@ final class RestaurantListSearch: UIViewController {
             self.tableView.snp.makeConstraints { make in
                 make.top.equalTo(self.textField.snp.bottom).offset(Metric.commonOffset)
                 make.left.right.equalToSuperview()
-                make.bottom.equalTo(self.bottomLayoutGuide.snp.top)
+                make.bottom.equalTo(self.gADBannerView.snp.top)
+            }
+            self.gADBannerView.snp.makeConstraints { make in
+                //Auto Width
+                //make.left.equalTo(Metric.textViewMid)
+                //make.right.equalTo(-Metric.textViewMid)
+                make.width.equalTo(AdMobConstants.adMobBannerWidth)
+                make.height.equalTo(AdMobConstants.adMobBannerHeight)
+                make.centerX.equalTo(self.view)
+                make.bottom.equalTo(self.bottomLayoutGuide.snp.top).offset(-Metric.commonOffset)
             }
         }
         super.updateViewConstraints()
@@ -245,3 +272,40 @@ extension RestaurantListSearch: UITextFieldDelegate {
         return true
     }
 }
+
+
+extension RestaurantListSearch: GADBannerViewDelegate {
+    /// Tells the delegate an ad request loaded an ad.
+    func adViewDidReceiveAd(_ bannerView: GADBannerView) {
+        print("adViewDidReceiveAd")
+    }
+    
+    /// Tells the delegate an ad request failed.
+    func adView(_ bannerView: GADBannerView,
+                didFailToReceiveAdWithError error: GADRequestError) {
+        print("adView:didFailToReceiveAdWithError: \(error.localizedDescription)")
+    }
+    
+    /// Tells the delegate that a full-screen view will be presented in response
+    /// to the user clicking on an ad.
+    func adViewWillPresentScreen(_ bannerView: GADBannerView) {
+        print("adViewWillPresentScreen")
+    }
+    
+    /// Tells the delegate that the full-screen view will be dismissed.
+    func adViewWillDismissScreen(_ bannerView: GADBannerView) {
+        print("adViewWillDismissScreen")
+    }
+    
+    /// Tells the delegate that the full-screen view has been dismissed.
+    func adViewDidDismissScreen(_ bannerView: GADBannerView) {
+        print("adViewDidDismissScreen")
+    }
+    
+    /// Tells the delegate that a user click will open another app (such as
+    /// the App Store), backgrounding the current app.
+    func adViewWillLeaveApplication(_ bannerView: GADBannerView) {
+        print("adViewWillLeaveApplication")
+    }
+}
+

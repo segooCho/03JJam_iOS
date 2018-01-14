@@ -8,11 +8,11 @@
 
 struct FixedBaseUrl {
     //Server URL
-    //static let BaseUrl = "http://127.0.0.1:3000/"         //local
-    static let BaseUrl = "http://192.168.2.32:3000/"        //local WIFI
-    //static let BaseUrl = "http://106.245.251.59:3000/"    //조은 Server
-    //static let BaseUrl = "http://106.245.251.60:3000/"    //local WIFI
-    //static let BaseUrl = "http://13.125.115.164:3000/"        //AWS 2018
+    //static let BaseUrl = "http://127.0.0.1:3000/"             //local
+    //static let BaseUrl = "http://192.168.2.30:3000/"          //local WIFI
+    //static let BaseUrl = "http://106.245.251.59:3000/"        //조은 Server
+    //static let BaseUrl = "http://106.245.251.60:3000/"        //local WIFI
+    static let BaseUrl = "http://13.125.115.164:3000/"        //AWS 2018
 
     
     /* ============== 조회 ============== */
