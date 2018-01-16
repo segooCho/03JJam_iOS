@@ -27,7 +27,8 @@ final class Login: UIViewController {
         
         //cancelButton
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(
-            barButtonSystemItem: .cancel,
+            title: "뒤로",
+            style: .done,
             target: self,
             action: #selector(cancelButtonDidTap)
         )
@@ -117,7 +118,7 @@ final class Login: UIViewController {
     // MARK: Actions
     // cancel
     func cancelButtonDidTap() {
-        AppDelegate.instance?.GeneralUsersTabBarScreen(selectIndex: 0)
+        AppDelegate.instance?.GeneralUsersTabBarScreen(selectIndex: 2)
     }
     
     func textFieldDidChangeText(_ textField: UITextField) {

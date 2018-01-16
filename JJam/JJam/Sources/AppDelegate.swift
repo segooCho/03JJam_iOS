@@ -84,7 +84,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     /*
      let alertController = UIAlertController(
      title: NSLocalizedString("Confirm", comment: "확인"),
-     message: "관심 식당 추가",
+     message: "식당 찾기",
      preferredStyle: .alert
      )
      let alertConfirm = UIAlertAction(

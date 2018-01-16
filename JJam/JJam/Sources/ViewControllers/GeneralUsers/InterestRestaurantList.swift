@@ -68,13 +68,15 @@ final class InterestRestaurantList: UIViewController {
         self.automaticallyAdjustsScrollViewInsets = false
 
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(
-            barButtonSystemItem: .edit,
+            title: "편집",
+            style: .done,
             target: self,
             action: #selector(editButtonDidTap)
         )
         
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(
-            barButtonSystemItem: .add,
+            title: "식당 찾기",
+            style: .done,
             target: self,
             action: #selector(addButtonDidTap)
         )
@@ -97,7 +99,7 @@ final class InterestRestaurantList: UIViewController {
         self.gADBannerView = GADBannerView(adSize: kGADAdSizeBanner) //320x50
         //self.gADBannerView = GADBannerView(adSize: kGADAdSizeSmartBannerPortrait)
         self.gADBannerView.translatesAutoresizingMaskIntoConstraints = false
-        self.gADBannerView.backgroundColor = .red
+        //self.gADBannerView.backgroundColor = .red
         self.gADBannerView.adUnitID = AdMobConstants.adMobAdUnitID
         self.gADBannerView.delegate = self
         self.gADBannerView.rootViewController = self
@@ -176,7 +178,8 @@ final class InterestRestaurantList: UIViewController {
     func editButtonDidTap() {
         guard !self.interestRestaurant.isEmpty else { return }
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(
-            barButtonSystemItem: .done,
+            title: "완료",
+            style: .done,
             target: self,
             action: #selector(doneButtonDidTap)
         )
@@ -185,7 +188,8 @@ final class InterestRestaurantList: UIViewController {
     
     func doneButtonDidTap() {
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(
-            barButtonSystemItem: .edit,
+            title: "목록 수록",
+            style: .done,
             target: self,
             action: #selector(editButtonDidTap)
         )
@@ -193,6 +197,14 @@ final class InterestRestaurantList: UIViewController {
     }
     
     func addButtonDidTap() {
+        //UI 버그 수정 차원
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(
+            title: "식당 찾기",
+            style: .done,
+            target: self,
+            action: #selector(addButtonDidTap)
+        )
+       
         let restaurantListSearch = RestaurantListSearch()
         self.navigationController?.pushViewController(restaurantListSearch, animated: true)
     }

@@ -59,15 +59,17 @@ final class BusinessUsersMenuManagement: UIViewController {
         
         self.view.backgroundColor = .white
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(
-            barButtonSystemItem: .edit,
+            title: "편집",
+            style: .done,
             target: self,
             action: #selector(editButtonDidTap)
         )
 
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(
-        barButtonSystemItem: .add,
-        target: self,
-        action: #selector(addButtonDidTap)
+            title: "등록 하기",
+            style: .done,
+            target: self,
+            action: #selector(addButtonDidTap)
         )
 
         UICommonSetLoading(self.activityIndicatorView)
@@ -204,10 +206,11 @@ final class BusinessUsersMenuManagement: UIViewController {
             }
             alertController.addAction(alertConfirm)
             self.present(alertController, animated: true, completion: nil)
-            
+            return
         }
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(
-            barButtonSystemItem: .done,
+            title: "완료",
+            style: .done,
             target: self,
             action: #selector(doneButtonDidTap)
         )
@@ -216,7 +219,8 @@ final class BusinessUsersMenuManagement: UIViewController {
     
     func doneButtonDidTap() {
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(
-            barButtonSystemItem: .edit,
+            title: "편집",
+            style: .done,
             target: self,
             action: #selector(editButtonDidTap)
         )

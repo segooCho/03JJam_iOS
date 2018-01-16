@@ -75,13 +75,15 @@ final class BusinessUsersMealList: UIViewController {
         self.automaticallyAdjustsScrollViewInsets = false
         
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(
-            barButtonSystemItem: .edit,
+            title: "편집",
+            style: .done,
             target: self,
             action: #selector(editButtonDidTap)
         )
         
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(
-            barButtonSystemItem: .add,
+            title: "식단 추가",
+            style: .done,
             target: self,
             action: #selector(addButtonDidTap)
         )
@@ -196,7 +198,8 @@ final class BusinessUsersMealList: UIViewController {
         } else {
             guard !self.meal.isEmpty else { return }
             self.navigationItem.leftBarButtonItem = UIBarButtonItem(
-                barButtonSystemItem: .done,
+                title: "완료",
+                style: .done,
                 target: self,
                 action: #selector(doneButtonDidTap)
             )
@@ -206,7 +209,8 @@ final class BusinessUsersMealList: UIViewController {
     
     func doneButtonDidTap() {
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(
-            barButtonSystemItem: .edit,
+            title: "편집",
+            style: .done,
             target: self,
             action: #selector(editButtonDidTap)
         )
@@ -215,6 +219,14 @@ final class BusinessUsersMealList: UIViewController {
     
     //신규 식단 추가
     func addButtonDidTap() {
+        //UI 버그 처리
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(
+            title: "식단 추가",
+            style: .done,
+            target: self,
+            action: #selector(addButtonDidTap)
+        )
+        
         let newMeal = [Meal](JSONArray: [["meal_Id": "",
                                           "restaurant_Id": restaurant_Id,     //필수
                                           "mealDate": "",

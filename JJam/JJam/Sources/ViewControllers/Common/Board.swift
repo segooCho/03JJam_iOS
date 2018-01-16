@@ -65,13 +65,15 @@ final class Board: UIViewController {
         self.automaticallyAdjustsScrollViewInsets = false
         
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(
-            barButtonSystemItem: .edit,
+            title: "편집",
+            style: .done,
             target: self,
             action: #selector(editButtonDidTap)
         )
         
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(
-            barButtonSystemItem: .add,
+            title: "문의 하기",
+            style: .done,
             target: self,
             action: #selector(addButtonDidTap)
         )
@@ -132,7 +134,8 @@ final class Board: UIViewController {
     func editButtonDidTap() {
         guard !self.boardInfo.isEmpty else { return }
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(
-            barButtonSystemItem: .done,
+            title: "완료",
+            style: .done,
             target: self,
             action: #selector(doneButtonDidTap)
         )
@@ -141,7 +144,8 @@ final class Board: UIViewController {
     
     func doneButtonDidTap() {
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(
-            barButtonSystemItem: .edit,
+            title: "편집",
+            style: .done,
             target: self,
             action: #selector(editButtonDidTap)
         )
@@ -149,6 +153,14 @@ final class Board: UIViewController {
     }
     
     func addButtonDidTap() {
+        //UI 버그 처리
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(
+            title: "문의 하기",
+            style: .done,
+            target: self,
+            action: #selector(addButtonDidTap)
+        )
+
         let newBoardInfo = [BoardInfo](JSONArray: [["board_Id": "",
                                                     "restaurant_Id": restaurant_Id,     //필수
                                                     "uniqueId": uniqueId,               //필수
@@ -169,20 +181,23 @@ final class Board: UIViewController {
             guard let `self` = self else { return }
             if response.count > 0 {
                 UICommonSetLoadingService(self.activityIndicatorView, service: false)
+                //iOS는 메시지 처리 하지 않음
                 let message = response[0].message
                 if message != nil {
-                    let alertController = UIAlertController(
-                        title: "확인",
-                        message: message,
-                        preferredStyle: .alert
-                    )
-                    let alertConfirm = UIAlertAction(
-                        title: "확인",
-                        style: .default) { _ in
-                            // 확인 후 작업
+                    if message != "문의 내용이 없습니다." {
+                        let alertController = UIAlertController(
+                            title: "확인",
+                            message: message,
+                            preferredStyle: .alert
+                        )
+                        let alertConfirm = UIAlertAction(
+                            title: "확인",
+                            style: .default) { _ in
+                                // 확인 후 작업
+                        }
+                        alertController.addAction(alertConfirm)
+                        self.present(alertController, animated: true, completion: nil)
                     }
-                    alertController.addAction(alertConfirm)
-                    self.present(alertController, animated: true, completion: nil)
                     return
                 }
             }

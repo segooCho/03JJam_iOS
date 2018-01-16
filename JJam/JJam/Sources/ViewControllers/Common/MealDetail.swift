@@ -90,7 +90,8 @@ final class MealDetail: UIViewController, UIImagePickerControllerDelegate, UINav
 
         //cancelButton
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(
-            barButtonSystemItem: .cancel,
+            title: "뒤로",
+            style: .done,
             target: self,
             action: #selector(cancelButtonDidTap)
         )
@@ -98,7 +99,8 @@ final class MealDetail: UIViewController, UIImagePickerControllerDelegate, UINav
         //수정(지난 식단은 제외) 또는 신규
         if controlTuple.editMode {
             self.navigationItem.rightBarButtonItem = UIBarButtonItem(
-                barButtonSystemItem: .save,
+                title: "등록 하기",
+                style: .done,
                 target: self,
                 action: #selector(saveButtonDidTap)
             )

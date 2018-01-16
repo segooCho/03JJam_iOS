@@ -122,9 +122,23 @@ final class MealDetailTextCell: UITableViewCell {
             let toolbar = UIToolbar();
             toolbar.sizeToFit()
             //done button & cancel button
-            let doneButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.done, target: self, action: #selector(MealDetailTextCell.donedatePicker))
-            let spaceButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: nil, action: nil)
-            let cancelButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.cancel, target: self, action: #selector(MealDetailTextCell.cancelDatePicker))
+            let doneButton = UIBarButtonItem(
+                title: "완료",
+                style: .done,
+                target: self,
+                action: #selector(MealDetailTextCell.donedatePicker)
+            )
+            let spaceButton = UIBarButtonItem(
+                barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace,
+                target: nil,
+                action: nil
+            )
+            let cancelButton = UIBarButtonItem(
+                title: "취소",
+                style: .done,
+                target: self,
+                action: #selector(MealDetailTextCell.cancelDatePicker)
+            )
             toolbar.setItems([cancelButton,spaceButton,doneButton], animated: false)
             // add toolbar to textField
             self.dateTextField.inputAccessoryView = toolbar
@@ -136,71 +150,99 @@ final class MealDetailTextCell: UITableViewCell {
             UICommonSetTextFieldEnable(self.locationTextField, placeholderText: "")
             self.locationDownPicker = DownPicker(textField: self.locationTextField, withData:BusinessGroupArray.location as! [Any])
             self.locationDownPicker.setPlaceholder("선택하세요.")
+            self.locationDownPicker.setToolbarCancelButtonText("취소")
+            self.locationDownPicker.setToolbarDoneButtonText("완료")
 
             UICommonSetLabel(self.divisionLabel, text: "구분", color: 1)
             UICommonSetTextFieldEnable(self.divisionTextField, placeholderText: "")
             self.divisionDownPicker = DownPicker(textField: self.divisionTextField, withData:BusinessGroupArray.division as! [Any])
             self.divisionDownPicker.setPlaceholder("선택하세요.")
+            self.divisionDownPicker.setToolbarCancelButtonText("취소")
+            self.divisionDownPicker.setToolbarDoneButtonText("완료")
 
             UICommonSetLabel(self.stapleFood1Label, text: "주식(밥,면)", color: 0)
             UICommonSetTextFieldEnable(self.stapleFood1TextField, placeholderText: "")
             self.stapleFood1DownPicker = DownPicker(textField: self.stapleFood1TextField, withData:BusinessGroupArray.stapleFood as! [Any])
             self.stapleFood1DownPicker.setPlaceholder("선택하세요.")
+            self.stapleFood1DownPicker.setToolbarCancelButtonText("취소")
+            self.stapleFood1DownPicker.setToolbarDoneButtonText("완료")
 
             UICommonSetLabel(self.soup1Label, text: "국", color: 0)
             UICommonSetTextFieldEnable(self.soup1TextField, placeholderText: "")
             self.soup1DownPicker = DownPicker(textField: self.soup1TextField, withData:BusinessGroupArray.soup as! [Any])
             self.soup1DownPicker.setPlaceholder("선택하세요.")
+            self.soup1DownPicker.setToolbarCancelButtonText("취소")
+            self.soup1DownPicker.setToolbarDoneButtonText("완료")
 
             UICommonSetLabel(self.sideDish1Label, text: "반찬", color: 0)
             UICommonSetTextFieldEnable(self.sideDish1TextField, placeholderText: "")
             self.sideDish1DownPicker = DownPicker(textField: self.sideDish1TextField, withData:BusinessGroupArray.sideDish as! [Any])
             self.sideDish1DownPicker.setPlaceholder("선택하세요.")
+            self.sideDish1DownPicker.setToolbarCancelButtonText("취소")
+            self.sideDish1DownPicker.setToolbarDoneButtonText("완료")
 
             UICommonSetLabel(self.sideDish2Label, text: "반찬", color: 0)
             UICommonSetTextFieldEnable(self.sideDish2TextField, placeholderText: "")
             self.sideDish2DownPicker = DownPicker(textField: self.sideDish2TextField, withData:BusinessGroupArray.sideDish as! [Any])
             self.sideDish2DownPicker.setPlaceholder("선택하세요.")
+            self.sideDish2DownPicker.setToolbarCancelButtonText("취소")
+            self.sideDish2DownPicker.setToolbarDoneButtonText("완료")
 
             UICommonSetLabel(self.sideDish3Label, text: "반찬", color: 0)
             UICommonSetTextFieldEnable(self.sideDish3TextField, placeholderText: "")
             self.sideDish3DownPicker = DownPicker(textField: self.sideDish3TextField, withData:BusinessGroupArray.sideDish as! [Any])
             self.sideDish3DownPicker.setPlaceholder("선택하세요.")
+            self.sideDish3DownPicker.setToolbarCancelButtonText("취소")
+            self.sideDish3DownPicker.setToolbarDoneButtonText("완료")
 
             UICommonSetLabel(self.sideDish4Label, text: "반찬", color: 0)
             UICommonSetTextFieldEnable(self.sideDish4TextField, placeholderText: "")
             self.sideDish4DownPicker = DownPicker(textField: self.sideDish4TextField, withData:BusinessGroupArray.sideDish as! [Any])
             self.sideDish4DownPicker.setPlaceholder("선택하세요.")
+            self.sideDish4DownPicker.setToolbarCancelButtonText("취소")
+            self.sideDish4DownPicker.setToolbarDoneButtonText("완료")
 
             UICommonSetLabel(self.sideDish5Label, text: "반찬", color: 0)
             UICommonSetTextFieldEnable(self.sideDish5TextField, placeholderText: "")
             self.sideDish5DownPicker = DownPicker(textField: self.sideDish5TextField, withData:BusinessGroupArray.sideDish as! [Any])
             self.sideDish5DownPicker.setPlaceholder("선택하세요.")
+            self.sideDish5DownPicker.setToolbarCancelButtonText("취소")
+            self.sideDish5DownPicker.setToolbarDoneButtonText("완료")
 
             UICommonSetLabel(self.sideDish6Label, text: "반찬", color: 0)
             UICommonSetTextFieldEnable(self.sideDish6TextField, placeholderText: "")
             self.sideDish6DownPicker = DownPicker(textField: self.sideDish6TextField, withData:BusinessGroupArray.sideDish as! [Any])
             self.sideDish6DownPicker.setPlaceholder("선택하세요.")
+            self.sideDish6DownPicker.setToolbarCancelButtonText("취소")
+            self.sideDish6DownPicker.setToolbarDoneButtonText("완료")
 
             UICommonSetLabel(self.sideDish7Label, text: "반찬", color: 0)
             UICommonSetTextFieldEnable(self.sideDish7TextField, placeholderText: "")
             self.sideDish7DownPicker = DownPicker(textField: self.sideDish7TextField, withData:BusinessGroupArray.sideDish as! [Any])
             self.sideDish7DownPicker.setPlaceholder("선택하세요.")
+            self.sideDish7DownPicker.setToolbarCancelButtonText("취소")
+            self.sideDish7DownPicker.setToolbarDoneButtonText("완료")
 
             UICommonSetLabel(self.dessert1Label, text: "후식", color: 0)
             UICommonSetTextFieldEnable(self.dessert1TextField, placeholderText: "")
             self.dessert1DownPicker = DownPicker(textField: self.dessert1TextField, withData:BusinessGroupArray.dessert as! [Any])
             self.dessert1DownPicker.setPlaceholder("선택하세요.")
+            self.dessert1DownPicker.setToolbarCancelButtonText("취소")
+            self.dessert1DownPicker.setToolbarDoneButtonText("완료")
 
             UICommonSetLabel(self.dessert2Label, text: "후식", color: 0)
             UICommonSetTextFieldEnable(self.dessert2TextField, placeholderText: "")
             self.dessert2DownPicker = DownPicker(textField: self.dessert2TextField, withData:BusinessGroupArray.dessert as! [Any])
             self.dessert2DownPicker.setPlaceholder("선택하세요.")
+            self.dessert2DownPicker.setToolbarCancelButtonText("취소")
+            self.dessert2DownPicker.setToolbarDoneButtonText("완료")
 
             UICommonSetLabel(self.dessert3Label, text: "후식", color: 0)
             UICommonSetTextFieldEnable(self.dessert3TextField, placeholderText: "")
             self.dessert3DownPicker = DownPicker(textField: self.dessert3TextField, withData:BusinessGroupArray.dessert as! [Any])
             self.dessert3DownPicker.setPlaceholder("선택하세요.")
+            self.dessert3DownPicker.setToolbarCancelButtonText("취소")
+            self.dessert3DownPicker.setToolbarDoneButtonText("완료")
 
             UICommonSetLabel(self.remarksLabel, text: "비고", color: 0)
             UICommonSetTextViewEnable(self.remarksTextView, placeholderText: "")

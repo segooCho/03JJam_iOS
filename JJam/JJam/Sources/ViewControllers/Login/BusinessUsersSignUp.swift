@@ -68,12 +68,14 @@ final class BusinessUsersSignUp: UIViewController, UIImagePickerControllerDelega
         self.automaticallyAdjustsScrollViewInsets = false
 
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(
-            barButtonSystemItem: .cancel,
+            title: "뒤로",
+            style: .done,
             target: self,
             action: #selector(cancelButtonDidTap)
         )
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(
-            barButtonSystemItem: .add,
+            title: "등록 하기",
+            style: .done,
             target: self,
             action: #selector(addButtonDidTap)
         )

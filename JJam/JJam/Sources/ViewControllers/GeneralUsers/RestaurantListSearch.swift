@@ -63,13 +63,15 @@ final class RestaurantListSearch: UIViewController {
         UICommonSetLoading(self.activityIndicatorView)
         
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(
-            barButtonSystemItem: .cancel,
+            title: "뒤로",
+            style: .done,
             target: self,
             action: #selector(cancelButtonDidTap)
         )
         
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(
-            barButtonSystemItem: .add,
+            title: "추가",
+            style: .done,
             target: self,
             action: #selector(addButtonDidTap)
         )
@@ -90,7 +92,7 @@ final class RestaurantListSearch: UIViewController {
         self.gADBannerView = GADBannerView(adSize: kGADAdSizeBanner) //320x50
         //self.gADBannerView = GADBannerView(adSize: kGADAdSizeSmartBannerPortrait)
         self.gADBannerView.translatesAutoresizingMaskIntoConstraints = false
-        self.gADBannerView.backgroundColor = .red
+        //self.gADBannerView.backgroundColor = .red
         self.gADBannerView.adUnitID = AdMobConstants.adMobAdUnitID
         self.gADBannerView.delegate = self
         self.gADBannerView.rootViewController = self

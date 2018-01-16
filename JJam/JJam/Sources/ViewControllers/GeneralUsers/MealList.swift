@@ -78,8 +78,10 @@ final class MealList: UIViewController {
         UICommonSetLoading(self.activityIndicatorView)
         
         //cancelButton
+        
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(
-            barButtonSystemItem: .cancel,
+            title: "뒤로",
+            style: .done,
             target: self,
             action: #selector(cancelButtonDidTap)
         )
@@ -111,7 +113,7 @@ final class MealList: UIViewController {
         self.gADBannerView = GADBannerView(adSize: kGADAdSizeBanner) //320x50
         //self.gADBannerView = GADBannerView(adSize: kGADAdSizeSmartBannerPortrait)
         self.gADBannerView.translatesAutoresizingMaskIntoConstraints = false
-        self.gADBannerView.backgroundColor = .red
+        //self.gADBannerView.backgroundColor = .red
         self.gADBannerView.adUnitID = AdMobConstants.adMobAdUnitID
         self.gADBannerView.delegate = self
         self.gADBannerView.rootViewController = self
