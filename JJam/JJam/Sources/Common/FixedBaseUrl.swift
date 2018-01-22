@@ -28,6 +28,8 @@ struct FixedBaseUrl {
     static let mealLikeCount = BaseUrl + "mealLikeCount"
     //식단 맛있어요 설정/해제
     static let mealLike = BaseUrl + "mealLike"
+    //식단 등록 카운터를 이용한 전면 배너 광고 처리
+    static let mealBannerCheck = BaseUrl + "mealBannerCheck"
     //로그인
     static let restaurantLogin = BaseUrl + "restaurantLogin"
     //회원 정보 조회

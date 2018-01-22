@@ -72,16 +72,6 @@ final class MealDetail: UIViewController, UIImagePickerControllerDelegate, UINav
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // 전면 광고 => 일반 사용자
-        // **사업자의 지난 식단 까지 영향 추후 적용 시 변경 필요
-        if !controlTuple.editMode {
-            self.gADInterstitial = GADInterstitial(adUnitID: AdMobConstants.adMobAdUnitIDInterstitial)
-            self.gADInterstitial.delegate = self
-            let request = GADRequest()
-            request.testDevices = [kGADSimulatorID, AdMobConstants.adMobTestDevices];
-            self.gADInterstitial.load(request)
-        }
-        
         self.view.backgroundColor = .white
         self.title = "상세 식단"
         
@@ -204,6 +194,9 @@ final class MealDetail: UIViewController, UIImagePickerControllerDelegate, UINav
                 }
             }
         }
+        
+        //식단 등록 카운터를 이용한 전면 배너 광고 처리
+        mealBannerCheck()
         
         //좋아요 가져오기
         if !controlTuple.writeMode {
@@ -402,6 +395,30 @@ final class MealDetail: UIViewController, UIImagePickerControllerDelegate, UINav
                         }
                     }
                 }
+        }
+    }
+    
+    /*********************************************  전면 광고 처리 ******************************************************/
+    func mealBannerCheck() {
+        UICommonSetLoadingService(self.activityIndicatorView, service: true)
+        CommonNetWorking.mealBannerCheck(
+            restaurant_Id: self.viewMeal[0].restaurant_Id
+        ) { [weak self] response in
+            guard let `self` = self else { return }
+            UICommonSetLoadingService(self.activityIndicatorView, service: false)
+            if response.count > 0 {
+                //Notification 포함 작동 중
+                let bannetCheck = response[0].bannerCheck   //무조건 리턴 발생함
+                //check
+                if bannetCheck == "y" {
+                    // 전면 광고
+                    self.gADInterstitial = GADInterstitial(adUnitID: AdMobConstants.adMobAdUnitIDInterstitial)
+                    self.gADInterstitial.delegate = self
+                    let request = GADRequest()
+                    request.testDevices = [kGADSimulatorID, AdMobConstants.adMobTestDevices];
+                    self.gADInterstitial.load(request)
+                }
+            }
         }
     }
     
