@@ -15,7 +15,8 @@ final class BusinessUsersMenuManagement: UIViewController {
     fileprivate var segmentedIndexAndCode = 0
     fileprivate var groupText:String = "location"
     fileprivate var group: [Group] = []
-    
+    fileprivate var groupSort: [Group] = []
+
     
     //MARK: Constants
     fileprivate struct Metric {
@@ -37,6 +38,10 @@ final class BusinessUsersMenuManagement: UIViewController {
     fileprivate let button = UIButton()
     fileprivate let tableView = UITableView(frame: .zero, style: .plain)
     
+    //NotificationCenter에 등록된 옵저버의 타겟 객체가 소멸
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
     
     //MARK: init
     init(restaurant_Id: String) {
@@ -56,6 +61,8 @@ final class BusinessUsersMenuManagement: UIViewController {
     //MARK: View Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        setupViewResizerOnKeyboardShown()
         
         self.view.backgroundColor = .white
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(
@@ -146,8 +153,7 @@ final class BusinessUsersMenuManagement: UIViewController {
             changeSegmentedControl()
         }
     }
-
-    
+   
     //MARK: ACTION
     func changeSegmentedControl() {
         self.textField.text = ""
@@ -309,19 +315,32 @@ final class BusinessUsersMenuManagement: UIViewController {
                         style: .default) { _ in
                             if message == "저장이 완료되었습니다." {
                                 self.group.append(Group (text: text))
+                                //임시 sort
+                                self.groupSort.removeAll()
+                                for data in self.group {
+                                    self.groupSort.append(Group (text: data.text))
+                                }
+                                self.groupSort.sort {$0.text < $1.text}
+
                                 switch self.groupText {
                                 case "location":
-                                    BusinessGroupArray.location.add(text)
+                                    BusinessGroupArray.location.removeAllObjects()
+                                    self.compareTextPlacement(group: self.groupText)
                                 case "division":
-                                    BusinessGroupArray.division.add(text)
+                                    BusinessGroupArray.division.removeAllObjects()
+                                    self.compareTextPlacement(group: self.groupText)
                                 case "stapleFood":
-                                    BusinessGroupArray.stapleFood.add(text)
+                                    BusinessGroupArray.stapleFood.removeAllObjects()
+                                    self.compareTextPlacement(group: self.groupText)
                                 case "soup":
-                                    BusinessGroupArray.soup.add(text)
+                                    BusinessGroupArray.soup.removeAllObjects()
+                                    self.compareTextPlacement(group: self.groupText)
                                 case "sideDish":
-                                    BusinessGroupArray.sideDish.add(text)
+                                    BusinessGroupArray.sideDish.removeAllObjects()
+                                    self.compareTextPlacement(group: self.groupText)
                                 case "dessert":
-                                    BusinessGroupArray.dessert.add(text)
+                                    BusinessGroupArray.dessert.removeAllObjects()
+                                    self.compareTextPlacement(group: self.groupText)
                                 default:
                                     print("No Group")
                                 }
@@ -360,6 +379,35 @@ final class BusinessUsersMenuManagement: UIViewController {
                 }
             }
         }
+    }
+    
+    func compareTextPlacement(group:String) {
+        self.group.removeAll()
+        for data in self.groupSort {
+            switch group {
+            case "location":
+                BusinessGroupArray.location.add(data.text)
+                self.group.append(Group (text: data.text))
+            case "division":
+                BusinessGroupArray.division.add(data.text)
+                self.group.append(Group (text: data.text))
+            case "stapleFood":
+                BusinessGroupArray.stapleFood.add(data.text)
+                self.group.append(Group (text: data.text))
+            case "soup":
+                BusinessGroupArray.soup.add(data.text)
+                self.group.append(Group (text: data.text))
+            case "sideDish":
+                BusinessGroupArray.sideDish.add(data.text)
+                self.group.append(Group (text: data.text))
+            case "dessert":
+                BusinessGroupArray.dessert.add(data.text)
+                self.group.append(Group (text: data.text))
+            default:
+                print("No Group")
+            }
+        }
+        self.groupSort.removeAll()
     }
     
     func textFieldDidChangeText(_ textField: UITextField) {
@@ -431,3 +479,41 @@ extension BusinessUsersMenuManagement: UITextFieldDelegate {
     }
 }
 
+//키보드 상태로 인해 숨겨지는 영역 처리
+extension UIViewController {
+    func setupViewResizerOnKeyboardShown() {
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(keyboardWillShowForResizing),
+                                               name: Notification.Name.UIKeyboardWillShow,
+                                               object: nil)
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(keyboardWillHideForResizing),
+                                               name: Notification.Name.UIKeyboardWillHide,
+                                               object: nil)
+    }
+    
+    func keyboardWillShowForResizing(notification: Notification) {
+        if let keyboardSize = (notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue,
+            let window = self.view.window?.frame {
+            self.view.frame = CGRect(x: self.view.frame.origin.x,
+                                     y: self.view.frame.origin.y,
+                                     width: self.view.frame.width,
+                                     height: window.origin.y + window.height - keyboardSize.height)
+        } else {
+            debugPrint("We're showing the keyboard and either the keyboard size or window is nil: panic widely.")
+        }
+    }
+    
+    func keyboardWillHideForResizing(notification: Notification) {
+        if let keyboardSize = (notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
+            let viewHeight = self.view.frame.height
+            self.view.frame = CGRect(x: self.view.frame.origin.x,
+                                     y: self.view.frame.origin.y,
+                                     width: self.view.frame.width,
+                                     height: viewHeight + keyboardSize.height)
+        } else {
+            debugPrint("We're about to hide the keyboard and the keyboard size is nil. Now is the rapture.")
+        }
+    }
+    
+}
