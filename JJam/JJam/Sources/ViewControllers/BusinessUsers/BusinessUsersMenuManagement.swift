@@ -71,6 +71,7 @@ final class BusinessUsersMenuManagement: UIViewController {
             target: self,
             action: #selector(editButtonDidTap)
         )
+        self.navigationItem.leftBarButtonItem?.tintColor = .orange
 
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(
             title: "등록 하기",
@@ -78,6 +79,7 @@ final class BusinessUsersMenuManagement: UIViewController {
             target: self,
             action: #selector(addButtonDidTap)
         )
+        self.navigationItem.rightBarButtonItem?.tintColor = .orange
 
         UICommonSetLoading(self.activityIndicatorView)
         //segmentedControl
@@ -220,6 +222,7 @@ final class BusinessUsersMenuManagement: UIViewController {
             target: self,
             action: #selector(doneButtonDidTap)
         )
+        self.navigationItem.leftBarButtonItem?.tintColor = .orange
         self.tableView.setEditing(true, animated: true)
     }
     
@@ -230,6 +233,7 @@ final class BusinessUsersMenuManagement: UIViewController {
             target: self,
             action: #selector(editButtonDidTap)
         )
+        self.navigationItem.leftBarButtonItem?.tintColor = .orange
         self.tableView.setEditing(false, animated: true)
     }
    

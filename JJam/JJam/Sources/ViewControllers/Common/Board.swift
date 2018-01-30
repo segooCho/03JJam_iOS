@@ -70,14 +70,16 @@ final class Board: UIViewController {
             target: self,
             action: #selector(editButtonDidTap)
         )
-        
+        self.navigationItem.leftBarButtonItem?.tintColor = .orange
+
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(
             title: "문의 하기",
             style: .done,
             target: self,
             action: #selector(addButtonDidTap)
         )
-        
+        self.navigationItem.rightBarButtonItem?.tintColor = .orange
+
         UICommonSetLoading(self.activityIndicatorView)
         
         //문의 또는 식당요청 게시판 삭제
@@ -139,6 +141,7 @@ final class Board: UIViewController {
             target: self,
             action: #selector(doneButtonDidTap)
         )
+        self.navigationItem.leftBarButtonItem?.tintColor = .orange
         self.tableView.setEditing(true, animated: true)
     }
     
@@ -149,6 +152,7 @@ final class Board: UIViewController {
             target: self,
             action: #selector(editButtonDidTap)
         )
+        self.navigationItem.leftBarButtonItem?.tintColor = .orange
         self.tableView.setEditing(false, animated: true)
     }
     
@@ -160,6 +164,7 @@ final class Board: UIViewController {
             target: self,
             action: #selector(addButtonDidTap)
         )
+        self.navigationItem.rightBarButtonItem?.tintColor = .orange
 
         let newBoardInfo = [BoardInfo](JSONArray: [["board_Id": "",
                                                     "restaurant_Id": restaurant_Id,     //필수

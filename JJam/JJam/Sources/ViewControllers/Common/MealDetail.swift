@@ -85,6 +85,7 @@ final class MealDetail: UIViewController, UIImagePickerControllerDelegate, UINav
             target: self,
             action: #selector(cancelButtonDidTap)
         )
+        self.navigationItem.leftBarButtonItem?.tintColor = .orange
 
         //수정(지난 식단은 제외) 또는 신규
         if controlTuple.editMode {
@@ -95,7 +96,8 @@ final class MealDetail: UIViewController, UIImagePickerControllerDelegate, UINav
                 action: #selector(saveButtonDidTap)
             )
         }
-        
+        self.navigationItem.rightBarButtonItem?.tintColor = .orange
+
         UICommonSetLoading(self.activityIndicatorView)
         
         //이미지

@@ -68,14 +68,16 @@ final class RestaurantListSearch: UIViewController {
             target: self,
             action: #selector(cancelButtonDidTap)
         )
-        
+        self.navigationItem.leftBarButtonItem?.tintColor = .orange
+
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(
             title: "추가",
             style: .done,
             target: self,
             action: #selector(addButtonDidTap)
         )
-        
+        self.navigationItem.rightBarButtonItem?.tintColor = .orange
+
         UICommonSetTextFieldEnable(self.textField, placeholderText:"상호 or 주소(읍,면,동)")
         self.textField.addTarget(self, action: #selector(textFieldDidChangeText), for: .editingChanged)
         self.textField.delegate = self

@@ -13,6 +13,9 @@ func UICommonSetSegmentedControl(_ uIKit: UISegmentedControl, titles: Array<Stri
     for (index, title) in titles.enumerated() {
         uIKit.insertSegment(withTitle: title, at: index, animated: false)
     }
+    
+    uIKit.tintColor = .orange
+    
     switch font {
     case 1:
         uIKit.setTitleTextAttributes([NSFontAttributeName: Font.font12], for: .normal)

@@ -73,14 +73,16 @@ final class InterestRestaurantList: UIViewController {
             target: self,
             action: #selector(editButtonDidTap)
         )
-        
+        self.navigationItem.leftBarButtonItem?.tintColor = .orange
+
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(
             title: "식당 찾기",
             style: .done,
             target: self,
             action: #selector(addButtonDidTap)
         )
-        
+        self.navigationItem.rightBarButtonItem?.tintColor = .orange
+
         UICommonSetLoading(self.activityIndicatorView)
         
         //공지사항
@@ -183,16 +185,18 @@ final class InterestRestaurantList: UIViewController {
             target: self,
             action: #selector(doneButtonDidTap)
         )
+        self.navigationItem.leftBarButtonItem?.tintColor = .orange
         self.tableView.setEditing(true, animated: true)
     }
     
     func doneButtonDidTap() {
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(
-            title: "목록 수록",
+            title: "편집",
             style: .done,
             target: self,
             action: #selector(editButtonDidTap)
         )
+        self.navigationItem.leftBarButtonItem?.tintColor = .orange
         self.tableView.setEditing(false, animated: true)
     }
     
@@ -204,7 +208,8 @@ final class InterestRestaurantList: UIViewController {
             target: self,
             action: #selector(addButtonDidTap)
         )
-       
+        self.navigationItem.rightBarButtonItem?.tintColor = .orange
+
         let restaurantListSearch = RestaurantListSearch()
         self.navigationController?.pushViewController(restaurantListSearch, animated: true)
     }

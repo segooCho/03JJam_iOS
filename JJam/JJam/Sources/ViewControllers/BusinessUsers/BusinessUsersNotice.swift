@@ -62,14 +62,16 @@ final class BusinessUsersNotice: UIViewController {
             target: self,
             action: #selector(cancelButtonDidTap)
         )
-        
+        self.navigationItem.leftBarButtonItem?.tintColor = .orange
+
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(
             title: "등록 하기",
             style: .done,
             target: self,
             action: #selector(addButtonDidTap)
         )
-        
+        self.navigationItem.rightBarButtonItem?.tintColor = .orange
+
         UICommonSetLoading(self.activityIndicatorView)
         UICommonSetTextViewEnable(self.textView, placeholderText: "")
         self.view.addSubview(self.textView)

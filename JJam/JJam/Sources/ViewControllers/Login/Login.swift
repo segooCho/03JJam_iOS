@@ -32,6 +32,7 @@ final class Login: UIViewController {
             target: self,
             action: #selector(cancelButtonDidTap)
         )
+        self.navigationItem.leftBarButtonItem?.tintColor = .orange
 
         UICommonSetLoading(self.activityIndicatorView)
 
