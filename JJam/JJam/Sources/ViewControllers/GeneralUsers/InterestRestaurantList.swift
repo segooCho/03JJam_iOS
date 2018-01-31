@@ -42,7 +42,7 @@ final class InterestRestaurantList: UIViewController {
         self.title = appName
         self.tabBarItem.image = UIImage(named: "tab-restaurant")
         self.tabBarItem.selectedImage = UIImage(named: "tab-restaurant-selected")
-
+        
         //로컬 저장 정보 불러오기
         if let dicts = UserDefaults.standard.array(forKey: JJamUserDefaultsKeyInterestRestaurantList) as? [[String: Any]] {
             self.interestRestaurant = dicts.flatMap { (disc: [String: Any]) -> InterestRestaurant? in

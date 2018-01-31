@@ -28,6 +28,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let window = UIWindow(frame: UIScreen.main.bounds)
         window.backgroundColor = .white
        
+        UITabBar.appearance().barTintColor = .white
+        UITabBar.appearance().tintColor = .orange
+
+        
         //로그인
         //LoginScreen()
         
