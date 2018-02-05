@@ -77,6 +77,7 @@ final class MealList: UIViewController {
 
         UICommonSetLoading(self.activityIndicatorView)
         
+        self.navigationController?.navigationBar.barTintColor = .orange
         //cancelButton
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(
             title: "뒤로",
@@ -84,7 +85,7 @@ final class MealList: UIViewController {
             target: self,
             action: #selector(cancelButtonDidTap)
         )
-        self.navigationItem.leftBarButtonItem?.tintColor = .orange
+        self.navigationItem.leftBarButtonItem?.tintColor = .white
 
         //segmentedControl
         UICommonSetSegmentedControl(self.segmentedControl, titles: segmentedTitles, font: 0)

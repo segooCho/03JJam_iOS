@@ -67,21 +67,21 @@ final class InterestRestaurantList: UIViewController {
         //scroll의 내부 여백 발생시 사용()
         self.automaticallyAdjustsScrollViewInsets = false
 
+        self.navigationController?.navigationBar.barTintColor = .orange
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(
             title: "편집",
             style: .done,
             target: self,
             action: #selector(editButtonDidTap)
         )
-        self.navigationItem.leftBarButtonItem?.tintColor = .orange
-
+        self.navigationItem.leftBarButtonItem?.tintColor = .white
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(
             title: "식당 찾기",
             style: .done,
             target: self,
             action: #selector(addButtonDidTap)
         )
-        self.navigationItem.rightBarButtonItem?.tintColor = .orange
+        self.navigationItem.rightBarButtonItem?.tintColor = .white
 
         UICommonSetLoading(self.activityIndicatorView)
         
@@ -185,7 +185,7 @@ final class InterestRestaurantList: UIViewController {
             target: self,
             action: #selector(doneButtonDidTap)
         )
-        self.navigationItem.leftBarButtonItem?.tintColor = .orange
+        self.navigationItem.leftBarButtonItem?.tintColor = .white
         self.tableView.setEditing(true, animated: true)
     }
     
@@ -196,7 +196,7 @@ final class InterestRestaurantList: UIViewController {
             target: self,
             action: #selector(editButtonDidTap)
         )
-        self.navigationItem.leftBarButtonItem?.tintColor = .orange
+        self.navigationItem.leftBarButtonItem?.tintColor = .white
         self.tableView.setEditing(false, animated: true)
     }
     
@@ -208,7 +208,7 @@ final class InterestRestaurantList: UIViewController {
             target: self,
             action: #selector(addButtonDidTap)
         )
-        self.navigationItem.rightBarButtonItem?.tintColor = .orange
+        self.navigationItem.rightBarButtonItem?.tintColor = .white
 
         let restaurantListSearch = RestaurantListSearch()
         self.navigationController?.pushViewController(restaurantListSearch, animated: true)

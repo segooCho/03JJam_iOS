@@ -54,6 +54,9 @@ final class GeneralUsersSettings: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.navigationController?.navigationBar.barTintColor = .orange
+
         self.tableView.dataSource = self
         self.tableView.delegate = self
         self.tableView.register(SettingsCell.self, forCellReuseIdentifier: "cell")

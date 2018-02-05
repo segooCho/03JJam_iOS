@@ -25,6 +25,7 @@ final class Login: UIViewController {
         self.view.backgroundColor = .white
         self.title = "로그인"
         
+        self.navigationController?.navigationBar.barTintColor = .orange
         //cancelButton
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(
             title: "뒤로",
@@ -32,7 +33,7 @@ final class Login: UIViewController {
             target: self,
             action: #selector(cancelButtonDidTap)
         )
-        self.navigationItem.leftBarButtonItem?.tintColor = .orange
+        self.navigationItem.leftBarButtonItem?.tintColor = .white
 
         UICommonSetLoading(self.activityIndicatorView)
 

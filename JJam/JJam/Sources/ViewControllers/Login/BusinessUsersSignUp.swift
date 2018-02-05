@@ -66,22 +66,22 @@ final class BusinessUsersSignUp: UIViewController, UIImagePickerControllerDelega
         
         //scroll의 내부 여백 발생시 사용()
         self.automaticallyAdjustsScrollViewInsets = false
-
+        
+        self.navigationController?.navigationBar.barTintColor = .orange
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(
             title: "뒤로",
             style: .done,
             target: self,
             action: #selector(cancelButtonDidTap)
         )
-        self.navigationItem.leftBarButtonItem?.tintColor = .orange
-
+        self.navigationItem.leftBarButtonItem?.tintColor = .white
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(
             title: "등록 하기",
             style: .done,
             target: self,
             action: #selector(addButtonDidTap)
         )
-        self.navigationItem.rightBarButtonItem?.tintColor = .orange
+        self.navigationItem.rightBarButtonItem?.tintColor = .white
 
         UICommonSetLoading(self.activityIndicatorView)
         

@@ -78,6 +78,7 @@ final class MealDetail: UIViewController, UIImagePickerControllerDelegate, UINav
         //scroll의 내부 여백 발생시 사용()
         //self.automaticallyAdjustsScrollViewInsets = false
 
+        self.navigationController?.navigationBar.barTintColor = .orange
         //cancelButton
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(
             title: "뒤로",
@@ -85,8 +86,7 @@ final class MealDetail: UIViewController, UIImagePickerControllerDelegate, UINav
             target: self,
             action: #selector(cancelButtonDidTap)
         )
-        self.navigationItem.leftBarButtonItem?.tintColor = .orange
-
+        self.navigationItem.leftBarButtonItem?.tintColor = .white
         //수정(지난 식단은 제외) 또는 신규
         if controlTuple.editMode {
             self.navigationItem.rightBarButtonItem = UIBarButtonItem(
@@ -96,7 +96,7 @@ final class MealDetail: UIViewController, UIImagePickerControllerDelegate, UINav
                 action: #selector(saveButtonDidTap)
             )
         }
-        self.navigationItem.rightBarButtonItem?.tintColor = .orange
+        self.navigationItem.rightBarButtonItem?.tintColor = .white
 
         UICommonSetLoading(self.activityIndicatorView)
         
