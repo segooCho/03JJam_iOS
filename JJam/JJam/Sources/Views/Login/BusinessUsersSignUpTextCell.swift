@@ -34,7 +34,7 @@ final class BusinessUsersSignUpTextCell: UITableViewCell {
     fileprivate let idTextField = UITextField()
     //패스워드
     fileprivate let passwordLabel = UILabel()
-    public let passwordTextField = UITextField()
+    fileprivate let passwordTextField = UITextField()
     //패스워드2
     fileprivate let password2Label = UILabel()
     fileprivate let password2TextField = UITextField()

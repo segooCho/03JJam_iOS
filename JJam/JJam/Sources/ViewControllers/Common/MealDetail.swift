@@ -549,7 +549,7 @@ final class MealDetail: UIViewController, UIImagePickerControllerDelegate, UINav
     
     func noImageButtonDidTap() {
         image = nil
-        self.editImage = "NoImageFound.jpg"
+        self.editImage = "NoImageFound.png"
         //지정된 row만 reload 한다.(전체 로드시 입력 값이 지워짐)
         let index = IndexPath(row: 0, section: 0)
         self.tableView.reloadRows(at: [index], with: .none)

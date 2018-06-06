@@ -131,7 +131,7 @@ struct BusinessUsersNetWorking {
             "dessert2": businessUsersMeal[0].dessert2,
             "dessert3": businessUsersMeal[0].dessert3,
             "remarks": businessUsersMeal[0].remarks,
-            "editImage": editImage,                         //"NoImageFound.jpg" 가 설정되면 기존 이미지 파일 삭제(변경시에만 사용)
+            "editImage": editImage,                         //"NoImageFound.png" 가 설정되면 기존 이미지 파일 삭제(변경시에만 사용)
             ]
         
         var restaurantInfo: [RestaurantInfo] = []

@@ -52,7 +52,7 @@ extension UIImageView {
             }
            
             let url = URL(string: urlString + "/\(foodImage)")
-            self.kf.setImage(with: url, placeholder: UIImage(named: "NoImageFound.jpg"))
+            self.kf.setImage(with: url, placeholder: UIImage(named: "NoImageFound.png"))
         }else {
             self.kf.setImage(with: nil)
         }

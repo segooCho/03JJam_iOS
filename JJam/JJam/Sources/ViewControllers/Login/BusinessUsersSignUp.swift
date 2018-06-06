@@ -433,7 +433,7 @@ final class BusinessUsersSignUp: UIViewController, UIImagePickerControllerDelega
 
     func noImageButtonDidTap() {
         image = nil
-        self.editImage = "NoImageFound.jpg"
+        self.editImage = "NoImageFound.png"
         //지정된 row만 reload 한다.(전체 로드시 입력 값이 지워짐)
         let index = IndexPath(row: 1, section: 0)
         self.tableView.reloadRows(at: [index], with: .none)
@@ -496,7 +496,7 @@ extension BusinessUsersSignUp: UITableViewDataSource {
                 if editImage != "" {
                     cell.configure(editImage: editImage)
                 } else {
-                    let noImage = UIImage(named: "NoImageFound.jpg")
+                    let noImage = UIImage(named: "NoImageFound.png")
                     cell.configure(image: noImage!)
                 }
             } else {
