@@ -18,7 +18,7 @@ final class InterestRestaurantList: UIViewController {
     //MARK: Constants
     fileprivate struct Metric {
         static let textViewMid = CGFloat(10)
-        static let textViewHeight = CGFloat(70)
+        static let textViewHeight = CGFloat(100)
         
         static let commonOffset = CGFloat(7)
     }

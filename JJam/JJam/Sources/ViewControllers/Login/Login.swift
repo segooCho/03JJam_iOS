@@ -49,7 +49,7 @@ final class Login: UIViewController {
         UICommonSetButton(self.loginButton, setTitleText: "로그인", color: 0)
         self.loginButton.addTarget(self, action: #selector(loginButtonDidTap), for: .touchUpInside)
         
-        UICommonSetButton(self.signUpButton, setTitleText: "회원 가입", color: 1)
+        UICommonSetButton(self.signUpButton, setTitleText: "회원 가입", color: 2)
         self.signUpButton.addTarget(self, action: #selector(signUpButtonDidTap), for: .touchUpInside)
 
         self.view.addSubview(self.usernameTextField)

@@ -34,7 +34,8 @@ final class BusinessUsersSignUp: UIViewController, UIImagePickerControllerDelega
     fileprivate let tableView = UITableView(frame: .zero, style: .plain)
     fileprivate var imagePicker: UIImagePickerController = UIImagePickerController()
     fileprivate let segmentedControl = UISegmentedControl()
-    fileprivate let segmentedTitles: Array<String> = ["사진 지우기","사진첩","카메라"]
+    //사업자 번호
+    //fileprivate let segmentedTitles: Array<String> = ["사진 지우기","사진첩","카메라"]
     
     
     //MARK: init
@@ -90,14 +91,18 @@ final class BusinessUsersSignUp: UIViewController, UIImagePickerControllerDelega
         self.tableView.dataSource = self
         self.tableView.delegate = self
         
+        /*
+        //사업자 번호
         //segmentedControl
         imagePicker.delegate = self
         UICommonSetSegmentedControl(self.segmentedControl, titles: segmentedTitles, font: 0)
         self.segmentedControl.addTarget(self, action: #selector(changeSegmentedControl), for: .valueChanged)
         self.segmentedControl.selectedSegmentIndex = self.segmentedIndexAndCode
+        */
         
         self.view.addSubview(self.tableView)
-        self.view.addSubview(self.segmentedControl)
+        //사업자 번호
+        //self.view.addSubview(self.segmentedControl)
         self.view.addSubview(self.activityIndicatorView)
         
         //updateViewConstraints 자동 호출
@@ -119,8 +124,12 @@ final class BusinessUsersSignUp: UIViewController, UIImagePickerControllerDelega
             self.tableView.snp.makeConstraints { make in
                 make.top.equalTo(self.topLayoutGuide.snp.bottom)
                 make.left.right.equalToSuperview()
-                make.bottom.equalTo(self.bottomLayoutGuide.snp.top).offset(-(height+Metric.commonOffset))
+                make.bottom.equalTo(self.bottomLayoutGuide.snp.top).offset(-height)
+                //사업자 번호
+                //make.botto/m.equalTo(self.bottomLayoutGuide.snp.top).offset(-(height+Metric.commonOffset))
             }
+            /*
+            //사업자 번호
             //segmented
             self.segmentedControl.snp.makeConstraints { make in
                 make.left.equalTo(Metric.segmentedMid)
@@ -128,6 +137,7 @@ final class BusinessUsersSignUp: UIViewController, UIImagePickerControllerDelega
                 make.top.equalTo(self.bottomLayoutGuide.snp.top).offset(-height)
                 make.height.equalTo(Metric.segmentedHeight)
             }
+            */
         }
         
         super.updateViewConstraints()
@@ -479,7 +489,8 @@ final class BusinessUsersSignUp: UIViewController, UIImagePickerControllerDelega
 
 extension BusinessUsersSignUp: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 2
+        return 1
+        //return 2
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -518,20 +529,3 @@ extension BusinessUsersSignUp: UITableViewDelegate {
     }
 }
 
-/*
-extension BusinessUsersSignUp: UITextFieldDelegate {
-    //TextField 리턴키 처리
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        self.view.endEditing(true)
-        return true
-    }
-}
-
-extension BusinessUsersSignUp: UITextViewDelegate {
-    //UITextView 리턴키 처리
-    func textViewShouldReturn(_ textView: UITextView) -> Bool {
-        self.view.endEditing(true)
-        return true
-    }
-}
-*/

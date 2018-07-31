@@ -46,6 +46,8 @@ func UICommonSetButton(_ uIKit: UIButton, setTitleText: String, color: Int) {
     switch color {
     case 1:
         uIKit.backgroundColor = .red
+    case 2:
+        uIKit.backgroundColor = .orange
     default:
         uIKit.backgroundColor = uIKit.tintColor
     }

@@ -9,7 +9,7 @@
 import UIKit
 
 let osVer = "iOS"
-let appVer = "1.001"
+let appVer = "1.002"
 let appName = "오늘 뭐야?"
 
 //광고

@@ -71,7 +71,7 @@ final class RestaurantListSearch: UIViewController {
         )
         self.navigationItem.leftBarButtonItem?.tintColor = .white
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(
-            title: "추가",
+            title: "식당 추가",
             style: .done,
             target: self,
             action: #selector(addButtonDidTap)
